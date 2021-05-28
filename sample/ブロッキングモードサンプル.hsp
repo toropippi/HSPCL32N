@@ -1,0 +1,47 @@
+#include "hspcl32n.as"
+	clini
+	clsetdev 0
+	sz=1024*1024*128;128Mb
+
+;	mes 0
+	clCreateBuffer vram1,sz
+;	mes 1
+	clCreateBuffer vram2,sz
+;	mes 2
+
+	dim i,sz/4
+;	mes 3
+
+	i=2345,25643256,437,3265,6456,56
+	clwriteBuffer vram1,i,sz;gpuに転送	
+;	mes 4
+
+		repeat 8
+		clCopyBuffer vram2,vram1,sz,0,0;この命令は元々ブロッキングモードオフ、vram1→vram2にコピー
+		loop
+;	mes 5
+
+	i=0,0,0,0,0,0,0,0,0,0,0
+	clreadBuffer vram2,i,sz,0,0,0;ブロッキングモードオフで実行
+;	mes 6
+	pos 0,0
+	mes i;ここで0が表示されればまだ転送が終わっていない
+	mes i.1
+	mes i.2
+	mes i.3
+	mes i.4
+	mes i.5
+	mes "ここで0が表示されればまだデータ転送が終わっていない(ブロッキングoff)"
+
+	clwaittask;ここでブロッキングモードがオフでも転送終わるまで待つことになる
+
+	pos 0,160
+	mes i;ここで転送終わっている
+	mes i.1
+	mes i.2
+	mes i.3
+	mes i.4
+	mes i.5
+	mes "ここで0以外が表示されればデータ転送終わっている(ブロッキングモード成功)"
+	clbye
+	stop

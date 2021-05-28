@@ -1,0 +1,68 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////
+;共有メモリのサンプル
+;65536*64個のランダムな数をGPUに仕分けさせる
+;1スレッドあたり64個の数を抜き出して、偶数、奇数の数を割り出す
+;このスレッドを65536個回すのだが、ローカルアイテムサイズを256にすることで
+;256スレッド同士での数値の共有が可能になる
+;つまり65536スレッドを256同士まとめて256個になる。
+;この256にまとまった偶数合計、奇数合計をVRAMに出力してCPUで256回加算して最終的に求める
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+randomize
+#include "hspcl32n.as"
+	clini
+	if stat==0:dialog "対応ビデオカードがありません。終了します",1:end
+
+
+	clSetDev 0;0番目のデバイスを使って計算する
+	mes "65536個のスレッドを実行します。\n各々のスレッドで64個の数値を偶数奇数分けしていきます。\nこのときカーネル内で256個のスレッドが同期して情報を共有します\n"
+	dim rando,65536*64
+		repeat 65536*64;419万個のランダム数生成
+		rando.cnt=rnd(32767)*rnd(32000)+rnd(32767)
+		if rando.cnt\2:intkisuko++:else:intgusuko++
+		loop
+	mes "65536*64個のランダム数生成"
+
+	clBuildProgram "奇数偶数分けその2.cl",prgid;
+	clCreateKernel prgid,"wake",krnid;
+	clCreateBuffer vram,65536*64*4;
+	mes "65536*64個のint型メモリ確保"
+	clCreateBuffer kisu,256*4;奇数の数を保存するint型配列変数を作成
+	clCreateBuffer gusu,256*4;偶数の数を保存するint型配列変数を作成
+	clSetKernel krnid,0,vram;
+	clSetKernel krnid,1,0,4*256;奇数用ローカルメモリ作成。１ワークグループにつき1024byte作成
+	clSetKernel krnid,2,0,4*256;偶数用ローカルメモリ作成。１ワークグループにつき1024byte作成
+	clSetKernel krnid,3,kisu;
+	clSetKernel krnid,4,gusu;
+	clWriteBuffer vram,rando,65536*64*4;
+	mes "データ転送"
+	clDoKrn1 krnid,65536*64/64,256;1スレッドあたり64個のint変数を仕分け、またローカルワークサイズが256なのがミソ！！
+	clwaittask
+	mes "カーネル実行中"
+
+	dim k,256
+	clReadBuffer kisu,k,1024;vram → k  に65536byteコピー
+	奇数の数=0
+		repeat 256
+		奇数の数+=k.cnt
+		loop
+	clReadBuffer gusu,k,1024;vram → k  に65536byteコピー
+	偶数の数=0
+		repeat 256
+		偶数の数+=k.cnt
+		loop
+
+	mes "\nGPU上で仕分けした結果"
+	mes "奇数の数		"+奇数の数
+	mes "偶数の数		"+偶数の数
+	mes "奇数の数＋偶数の数＝	"+(偶数の数+奇数の数)+"    =4194304なら正確にできた"
+	mes "\nCPU上で仕分けした結果"
+	
+	mes "奇数の数		"+intkisuko
+	mes "偶数の数		"+intgusuko
+	mes "奇数の数＋偶数の数＝	"+(intkisuko+intgusuko)+"    =4194304なら正確にできた"
+	
+	clbye
+	stop

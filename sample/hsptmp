@@ -1,0 +1,78 @@
+#include "hspcl32n.as"
+	screen 0,640,480
+	font "MS ゴシック",40,1
+	mes "※操作はマウス左クリック"
+	mes "※fpsは60に抑えられています"
+	mes "※Escで終了"
+	clini
+	if stat==0:dialog "対応ビデオカードがありません。終了します",1:end
+
+	clsetdev 0;計算に使うデバイス
+	maxkz=640*480;max粉の数64の倍数であること
+	ipn=2;アンチエイリアス係数
+	local_item_size=64;１つのワークユニットに与える処理数、そのワークユニット内で共有メモリが使える
+	clBuildProgram "suna.cl",prgid
+	clCreateBuffer mema,4*3*maxkz;float型3つにx,y,z座標が格納されている
+	clCreateBuffer memb,4*3*maxkz;float型3つにx,y,z速度が格納されている
+	clCreateBuffer vram,3*maxkz;HSP側VRAMと同じ 1ドット=3*char
+	clCreateBuffer vram2,4*maxkz*ipn*ipn;裏VRAMアンチエイリアス前 1ドット=1*float
+
+	gosub*syoki
+	clWriteBuffer mema,i,4*3*maxkz;粉位置情報をGPUに転送
+	dim i,1
+
+	await 1
+	screen 0,640,480
+	mref i,66
+
+	clCreateKernel prgid,"kona",krnidou;粉移動し裏画面出力
+	clCreateKernel prgid,"konacl",krncl;裏画面からHSP VRAM画面に出力ついでにアンチエイリアス
+	fpsf=0
+	ms=gettime(5)*60000+gettime(6)*1000+gettime(7)
+*main
+	getkey keyc,1
+	gosub*idou
+	gosub*cl
+	clReadBuffer vram,i,3*maxkz
+	msg=limit(gettime(5)*60000+gettime(6)*1000+gettime(7)-ms,1,99999)
+	pos 0,0:color 255,55,55:mes "fps="+(fpsf*1000/msg)+""
+	await 16
+	getkey key,27:if key:goto*sthsr
+	redraw 1
+	fpsf++
+	goto*main
+
+*sthsr
+	CLbye
+	end
+
+*syoki;砂の初期位置を決める
+	clfdim i,maxkz*3
+	w=0
+		repeat maxkz
+		i.w=clfloat(0.001*(rnd(6400)*100+rnd(100))-320.0)*clfloat(0.71)
+		w+
+		i.w=clfloat(0.001*(rnd(4800)*100+rnd(100))-240.0)*clfloat(0.71)
+		w+
+		i.w=clfloat(125.0)
+		w+
+		loop
+	return
+*idou
+	clSetKernel krnidou,0,mema
+	clSetKernel krnidou,1,memb
+	clSetKernel krnidou,2,vram2
+	clSetKernel krnidou,3,clfloat(mousex-320)+clfloat(0.001*rnd(1000))
+	clSetKernel krnidou,4,clfloat(240-mousey)+clfloat(0.001*rnd(1000))
+	clSetKernel krnidou,5,clfloat(125.0)
+	clSetKernel krnidou,6,ipn
+	clSetKernel krnidou,7,clfloat(keyc)
+	clDoKernel krnidou,1,maxkz,local_item_size
+	return
+
+*cl
+	clSetKernel krncl,0,vram2
+	clSetKernel krncl,1,vram
+	clSetKernel krncl,2,ipn
+	clDoKernel krncl,1,maxkz,local_item_size
+	return

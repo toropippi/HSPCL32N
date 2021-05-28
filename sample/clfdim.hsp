@@ -1,0 +1,17 @@
+#include "hspcl32n.as"
+	clini
+	b=234
+	c=4567.89901
+
+	clfdim a,10	
+	a.0=clfloat(123)
+	a.1=clfloat(b)
+	a.2=clfloat(c)
+	a.3++
+	a.4=a.0*a.1
+	a.5=clfloat(sqrt(double(a.4)))
+	
+		repeat 10
+		mes a.cnt
+		loop
+	stop
