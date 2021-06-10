@@ -5,9 +5,7 @@
 #include <iostream>
 #include "hsp3plugin.h"
 #include "hspvar_float.h"
-
 #include <CL/cl.h>
-
 
 #define MAX_SOURCE_SIZE 0x200000
 #define MAX_PLATFORM_IDS 16 //platform_id‚ÌÅ‘å’l
