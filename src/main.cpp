@@ -186,12 +186,6 @@ cl_program WithSource_func(cl_context contxt, std::string s_source, std::string 
 
 
 
-
-
-
-
-
-
 /*------------------------------------------------------------*/
 
 static int cmdfunc(int cmd)
