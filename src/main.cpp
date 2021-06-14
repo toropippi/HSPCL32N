@@ -13,7 +13,6 @@
 #include "errmsg.h"
 #include "RGB.h"
 
-
 const int MAX_PLATFORM_IDS = 32;//platform_id‚ÌÅ‘å’l
 const int MAX_DEVICE_IDS = 2048;//ˆê“x‚Éæ“¾‚Å‚«‚édevice‚ÌÅ‘å’l
 const int CLCALL_LOOP = 32;//HCLCall‚Ìˆø”‚Ì‰Â”\‚È”
@@ -31,7 +30,6 @@ cl_kernel kernel;
 cl_event* cppeventlist;//c++‚ÅŠÇ—‚·‚éevent objectBHSP‚©‚ç‚¢‚¶‚ê‚é‚Ì‚Í‚±‚±‚¾‚¯BHCLinit‚ÅÀ‘Ì‰»Bƒƒ‚ƒŠƒŠ[ƒN—\–h–Ú“IB‚±‚±‚Ì’†‚É‚ ‚éevent‚Ì‚İî•ñ‚ğ•Û‚µA‚»‚êˆÈŠO‚Ìevent‚Í•K‚¸release‚µ‚Ä”jŠü‚·‚é
 cl_event* event_wait_list;//HCLinit‚ÅÀ‘Ì‰»BŸ‚Éevent‚Åwait‚µ‚½‚¢clŠÖ”‚ğg‚¤Û‚É‚ ‚ç‚©‚¶‚ß‚±‚ê‚ğİ’è‚µ‚Ä‚¨‚¢‚Ä‚¨‚­ƒCƒ[ƒW
 
-
 struct EventStruct
 {
 	int k;//kernel id‚Ü‚½‚ÍƒRƒs[ƒTƒCƒY‚â‚ç
@@ -47,7 +45,6 @@ int cmd_properties = CL_QUEUE_PROFILING_ENABLE;//OpenCL‚ÌƒRƒ}ƒ“ƒhƒLƒ…[¶¬‚É
 int num_event_wait_list = 0;//NDRangeKernel ‚Æ‚©‚Åg‚¤‚â‚ÂBg‚¤“x‚É0‚É‚È‚é
 int thread_start = 0;//0‚ÍEnqueue‚Ü‚¿‚ª‚È‚¢A1ˆÈ~‚Íthread‚É“Š‚°‚½‚ª‚Ü‚¾Enqueue‚³‚ê‚Ä‚È‚¢”
 
-
 int GetMemSize(cl_mem m)
 {
 	int st;
@@ -55,7 +52,6 @@ int GetMemSize(cl_mem m)
 	if (ret != CL_SUCCESS) retmeserr12(ret);
 	return st;
 }
-
 
 //prm3‚ÍQÆ“n‚µ‚Å‚ ‚é‚±‚Æ‚É’ˆÓ
 void AutoReadWriteCopySize(int& prm3, PVal* pval, cl_mem prm1)

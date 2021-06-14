@@ -1,10 +1,7 @@
 #regcmd "_hsp3cmdinit@4","HSPCL32N.dll",1
 #cmd clfloat $0FF
 
-
-
 #regcmd "_hsp3cmdinit@4","HSPCL32N.dll"
-
 #cmd clGetDeviceCount $054
 #cmd clGetSettingDevice $056
 #cmd clCreateProgram $057
@@ -21,11 +18,6 @@
 #cmd clGetKernelName $079//A4
 #cmd clGetDevName $0AF
 #cmd clGet_NonBlocking_Status $088
-
-
-
-
-
 
 #cmd clini				$050
 #cmd clinit				$050
