@@ -412,7 +412,7 @@ static int cmdfunc(int cmd)
 		int sz = GetMemSize((cl_mem)prm2);//サイズ
 		int n = min((1 << 30), sz);
 		//HSP変数初期化
-		exinfo->HspFunc_dim(pval1, 8, 0, (n + 7) / 8 * 8, 0, 0, 0);
+		exinfo->HspFunc_dim(pval1, 8, 0, (n + 3) / 4 * 4, 0, 0, 0);
 		//転送
 		cl_int ret = clEnqueueReadBuffer(command_queue[clsetdev * COMMANDQUEUE_PER_DEVICE + clsetque], (cl_mem)prm2, CL_TRUE, 0,
 			n, pval1->pt, 0, NULL, NULL);
@@ -839,7 +839,20 @@ static int cmdfunc(int cmd)
 		//引数1 buffer
 		int prm1 = code_geti();
 		//引数2 pattern
-		float pattern = code_getd();
+		//float pattern = code_getdd(0.0);
+		float pattern = 0.0f;
+		auto chk = code_getprm();							// パラメーターを取得(型は問わない)
+		auto type = mpval->flag;							// パラメーターの型を取得
+		switch (type) {
+			case 8:								// パラメーターがfloatだった時
+			{
+				pattern = *(float*)mpval->pt;
+				break;
+			}
+			default:
+				puterror(HSPERR_TYPE_MISMATCH);			// サポートしていない型ならばエラー
+				break;
+		}
 		//引数3、offset(byte)
 		int prm4 = code_getdi(0);
 		//引数4、size(byte)
@@ -908,7 +921,21 @@ static int cmdfunc(int cmd)
 	{
 		int memid = code_geti();
 		int b = code_geti();//idx
-		float data = code_getd();//内容
+		float data = 0.0f;
+		auto chk = code_getprm();							// パラメーターを取得(型は問わない)
+		auto type = mpval->flag;							// パラメーターの型を取得
+		switch (type) {
+		case 8:								// パラメーターがfloatだった時
+		{
+			data = *(float*)mpval->pt;
+			break;
+		}
+		default:
+			puterror(HSPERR_TYPE_MISMATCH);			// サポートしていない型ならばエラー
+			break;
+		}
+
+
 		cl_int ret = clEnqueueReadBuffer(command_queue[clsetdev * COMMANDQUEUE_PER_DEVICE + clsetque], (cl_mem)memid, CL_TRUE, b * 4, 4, &data, 0, NULL, NULL);
 		if (ret != CL_SUCCESS) { retmeserr2(ret); }
 		break;

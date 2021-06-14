@@ -1,0 +1,63 @@
+//fill0：メモリの先頭から末尾に1byteずつ52を代入するコード
+//fill1：メモリの末尾から先頭に1byteずつ-11を代入するコード
+
+//今度はclSetCommandQueueで実行するCommandQueue番号を変えることで同時実行させることが可能になります。
+//この際、__global char* aに対して２つのカーネルから同時に書き込みを行うためデータ競合(data race)が起ります。
+//結果、メモリには52と-11が混在した状態になります。
+
+#include "hspcl32n.as"
+#include "ViewTimeStamp_module.as"
+	randomize
+	clinit
+	n=1024*1024*3//3Mb、この大きさならfillに少し時間がかかるはず
+
+	source={"
+__kernel void fill0(__global char* a)
+{
+    for(int i=0;i<N;i++)
+	    a[i]=52;
+}
+
+__kernel void fill1(__global char* a)
+{
+    for(int i=N-1;i>=0;i--)
+	    a[i]=-11;
+}
+"}
+
+
+	clSetDevice 0
+
+	prg=clCreateProgramWithSource(source,"-D N="+n+"")
+	krnfill0=clCreateKernel(prg,"fill0")
+	krnfill1=clCreateKernel(prg,"fill1")
+	
+	clmem=clCreateBuffer(n)
+	clSetKernel krnfill0,0,clmem
+	clSetKernel krnfill1,0,clmem
+
+	//コマンドキュー0では52のfillを配列の先頭から実行
+	clSetCommandQueue 0
+	clDokrn1 krnfill0,1,1,0//event id=0
+
+	//コマンドキュー1では-11のfillを配列の末尾から実行
+	clSetCommandQueue 1
+	clDokrn1 krnfill1,1,1,1//event id=1
+	clFlush
+
+	wait 10
+	
+	clSetCommandQueue 0
+	clFinish
+	clSetCommandQueue 1
+	clFinish
+	//実行状況可視化
+	ViewEvents3 2
+	
+	//配列の中身可視化
+	screen 2,1024,1024,0
+	cldim_i32FromBuffer data,clmem
+	mref vrm,66
+	memcpy vrm,data,n
+	redraw 1
+	stop
