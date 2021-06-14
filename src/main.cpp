@@ -9,38 +9,9 @@
 #include <thread>
 #include "hsp3plugin.h"
 #include "hspvar_float.h"
-
 #include <CL/cl.h>
-
 #include "errmsg.h"
 #include "RGB.h"
-
-/*
-#define MAX_SOURCE_SIZE 0x200000
-#define MAX_PLATFORM_IDS 16 //platform_idの最大値
-#define MAX_DEVICE_IDS 32 //devicesの最大値
-
-int gplatkz = 0;//プラットフォームの数  2
-int gdevkz = 0;//デバイスの数  4
-
-
-int dev_num = 0;
-
-cl_platform_id platform_id[MAX_PLATFORM_IDS];
-cl_context* context;
-cl_command_queue* command_queue;
-cl_mem mem_obj;//上限4096撤廃
-cl_program program;
-cl_kernel kernel;
-cl_event dmyevent;
-cl_event* ddmyevent = &dmyevent;
-int clsetdev = 0;
-void gtflt(float* ff0);
-void gtint(int* ii0);
-void gtdbl(double* dd0);
-void retmeserr(cl_int ret);//clEnqueueNDRangeKernel で失敗した時出すエラーメッセージをまとめた関数
-void retmeserr2(cl_int ret);//clReadで失敗した時出すエラーメッセージをまとめた関数
-*/
 
 
 
@@ -78,484 +49,6 @@ int num_event_wait_list = 0;//NDRangeKernel とかで使うやつ。使う度に0になる
 int thread_start = 0;//0はEnqueueまちがない、1以降はthreadに投げたがまだEnqueueされてない数
 
 
-
-
-
-
-
-/*
-struct cldevinfoStruct {
-	int plat;
-	cl_device_id dev;
-	char name[1024];
-	cl_device_type coretype;
-	char version[1024];
-	char cversion[1024];
-	char vendor[1024];
-	char EXTENSIONS[1024];
-	cl_ulong localmemsize;
-	cl_ulong globalmemsize;
-	cl_ulong maxmemalloc;
-	cl_uint maxfrq;
-	size_t maxworkgsz;
-	size_t maxworkisz0;
-	size_t maxworkisz1;
-	size_t maxworkisz2;
-	cl_uint maxcompunit;
-	int devtype;
-	size_t m2dx;
-	size_t m2dy;
-	size_t m3dx;
-	size_t m3dy;
-	size_t m3dz;
-	bool localmemtype;
-	bool compile;
-	bool CLyukflg;
-};
-cldevinfoStruct* gpus;
-
-int onexitflg = 0;
-*/
-
-
-
-
-
-
-
-
-/*
-
-
-void gtflt(float* ff0)
-{
-	int chk = code_getprm();							// パラメーターを取得(型は問わない)
-	if (chk <= PARAM_END) {
-		return;										// パラメーター省略時の処理
-	}
-	int type = mpval->flag;							// パラメーターの型を取得
-	switch (type) {
-	case 2:								// パラメーターが文字列だった時
-	{
-		char* str = (char*)mpval->pt;
-		*ff0 = float(atof(str));
-		break;
-	}
-	case 3:									// パラメーターが実数だった時
-	{
-		double* ptr = (double*)mpval->pt;
-		*ff0 = float(*ptr);
-		break;
-	}
-	case 4:									// パラメーターが整数だった時
-	{
-		int* ptr = (int*)mpval->pt;
-		*ff0 = float(*ptr);
-		break;
-	}
-	case 8:									// パラメーターがfloatだった時
-	{
-		float* ptr = (float*)mpval->pt;
-		*ff0 = float(*ptr);
-		break;
-	}
-	default:
-		puterror(HSPERR_TYPE_MISMATCH);			// サポートしていない型ならばエラー
-	}
-}
-
-
-void gtint(int* ii0)
-{
-	int chk = code_getprm();							// パラメーターを取得(型は問わない)
-	if (chk <= PARAM_END) {
-		return;										// パラメーター省略時の処理
-	}
-	int type = mpval->flag;							// パラメーターの型を取得
-	switch (type) {
-	case 2:								// パラメーターが文字列だった時
-	{
-		char* str = (char*)mpval->pt;
-		*ii0 = atoi(str);
-		break;
-	}
-	case 3:									// パラメーターが実数だった時
-	{
-		double* ptr = (double*)mpval->pt;
-		*ii0 = int(*ptr);
-		break;
-	}
-	case 4:									// パラメーターが整数だった時
-	{
-		int* ptr = (int*)mpval->pt;
-		*ii0 = int(*ptr);
-		break;
-	}
-	case 8:									// パラメーターがfloatだった時
-	{
-		float* ptr = (float*)mpval->pt;
-		*ii0 = int(*ptr);
-		break;
-	}
-	default:
-		puterror(HSPERR_TYPE_MISMATCH);			// サポートしていない型ならばエラー
-	}
-}
-
-
-void gtdbl(double* dd0)
-{
-	int chk = code_getprm();							// パラメーターを取得(型は問わない)
-	if (chk <= PARAM_END) {
-		return;										// パラメーター省略時の処理
-	}
-	int type = mpval->flag;							// パラメーターの型を取得
-	switch (type) {
-	case 2:								// パラメーターが文字列だった時
-	{
-		char* str = (char*)mpval->pt;
-		*dd0 = atof(str);
-		break;
-	}
-	case 3:									// パラメーターが実数だった時
-	{
-		double* ptr = (double*)mpval->pt;
-		*dd0 = double(*ptr);
-		break;
-	}
-	case 4:									// パラメーターが整数だった時
-	{
-		int* ptr = (int*)mpval->pt;
-		*dd0 = double(*ptr);
-		break;
-	}
-	case 8:									// パラメーターがfloatだった時
-	{
-		float* ptr = (float*)mpval->pt;
-		*dd0 = double(*ptr);
-		break;
-	}
-	default:
-		puterror(HSPERR_TYPE_MISMATCH);			// サポートしていない型ならばエラー
-	}
-}
-
-*/
-/*
-void retmeserr(cl_int ret)
-{
-	switch (ret) {							//分岐
-	case CL_INVALID_PROGRAM_EXECUTABLE:
-		MessageBox(NULL, "デバイス上で実行可能な、正常にビルドされたプログラムが一つもありません", "エラー", 0);
-
-		puterror(HSPERR_UNSUPPORTED_FUNCTION);
-		break;
-	case CL_INVALID_COMMAND_QUEUE:
-		MessageBox(NULL, "デバイスidが無効なデバイスになっています", "エラー", 0);
-
-		puterror(HSPERR_UNSUPPORTED_FUNCTION);
-		break;
-	case CL_INVALID_KERNEL:
-		MessageBox(NULL, "カーネルidが間違っています", "エラー", 0);
-
-		puterror(HSPERR_UNSUPPORTED_FUNCTION);
-		break;
-	case CL_INVALID_CONTEXT:
-		MessageBox(NULL, "カーネルidが違うデバイスidで登録されています、あるいは第一引数と event_wait_list 内のイベントと関連付けられたデバイスが同じでない", "エラー", 0);
-
-		puterror(HSPERR_UNSUPPORTED_FUNCTION);
-		break;
-	case CL_INVALID_KERNEL_ARGS:
-		MessageBox(NULL, "カーネル引数が指定されていません", "エラー", 0);
-
-		puterror(HSPERR_UNSUPPORTED_FUNCTION);
-		break;
-	case CL_INVALID_GLOBAL_WORK_SIZE:
-		MessageBox(NULL, "global_work_size が NULL です。あるいは、global_work_sizeの配列のどれかが0です。もしくはカーネルを実行するデバイス上でのglobal_work_sizeが上限値を超えている", "エラー", 0);
-
-		puterror(HSPERR_UNSUPPORTED_FUNCTION);
-		break;
-	case CL_INVALID_GLOBAL_OFFSET:
-		MessageBox(NULL, "CL_INVALID_GLOBAL_OFFSET - global_work_offset が NULL でない", "エラー", 0);
-
-		puterror(HSPERR_UNSUPPORTED_FUNCTION);
-		break;
-	case CL_INVALID_WORK_DIMENSION:
-		MessageBox(NULL, "work_dim が適切な値でない", "エラー", 0);
-
-		puterror(HSPERR_UNSUPPORTED_FUNCTION);
-		break;
-	case CL_INVALID_WORK_GROUP_SIZE:
-		MessageBox(NULL, "global_work_sizeがlocal_work_size で整除できない、またはlocal_work_size[0]*local_work_size[1]*local_work_size[2]が、一つのワークグループ内のワークアイテム数の最大値を超えた", "エラー", 0);
-
-		puterror(HSPERR_UNSUPPORTED_FUNCTION);
-		break;
-	case CL_INVALID_WORK_ITEM_SIZE:
-		MessageBox(NULL, "local_work_size[0], ... local_work_size[work_dim - 1] で指定したワークアイテム数が対応する CL_DEVICE_MAX_WORK_ITEM_SIZES[0], ... CL_DEVICE_MAX_WORK_ITEM_SIZES[work_dim - 1] の値こえている、または0を指定した", "エラー", 0);
-
-		puterror(HSPERR_UNSUPPORTED_FUNCTION);
-		break;
-	case CL_MEM_OBJECT_ALLOCATION_FAILURE:
-		MessageBox(NULL, "kernel の引数に指定されたバッファ/イメージオブジェクトに関連付けられたデータ保存のためのメモリ領域の確保に失敗した", "エラー", 0);
-
-		puterror(HSPERR_UNSUPPORTED_FUNCTION);
-		break;
-	case CL_INVALID_EVENT_WAIT_LIST:
-		MessageBox(NULL, "event_wait_list が NULL で num_events_in_wait_list が 0 より大きいとき。あるいは event_wait_list が NULL でなく num_events_in_wait_list が 0 のとき。あるいは event_wait_list 内のイベントオブジェクトが有効なものでない", "エラー", 0);
-
-		puterror(HSPERR_UNSUPPORTED_FUNCTION);
-		break;
-	case CL_OUT_OF_RESOURCES:
-		MessageBox(NULL, "デバイス上でのリソース確保に失敗した", "エラー", 0);
-
-		puterror(HSPERR_UNSUPPORTED_FUNCTION);
-		break;
-	case CL_OUT_OF_HOST_MEMORY:
-		MessageBox(NULL, "ホスト上でのリソース確保に失敗した", "エラー", 0);
-
-		puterror(HSPERR_UNSUPPORTED_FUNCTION);
-		break;
-	}
-	//上のどれでもなければ
-	MessageBox(NULL, "原因不明のエラーです", "エラー", 0);
-	puterror(HSPERR_UNSUPPORTED_FUNCTION);
-}
-
-*/
-
-
-
-
-
-
-
-/*
-static void clini(void)
-{
-	cl_device_id device_id[MAX_DEVICE_IDS];
-	cl_uint ret_num_devices;
-	cl_uint ret_num_platforms;
-	cl_int ret = clGetPlatformIDs(MAX_PLATFORM_IDS, platform_id, &ret_num_platforms);
-	gplatkz = ret_num_platforms;
-	int gkw = 0;
-
-	if (gplatkz != 0) {
-		for (int i = 0; i < gplatkz; i++) {
-			ret = clGetDeviceIDs(platform_id[i], CL_DEVICE_TYPE_ALL, MAX_DEVICE_IDS, device_id, &ret_num_devices);
-			gkw += ret_num_devices;
-		}
-		gpus = new struct cldevinfoStruct[gkw];
-		int w = 0;
-		for (int i = 0; i < gplatkz; i++) {
-			ret = clGetDeviceIDs(platform_id[i], CL_DEVICE_TYPE_ALL, MAX_DEVICE_IDS, device_id, &ret_num_devices);
-			for (int j = 0; j<int(ret_num_devices); j++)
-			{
-				clGetDeviceInfo(device_id[j], CL_DEVICE_NAME, 1024, &gpus[w].name, NULL);
-				clGetDeviceInfo(device_id[j], CL_DEVICE_TYPE, sizeof(cl_device_type), &gpus[w].coretype, NULL);
-				clGetDeviceInfo(device_id[j], CL_DEVICE_VENDOR, 1024, &gpus[w].vendor, NULL);
-				clGetDeviceInfo(device_id[j], CL_DEVICE_EXTENSIONS, 1024, &gpus[w].EXTENSIONS, NULL);
-				clGetDeviceInfo(device_id[j], CL_DRIVER_VERSION, 1024, &gpus[w].version, NULL);
-				clGetDeviceInfo(device_id[j], CL_DEVICE_VERSION, 1024, &gpus[w].cversion, NULL);
-				clGetDeviceInfo(device_id[j], CL_DEVICE_LOCAL_MEM_SIZE, sizeof(cl_ulong), &gpus[w].localmemsize, NULL);
-				clGetDeviceInfo(device_id[j], CL_DEVICE_GLOBAL_MEM_SIZE, sizeof(cl_ulong), &gpus[w].globalmemsize, NULL);
-				clGetDeviceInfo(device_id[j], CL_DEVICE_MAX_MEM_ALLOC_SIZE, sizeof(cl_ulong), &gpus[w].maxmemalloc, NULL);
-				clGetDeviceInfo(device_id[j], CL_DEVICE_MAX_CLOCK_FREQUENCY, sizeof(cl_uint), &gpus[w].maxfrq, NULL);
-				clGetDeviceInfo(device_id[j], CL_DEVICE_MAX_WORK_GROUP_SIZE, sizeof(size_t), &gpus[w].maxworkgsz, NULL);
-
-				size_t itj[3];
-				clGetDeviceInfo(device_id[j], CL_DEVICE_MAX_WORK_ITEM_SIZES, sizeof(size_t) * 3, &itj, NULL);
-				gpus[w].maxworkisz0 = itj[0]; gpus[w].maxworkisz1 = itj[1]; gpus[w].maxworkisz2 = itj[2];
-				clGetDeviceInfo(device_id[j], CL_DEVICE_MAX_COMPUTE_UNITS, sizeof(cl_uint), &gpus[w].maxcompunit, NULL);
-				cl_device_type itj3;
-				clGetDeviceInfo(device_id[j], CL_DEVICE_TYPE, sizeof(cl_device_type), &itj3, NULL);
-				gpus[w].devtype = int(itj3);
-				gpus[w].plat = i;
-				gpus[w].dev = device_id[j];
-
-				clGetDeviceInfo(device_id[j], CL_DEVICE_IMAGE2D_MAX_WIDTH, sizeof(size_t), &gpus[w].m2dx, NULL);
-				clGetDeviceInfo(device_id[j], CL_DEVICE_IMAGE2D_MAX_HEIGHT, sizeof(size_t), &gpus[w].m2dy, NULL);
-				clGetDeviceInfo(device_id[j], CL_DEVICE_IMAGE3D_MAX_WIDTH, sizeof(size_t), &gpus[w].m3dx, NULL);
-				clGetDeviceInfo(device_id[j], CL_DEVICE_IMAGE3D_MAX_HEIGHT, sizeof(size_t), &gpus[w].m3dy, NULL);
-				clGetDeviceInfo(device_id[j], CL_DEVICE_IMAGE3D_MAX_DEPTH, sizeof(size_t), &gpus[w].m3dz, NULL);
-				cl_device_local_mem_type itj4;
-				clGetDeviceInfo(device_id[j], CL_DEVICE_LOCAL_MEM_TYPE, sizeof(cl_device_local_mem_type), &itj4, NULL);
-				if (itj4 == CL_GLOBAL) { gpus[w].localmemtype = 0; }
-				if (itj4 == CL_LOCAL) { gpus[w].localmemtype = 1; }
-				cl_bool itj6;
-				clGetDeviceInfo(device_id[j], CL_DEVICE_COMPILER_AVAILABLE, sizeof(cl_bool), &itj6, NULL);
-				if (itj6 == CL_FALSE) { gpus[w].compile = 0; }
-				if (itj6 == CL_TRUE) { gpus[w].compile = 1; }
-				w++;
-			}
-		}
-	}//////////デバイス情報を取得しまくっているところ
-
-
-
-	cl_device_id cdDeviceID[32];
-	size_t size3 = 0;
-	int count = 0;
-	int countd = 0;
-	context = new cl_context[gkw];
-	command_queue = new cl_command_queue[gkw];
-
-
-	char str1[1024];
-	char str2[1024];
-
-
-	for (int k = 0; k < gkw; k++) {//コンテキストとコマンド級ーを作る
-		context[k] = clCreateContext(NULL, 1, &gpus[k].dev, NULL, NULL, &ret);
-
-		sprintf(str2, "原因不明");
-		switch (ret) {							//分岐
-		case CL_INVALID_PLATFORM:
-			sprintf(str2, "CL_INVALID_PLATFORM\nコンテキスト作成エラー。\nproperties が NULL でかつプラットフォームがひとつも選択されなかったとき。または、properties 内で指定したプラットフォームが有効なプラットフォームでないとき。");
-			break;
-
-		case CL_INVALID_PROPERTY:
-			sprintf(str2, "CL_INVALID_PROPERTY\n値が支援されたプロパティ名に対して指定した場合、特性中のコンテキスト・プロパティ名が支援されたプロパティ名でない場合、有効でない、あるいは、同じプロパティ名が二度以上指定される場合。しかしながら、拡張cl_khr_gl_sharingが可能になる場合、上記の特性用のテーブルにリストされたもの以外の属性名が、特性の中で指定される場合、CL_INVALID_PROPERTYが返されます。");
-			break;
-
-		case CL_INVALID_VALUE:
-			sprintf(str2, "CL_INVALID_VALUE\nコンテキスト作成エラー。\ndevices が NULL のとき num_devices が0のとき。  pfn_notify が NULL で user_data が NULL でないとき。");
-			break;
-
-		case CL_INVALID_DEVICE:
-			sprintf(str2, "CL_INVALID_DEVICE\nコンテキスト作成エラー。\ndevices に有効でないデバイスが含まれているとき");
-			break;
-
-		case CL_DEVICE_NOT_AVAILABLE:
-			sprintf(str2, "CL_DEVICE_NOT_AVAILABLE\nコンテキスト作成エラー。\ndevices 内のデバイスが、clGetDeviceIDs で返されたデバイスであるものの現在利用可能でないとき。");
-			break;
-
-		case CL_OUT_OF_HOST_MEMORY:
-			sprintf(str2, "CL_OUT_OF_HOST_MEMORY\nコンテキスト作成エラー。\nホスト上でのリソース確保に失敗したとき。");
-			break;
-		}
-
-
-		if (ret != CL_SUCCESS) {
-			sprintf(str1, "%s\n\n%s\n", gpus[k].name, str2);
-
-			context[k] = clCreateContext(NULL, 1, &gpus[k].dev, NULL, NULL, &ret);
-			sprintf(str2, "原因不明");
-			switch (ret) {							//分岐
-			case CL_INVALID_PLATFORM:
-				sprintf(str2, "CL_INVALID_PLATFORM\nコンテキスト作成エラー。\nproperties が NULL でかつプラットフォームがひとつも選択されなかったとき。または、properties 内で指定したプラットフォームが有効なプラットフォームでないとき。");
-				break;
-
-			case CL_INVALID_PROPERTY:
-				sprintf(str2, "CL_INVALID_PROPERTY\n値が支援されたプロパティ名に対して指定した場合、特性中のコンテキスト・プロパティ名が支援されたプロパティ名でない場合、有効でない、あるいは、同じプロパティ名が二度以上指定される場合。しかしながら、拡張cl_khr_gl_sharingが可能になる場合、上記の特性用のテーブルにリストされたもの以外の属性名が、特性の中で指定される場合、CL_INVALID_PROPERTYが返されます。");
-				break;
-
-			case CL_INVALID_VALUE:
-				sprintf(str2, "CL_INVALID_VALUE\nコンテキスト作成エラー。\ndevices が NULL のとき num_devices が0のとき。  pfn_notify が NULL で user_data が NULL でないとき。");
-				break;
-
-			case CL_INVALID_DEVICE:
-				sprintf(str2, "CL_INVALID_DEVICE\nコンテキスト作成エラー。\ndevices に有効でないデバイスが含まれているとき");
-				break;
-
-			case CL_DEVICE_NOT_AVAILABLE:
-				sprintf(str2, "CL_DEVICE_NOT_AVAILABLE\nコンテキスト作成エラー。\ndevices 内のデバイスが、clGetDeviceIDs で返されたデバイスであるものの現在利用可能でないとき。");
-				break;
-
-			case CL_OUT_OF_HOST_MEMORY:
-				sprintf(str2, "CL_OUT_OF_HOST_MEMORY\nコンテキスト作成エラー。\nホスト上でのリソース確保に失敗したとき。");
-				break;
-			}
-			if (ret != CL_SUCCESS)
-			{
-				sprintf(str1, "%s\n\n%s\n", gpus[k].name, str2);
-			}
-		}
-
-
-
-
-		command_queue[k] = clCreateCommandQueue(context[k], gpus[k].dev, CL_QUEUE_PROFILING_ENABLE, &ret);
-
-		switch (ret) {							//分岐
-		case CL_INVALID_CONTEXT:
-			sprintf(str2, "コマンドキュー生成エラー\ncontext が有効なOpenCLコンテキストでないとき。");
-			sprintf(str1, "%s\n\n%s", gpus[k].name, str2);
-			break;
-
-		case CL_INVALID_DEVICE:
-			sprintf(str2, "コマンドキュー生成エラー\ndevice が有効なOpenCLデバイスでないとき。あるいは、context と関連付けられていないとき。");
-			sprintf(str1, "%s\n\n%s", gpus[k].name, str2);
-			break;
-
-		case CL_INVALID_VALUE:
-			sprintf(str2, "コマンドキュー生成エラー\nproperties に指定した値が有効なものでないとき。");
-			sprintf(str1, "%s\n\n%s", gpus[k].name, str2);
-
-			sprintf(str1, "propertiesにアウトオブオーダーを指定したところエラーに成ったので、インオーダー実行として再コマンドキュー生成します");
-
-			command_queue[k] = clCreateCommandQueue(context[k], gpus[k].dev, 0, &ret);
-			break;
-
-		case CL_INVALID_QUEUE_PROPERTIES:
-			sprintf(str2, "コマンドキュー生成エラー\nproperties に指定した値が、有効であるもののデバイスがサポートしていないとき。");
-			sprintf(str1, "%s\n\n%s", gpus[k].name, str2);
-
-			sprintf(str1, "propertiesにアウトオブオーダーを指定したところエラーに成ったので、インオーダー実行として再コマンドキュー生成します");
-
-			command_queue[k] = clCreateCommandQueue(context[k], gpus[k].dev, 0, &ret);
-			break;
-
-		case CL_OUT_OF_HOST_MEMORY:
-			sprintf(str2, "コマンドキュー生成エラー\nホスト上でのリソース確保に失敗したとき。");
-			sprintf(str1, "%s\n\n%s", gpus[k].name, str2);
-
-			break;
-		}
-
-
-		if (ret == CL_SUCCESS) {
-			char str3[4];
-			gpus[k].CLyukflg = 1;
-			sprintf(str2, "コマンドキュー生成成功");
-			sprintf(str1, "デバイス名\n%s\n\n%s\nOpenGL連携 %s", gpus[k].name, str2, str3);
-		}
-		else {
-			gpus[k].CLyukflg = 0;
-		}
-	}
-
-	gdevkz = gkw;
-	dev_num = gdevkz;
-	stat = gdevkz;
-}
-*/
-
-
-/*
-
-static void clGetDevInfo(void)
-{
-	int p1 = clsetdev;
-	char out[90000];
-	sprintf(out, "プラットフォームid=開業%d開業デバイス名=開業%s開業デバイスid=開業%d開業デバイス種類(DEFAULT 1,CPU 2,GPU 4,ACCELERATOR 8)=開業%d開業OpenCLソフトウェアドライバのバージョン=開業%s開業デバイスがサポートするOpenCLのバージョン=開業%s開業デバイスのベンダー=開業%s開業ローカルメモリ(共有メモリ)のサイズ(byte)=開業%d開業デバイス最大周波数(MHz)=開業%f開業並列演算コアの数=開業%d開業グローバルメモリサイズ(byte)=開業%f開業メモリオブジェクトとして確保できる最大のメモリサイズ(byte)=開業%f開業ひとつのワークグループ内のワークアイテム数の最大値=開業%d開業ワークグループごとのワークアイテム数のそれぞれの次元についての最大値=開業%d,%d,%d開業2Dイメージの幅の最大サイズ=開業%d開業2Dイメージの高さの最大サイズ=開業%d開業3Dイメージの幅の最大サイズ=開業%d開業3Dイメージの高さの最大サイズ=開業%d開業3Dイメージの深さの最大サイズ=開業%d開業ローカルメモリのタイプ（専用のメモリ 有り1 無し0）=開業%d開業プログラムソースをコンパイルするために利用できるコンパイラの有無(有1 無0)=開業%d開業%d開業OpenCL有効(有1 無0)=開業%d開業デバイスがサポートする拡張機能の名称をスペースで区切ったリストの形式の文字列で返します開業%s開業"
-		, gpus[p1].plat, gpus[p1].name, p1, int(gpus[p1].coretype), gpus[p1].version, gpus[p1].cversion, gpus[p1].vendor
-		, int(gpus[p1].localmemsize), float(gpus[p1].maxfrq)
-		, int(gpus[p1].maxcompunit), float(gpus[p1].globalmemsize), float(gpus[p1].maxmemalloc), int(gpus[p1].maxworkgsz)
-		, int(gpus[p1].maxworkisz0), int(gpus[p1].maxworkisz1), int(gpus[p1].maxworkisz2)
-		, int(gpus[p1].m2dx), int(gpus[p1].m2dy), int(gpus[p1].m3dx), int(gpus[p1].m3dy), int(gpus[p1].m3dz)
-		, int(gpus[p1].localmemtype), int(gpus[p1].compile), int(gpus[p1].CLyukflg), gpus[p1].EXTENSIONS);
-	PVal* pval;
-	APTR aptr;
-	aptr = code_getva(&pval);
-	code_setva(pval, aptr, HSPVAR_FLAG_STR, &out);
-}
-
-*/
-
-
-
-
-
 int GetMemSize(cl_mem m)
 {
 	int st;
@@ -563,7 +56,6 @@ int GetMemSize(cl_mem m)
 	if (ret != CL_SUCCESS) retmeserr12(ret);
 	return st;
 }
-
 
 
 //prm3は参照渡しであることに注意
@@ -632,7 +124,6 @@ cl_event* GetWaitEvlist()
 }
 
 
-
 void Thread_WriteBuffer(cl_command_queue cmd, cl_mem mem, int ofst, int size,
 	const void* vptr, int num_event_wait_list__, cl_event* ev_, cl_event* outevent)
 {
@@ -654,10 +145,6 @@ void Thread_ReadBuffer(cl_command_queue cmd, cl_mem mem, int ofst, int size,
 	if (ret != CL_SUCCESS) { retmeserr2(ret); }
 	return;
 }
-
-
-
-
 
 
 std::string readFileIntoString(const std::string& path) {
@@ -688,65 +175,6 @@ cl_program WithSource_func(cl_context contxt, std::string s_source, std::string 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*------------------------------------------------------------*/
 
 static int cmdfunc(int cmd)
@@ -757,16 +185,7 @@ static int cmdfunc(int cmd)
 
 	switch (cmd) {							// サブコマンドごとの分岐
 
-	case 0xA0:
-		//clini();
-		break;
-
-	case 0xA1:
-		//clGetDevInfo();
-		break;
-
-	case 0xA2:
-		//clBye();
+	case 0xA2://clBye();
 		break;
 
 	case 0xA3:
@@ -808,7 +227,7 @@ static int cmdfunc(int cmd)
 		break;
 	}
 
-	case 0xA4:
+	case 0x79://A4
 	{
 		//clCreateKernel();
 		p1 = code_getdi(0);		// パラメータ1:数値
@@ -828,7 +247,7 @@ static int cmdfunc(int cmd)
 		break;
 	}
 
-	case 0xA6:
+	case 0x5E://A6
 	{
 		//clCreateBuffer();
 		PVal* pval;
@@ -893,18 +312,6 @@ static int cmdfunc(int cmd)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 	//////////////////////ここから64移植/////////////////
 	//////////////////////ここから64移植/////////////////
 	//////////////////////ここから64移植/////////////////
@@ -914,8 +321,6 @@ static int cmdfunc(int cmd)
 	//////////////////////ここから64移植/////////////////
 	//////////////////////ここから64移植/////////////////
 	//////////////////////ここから64移植/////////////////
-
-
 	case 0x50://HCLinit
 	{
 		cl_int errcode_ret;
@@ -983,6 +388,7 @@ static int cmdfunc(int cmd)
 			event_wait_list[i] = NULL;
 		}
 
+		stat = dev_num;
 		break;
 	}
 
@@ -2091,8 +1497,6 @@ static float ref_floatval;						// 返値のための変数
 static int ref_int32val;						// 返値のための変数
 static char* cptr;								// 返値のための変数
 
-
-
 static void* reffunc(int* type_res, int cmd)
 {
 
@@ -2113,10 +1517,10 @@ static void* reffunc(int* type_res, int cmd)
 
 	case 0xFF:								// float関数
 	{
+		fFloat = true;
 		ref_floatval = 0.0f;
 		double dp1 = code_getd();					// 整数値を取得(デフォルトなし)
 		ref_floatval = (float)dp1;				// 返値を設定
-		*type_res = HspVarFloat_typeid();		// 返値のタイプを指定する
 		break;
 	}
 
@@ -2382,8 +1786,6 @@ static void* reffunc(int* type_res, int cmd)
 	////////////////////////////////////////////////////////////ここまで
 	////////////////////////////////////////////////////////////ここまで
 	////////////////////////////////////////////////////////////ここまで
-
-
 	default:
 		puterror(HSPERR_UNSUPPORTED_FUNCTION);
 	}
@@ -2402,7 +1804,8 @@ static void* reffunc(int* type_res, int cmd)
 	}
 
 	if (fFloat) {
-		*type_res = HSPVAR_FLAG_INT;
+		*type_res = HspVarFloat_typeid();
+		//*type_res = HSPVAR_FLAG_INT;
 		return (void*)&ref_floatval;
 	}
 

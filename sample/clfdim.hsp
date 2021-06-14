@@ -3,7 +3,7 @@
 	b=234
 	c=4567.89901
 
-	clfdim a,10	
+	clfdim a,10
 	a.0=clfloat(123)
 	a.1=clfloat(b)
 	a.2=clfloat(c)
