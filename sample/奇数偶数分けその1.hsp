@@ -39,7 +39,7 @@ randomize
 	clwaittask;これがないと計算中なのにclReadBufferで計算途中のものを読み込み正しい答えがでない
 	mes "カーネル実行中"
 
-	dim k,65536/4
+	dim k,65536/4//sdimではうまく行かず
 	clReadBuffer kisu,k,65536;vram → k  に65536byteコピー
 	奇数の数=0
 		repeat 65536
