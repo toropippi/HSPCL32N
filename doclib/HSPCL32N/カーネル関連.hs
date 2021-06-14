@@ -4,22 +4,22 @@
 
 ;-------- header --------
 %dll
-HSPCL64.dll
+HSPCL32N.dll
 
 %ver
-1.0
+2.2
 
 %date
-2021/06/07
+2021/06/14
 
 %author
-toropippi
+pippi
 
 %note
-hspcl64.as ‚ğƒCƒ“ƒNƒ‹[ƒh‚µ‚Ä‚­‚¾‚³‚¢B
+hspcl32n.as ‚ğƒCƒ“ƒNƒ‹[ƒh‚µ‚Ä‚­‚¾‚³‚¢B
 
 %type
-64bitƒ‰ƒ“ƒ^ƒCƒ€GPGPU—pƒvƒ‰ƒOƒCƒ“
+32bitƒ‰ƒ“ƒ^ƒCƒ€GPGPU—pƒvƒ‰ƒOƒCƒ“
 
 %group
 OpenCLƒJ[ƒlƒ‹ŠÖ˜A
@@ -30,33 +30,50 @@ Win
 ;-------- ref --------
 
 %index
-HCLCreateProgram
-ƒJ[ƒlƒ‹ƒvƒƒOƒ‰ƒ€‚Ìƒrƒ‹ƒh
+clCreateProgram
+ƒvƒƒOƒ‰ƒ€‚Ìƒrƒ‹ƒh
 
 %prm
 (str p1,str p2)
-str p1 : ƒJ[ƒlƒ‹ƒ\[ƒXƒtƒ@ƒCƒ‹–¼ 	[in]
+str p1 : ƒvƒƒOƒ‰ƒ€ƒ\[ƒXƒtƒ@ƒCƒ‹–¼ 	[in]
 str p2 : ƒrƒ‹ƒhƒIƒvƒVƒ‡ƒ“,È—ª‰Â	[in]
 
 %inst
-ƒvƒƒOƒ‰ƒ€id‚ª64bit intŒ^‚Å•Ô‚è‚Ü‚·B
+ƒvƒƒOƒ‰ƒ€id‚ªintŒ^‚Å•Ô‚è‚Ü‚·B
 p1‚É‚Íƒ\[ƒX‚Ìƒtƒ@ƒCƒ‹–¼‚ğ“ü‚ê‚Ä‰º‚³‚¢B
 p2‚É‚Íƒrƒ‹ƒhƒIƒvƒVƒ‡ƒ“‚ğ“ü‚ê‚Ä‚­‚¾‚³‚¢B
 —áF"-D SCALE=111"
 
 ƒRƒ“ƒpƒCƒ‹‚³‚ê‚½OpenCLƒJ[ƒlƒ‹ƒvƒƒOƒ‰ƒ€‚ÍA‚»‚ÌƒfƒoƒCƒXã‚Å‚µ‚©g‚¦‚Ü‚¹‚ñB
-‚Q‚ÂˆÈã‚ÌƒfƒoƒCƒXã‚Å“¯‚¶ƒJ[ƒlƒ‹‚ğÀs‚µ‚½‚¢‚Æ‚«A‚»‚ê‚¼‚ê‚ÌƒfƒoƒCƒXid‚ğHCLSetDevice‚ÅƒZƒbƒg‚µ‚È‚¨‚µ‚ÄHCLCreateProgram‚ğÀs‚µ‚Ä‰º‚³‚¢B
+‚Q‚ÂˆÈã‚ÌƒfƒoƒCƒXã‚Å“¯‚¶ƒJ[ƒlƒ‹‚ğÀs‚µ‚½‚¢‚Æ‚«A‚»‚ê‚¼‚ê‚ÌƒfƒoƒCƒXid‚ğclSetDevice‚ÅƒZƒbƒg‚µ‚È‚¨‚µ‚ÄclCreateProgram‚ğÀs‚µ‚Ä‰º‚³‚¢B
 
 %href
-HCLCreateProgramWithSource
-HCLSetDevice
-HCLCreateKernel
-HCLReleaseProgram
-
+clCreateProgramWithSource
+clSetDevice
+clCreateKernel
+clReleaseProgram
 ;-------- ref --------
 
 %index
-HCLCreateProgramWithSource
+clBuildProgram
+ƒvƒƒOƒ‰ƒ€‚Ìƒrƒ‹ƒh(‹Œ–½—ß)
+
+%prm
+str p1,int p2
+str p1 : ƒvƒƒOƒ‰ƒ€ƒ\[ƒXƒtƒ@ƒCƒ‹–¼ 	[in]
+int p2 : ƒvƒƒOƒ‰ƒ€id 	[out]
+
+%inst
+ƒvƒƒOƒ‰ƒ€id‚ªintŒ^‚Åp2‚É‘ã“ü‚³‚ê‚Ü‚·B
+‚±‚ê‚Í‹Œ–½—ß‚Å‚·BclCreateProgram‚ğg—p‚µ‚Ä‰º‚³‚¢B
+
+%href
+clCreateProgram
+clCreateProgramWithSource
+;-------- ref --------
+
+%index
+clCreateProgramWithSource
 ƒJ[ƒlƒ‹ƒvƒƒOƒ‰ƒ€‚Ìƒrƒ‹ƒh
 
 %prm
@@ -65,60 +82,60 @@ str p1 : ƒJ[ƒlƒ‹ƒ\[ƒX•¶š—ñ		[in]
 str p2 : ƒrƒ‹ƒhƒIƒvƒVƒ‡ƒ“,È—ª‰Â	[in]
 
 %inst
-ƒvƒƒOƒ‰ƒ€id‚ª64bit intŒ^‚Å•Ô‚è‚Ü‚·B
+ƒvƒƒOƒ‰ƒ€id‚ªintŒ^‚Å•Ô‚è‚Ü‚·B
 p1‚É‚Íƒ\[ƒX‚Ìƒf[ƒ^‚ğ“ü‚ê‚Ä‰º‚³‚¢B
 p2‚É‚Íƒrƒ‹ƒhƒIƒvƒVƒ‡ƒ“‚ğ“ü‚ê‚Ä‚­‚¾‚³‚¢B
 —áF"-D SCALE=111"
 
 ƒRƒ“ƒpƒCƒ‹‚³‚ê‚½OpenCLƒJ[ƒlƒ‹ƒvƒƒOƒ‰ƒ€‚ÍA‚»‚ÌƒfƒoƒCƒXã‚Å‚µ‚©g‚¦‚Ü‚¹‚ñB
-‚Q‚ÂˆÈã‚ÌƒfƒoƒCƒXã‚Å“¯‚¶ƒJ[ƒlƒ‹‚ğÀs‚µ‚½‚¢‚Æ‚«A‚»‚ê‚¼‚ê‚ÌƒfƒoƒCƒXid‚ğHCLSetDevice‚ÅƒZƒbƒg‚µ‚È‚¨‚µ‚ÄHCLCreateProgramWithSource‚ğÀs‚µ‚Ä‰º‚³‚¢B
+‚Q‚ÂˆÈã‚ÌƒfƒoƒCƒXã‚Å“¯‚¶ƒJ[ƒlƒ‹‚ğÀs‚µ‚½‚¢‚Æ‚«A‚»‚ê‚¼‚ê‚ÌƒfƒoƒCƒXid‚ğclSetDevice‚ÅƒZƒbƒg‚µ‚È‚¨‚µ‚ÄclCreateProgramWithSource‚ğÀs‚µ‚Ä‰º‚³‚¢B
 
 %href
-HCLCreateProgram
-HCLSetDevice
-HCLCreateKernel
-HCLReleaseProgram
+clCreateProgram
+clSetDevice
+clCreateKernel
+clReleaseProgram
 
 ;--------
 
 %index
-HCLCreateKernel
+clCreateKernel
 ƒJ[ƒlƒ‹ì¬
 
 %prm
-(int64 p1,str p2)
-int64 p1 : ƒvƒƒOƒ‰ƒ€id		[in]
+(int p1,str p2)
+int p1 : ƒvƒƒOƒ‰ƒ€id		[in]
 str p2 : ƒJ[ƒlƒ‹ŠÖ”–¼		[in]
 
 %inst
-ƒJ[ƒlƒ‹id‚ª64bit intŒ^‚Å•Ô‚è‚Ü‚·B
+ƒJ[ƒlƒ‹id‚ªintŒ^‚Å•Ô‚è‚Ü‚·B
 
 p2‚Íp1ƒJ[ƒlƒ‹ƒ\[ƒX“à‚É‚ ‚éu__kernel v‚©‚çn‚Ü‚éŠÖ”–¼‚ğu__kernel v‚æ‚èŒã‚Ì•¶š—ñ‚Åw’è‚µ‚Ü‚·B
 —á‚¦‚Îp1ƒ\[ƒX“à‚Éu__kernel void vector_add(__global float *A) {}v‚Æ‚¢‚¤s‚ª‚ ‚ê‚Îp2‚Í "vector_add" ‚ğw’è‚µ‚Ü‚·B
 ˆÈ~A•Ï”‚ÌƒZƒbƒg‚âŒvZ‚Í‚±‚ÌƒJ[ƒlƒ‹id‚Æ‚¢‚¤Œ`‚ÅŠÇ—AÀs‚Å‚«‚Ü‚·B
 
 %href
-HCLSetDevice
-HCLReleaseKernel
-HCLSetKernel
-HCLSetKrns
+clSetDevice
+clReleaseKernel
+clSetKernel
+clSetKrns
 
 ;--------
 
 %index
-HCLSetKernel
+clSetKernel
 ƒJ[ƒlƒ‹ƒZƒbƒg
 
 %prm
-int64 p1,int p2,p3,int p4
-int64 p1 : ƒJ[ƒlƒ‹id			[in]
+int p1,int p2,p3,int p4
+int p1 : ƒJ[ƒlƒ‹id			[in]
 int p2 : ˆø”‚Ì‡”Ôp(x)‚Ìw’è		[in]
     p3 : ˆø”‚É“n‚·À‘Ì(’è”‚âmem_object)[in]
 int p4 : ƒ[ƒJƒ‹ƒƒ‚ƒŠƒtƒ‰ƒO,È—ª‰Â	[in]
 %inst
 ƒJ[ƒlƒ‹‚Ìˆø”ˆê‚Âˆê‚Â‚Éƒf[ƒ^‚ğ“n‚µ‚Ü‚·B
 
-HCLDoKernel‚ÅŒvZ‚·‚é‘O‚É‚±‚ê‚ÅƒJ[ƒlƒ‹‚Ìˆø”‚ğ—\‚ßƒZƒbƒg‚µ‚Ä‚¨‚©‚È‚¯‚ê‚Î‚¢‚¯‚Ü‚¹‚ñB
+clDoKernel‚ÅŒvZ‚·‚é‘O‚É‚±‚ê‚ÅƒJ[ƒlƒ‹‚Ìˆø”‚ğ—\‚ßƒZƒbƒg‚µ‚Ä‚¨‚©‚È‚¯‚ê‚Î‚¢‚¯‚Ü‚¹‚ñB
 
 
 —á‚¦‚ÎƒJ[ƒlƒ‹‘¤‚Ìƒ\[ƒX‚ª
@@ -126,14 +143,14 @@ HCLDoKernel‚ÅŒvZ‚·‚é‘O‚É‚±‚ê‚ÅƒJ[ƒlƒ‹‚Ìˆø”‚ğ—\‚ßƒZƒbƒg‚µ‚Ä‚¨‚©‚È‚¯‚ê‚Î‚¢‚¯‚Ü‚
 __kernel void vector_add(__global int *array1,int arg2) {}
 
 ‚Æ‚¢‚¤‚à‚Ì‚È‚ç
-HCLSetKernel p1,0,mem_object_A	//(©HCLCreateBuffer‚Åì¬‚µ‚½mem_object id)	;”z—ñ
-HCLSetKernel p1,1,5	//ˆø”2
+clSetKernel p1,0,mem_object_A	//(©clCreateBuffer‚Åì¬‚µ‚½mem_object id)	;”z—ñ
+clSetKernel p1,1,5	//ˆø”2
 ‚Æ2‰ñ‚É“n‚èw’è‚µ‚Ü‚·B
 
 p2‚ÍAvector_add‚Ìˆø”‚Ìˆê”Ô¶‚ğ0”Ô‚Æ‚µ‚Äl‚¦‚Ü‚·B
 
 ‚P‰ñƒZƒbƒg‚·‚ê‚ÎŸƒZƒbƒg‚µ’¼‚·‚Ü‚Å“K‰‚³‚ê‘±‚¯‚Ü‚·B
-p3‚É‚Í64bit intŒ^A32bit intŒ^A•¶š—ñŒ^•Ï”AdoubleŒ^•Ï”‚ªw’è‚Å‚«‚Ü‚·B
+p3‚É‚ÍfloatŒ^A32bit intŒ^A•¶š—ñŒ^•Ï”AdoubleŒ^•Ï”‚ªw’è‚Å‚«‚Ü‚·B
 
 p4‚ğ0ˆÈŠO‚É‚·‚é‚ÆA‚»‚Ìˆø”‚Íƒ[ƒJƒ‹ƒƒ‚ƒŠi‹¤—Lƒƒ‚ƒŠj‚Æ‚µ‚Ä“o˜^‚³‚ê‚Ü‚·Bƒ[ƒJƒ‹ƒƒ‚ƒŠ‚ÍƒOƒ[ƒoƒ‹ƒƒ‚ƒŠ‚æ‚è—e—Ê‚ª­‚È‚¢•ª‚‘¬‚ÉƒAƒNƒZƒX‚ª‰Â”\‚È‘“Çæ‰Â”\ƒƒ‚ƒŠ‚Å‚·B
 ˆê‚Â‚Ìƒ[ƒNƒOƒ‹[ƒv“à‚Å‚µ‚©’l‚ğ•Û‚Å‚«‚Ü‚¹‚ñB‰Šú’l‚Íİ’è•s‰Â‚Å0‚Ü‚½‚Í•s’è‚Å‚·B
@@ -149,76 +166,76 @@ __kernel void vector_add(__global double *A, __global double *B, __local double 
 	block[0]=1;//‹¤—Lƒƒ‚ƒŠ‚Ì0”Ô–Ú‚É1‚ğ‘ã“ü
 EEEEE
 
-‚É‘Î‚·‚éHSPƒXƒNƒŠƒvƒg‚Å‚ÌHCLSetKernel‚Í
-HCLSetKernel p1,0,mem_object_dpA
-HCLSetKernel p1,1,mem_object_dpB
-HCLSetKernel p1,2,0,64 (©p3‚É‚Í0‚ğw’èAp4‚Í64byte‚Â‚Ü‚èdoubleŒ^*8ŒÂ‚Ì‹¤—Lƒƒ‚ƒŠ‚ğì‚ê‚Æ‚¢‚¤ˆÓ–¡AOpenCLƒJ[ƒlƒ‹ƒ\[ƒX“à‚Å‚Íblock[0]`block[7]‚ª“¯‚¶ƒ[ƒNƒOƒ‹[ƒv“à‚Å‹¤—L‚µ‚Äg‚¦‚é)
-HCLSetKernel p1,3,10
-HCLSetKernel p1,4,1024
+‚É‘Î‚·‚éHSPƒXƒNƒŠƒvƒg‚Å‚ÌclSetKernel‚Í
+clSetKernel p1,0,mem_object_dpA
+clSetKernel p1,1,mem_object_dpB
+clSetKernel p1,2,0,64 (©p3‚É‚Í0‚ğw’èAp4‚Í64byte‚Â‚Ü‚èdoubleŒ^*8ŒÂ‚Ì‹¤—Lƒƒ‚ƒŠ‚ğì‚ê‚Æ‚¢‚¤ˆÓ–¡AOpenCLƒJ[ƒlƒ‹ƒ\[ƒX“à‚Å‚Íblock[0]`block[7]‚ª“¯‚¶ƒ[ƒNƒOƒ‹[ƒv“à‚Å‹¤—L‚µ‚Äg‚¦‚é)
+clSetKernel p1,3,10
+clSetKernel p1,4,1024
 
 
 
 %href
-HCLSetDevice
-HCLCreateKernel
-HCLSetKrns
-HCLDoKernel
-HCLDoKrn1
-HCLDoKrn2
-HCLDoKrn3
+clSetDevice
+clCreateKernel
+clSetKrns
+clDoKernel
+clDoKrn1
+clDoKrn2
+clDoKrn3
 
 ;--------
 
 %index
-HCLSetKrns
+clSetKrns
 ƒJ[ƒlƒ‹ƒZƒbƒg
 
 %prm
-int64 p1,p2,,,,,
-int64 p1 : ƒJ[ƒlƒ‹id				[in]
+int p1,p2,,,,,
+int p1 : ƒJ[ƒlƒ‹id				[in]
 p2ˆÈ~ : ˆø”‚É“n‚·À‘Ì(’è”‚âmem_object)	[in]
 
 %inst
 ƒJ[ƒlƒ‹‚Ìˆø”‚ğ‚Ü‚Æ‚ß‚Äw’è‚µ‚Ü‚·B
 
-HCLSetKernel p1,0,mem_object_dpA
-HCLSetKernel p1,1,mem_object_dpB
+clSetKernel p1,0,mem_object_dpA
+clSetKernel p1,1,mem_object_dpB
 
 ‚È‚ç
 
-HCLSetkrns p1,mem_object_dpA,mem_object_dpB
+clSetkrns p1,mem_object_dpA,mem_object_dpB
 
 ‚Æ‚È‚è‚Ü‚·B
 ‚È‚¨ƒ[ƒJƒ‹ƒƒ‚ƒŠ‚ÌƒTƒCƒYw’è‚Í‚Å‚«‚Ü‚¹‚ñB
 
 %href
-HCLSetDevice
-HCLCreateKernel
-HCLSetKernel
-HCLDoKernel
-HCLDoKrn1
-HCLDoKrn2
-HCLDoKrn3
+clSetDevice
+clCreateKernel
+clSetKernel
+clDoKernel
+clDoKrn1
+clDoKrn2
+clDoKrn3
 
 ;--------
 
 %index
-HCLGetKernelName
+clGetKernelName
 ƒJ[ƒlƒ‹–¼æ“¾
 
 %prm
-(int64 p1)
-int64 p1 : ƒJ[ƒlƒ‹id			[in]
+(int p1)
+int p1 : ƒJ[ƒlƒ‹id			[in]
 
 %inst
 ƒJ[ƒlƒ‹‚Ì–¼‘O‚ğ•¶š—ñ‚Å•Ô‚µ‚Ü‚·B
 
 %href
-HCLCreateKernel
+clCreateKernel
 ;--------
 
 %index
-HCLCall
+clCall
 ƒJ[ƒlƒ‹•¶š—ñÀs
 
 %prm
@@ -229,7 +246,7 @@ int p3:ƒ[ƒJƒ‹ƒTƒCƒY(1ŸŒ³•À—ñˆ—”)		[in]
 p4ˆÈ~:ˆø”‚É“n‚·À‘Ì(array‚âvar int‚È‚Ç‚Ì”’l)	[in,out]
 %inst
 
-HCLCreateProgram,HCLCreateKernel,HCLSetKernel,HCLCreateBuffer“™‚ğ‚¹‚¸ƒJ[ƒlƒ‹‚ğÀs‚µ‚ÄŒ‹‰Ê‚ğ“¾‚Ü‚·B
+clCreateProgram,clCreateKernel,clSetKernel,clCreateBuffer“™‚ğ‚¹‚¸ƒJ[ƒlƒ‹‚ğÀs‚µ‚ÄŒ‹‰Ê‚ğ“¾‚Ü‚·B
 —á‚¦‚ÎOpenCL‚Å”z—ñ‚É’l‚ğ‘‚«‚Şˆ—‚ğ‘‚¢‚ÄÀs‚·‚é‚ÆAp4ˆÈ~‚Éw’è‚µ‚½HSP”z—ñ•Ï”‚ÉŒ‹‰Ê‚ª‘‚«‚Ü‚ê‚Ü‚·B
 p1‚É‚Íƒ\[ƒXƒR[ƒh‚Ì•¶š—ñ
 p2‚É‚ÍƒOƒ[ƒoƒ‹ƒTƒCƒYiÀs‚µ‚½‚¢•À—ñˆ—”j
@@ -239,9 +256,9 @@ p4ˆÈ~‚É‚ÍƒJ[ƒlƒ‹‚É“n‚·ˆø”‚ğw’è‚µ‚Ä‰º‚³‚¢B
 p4ˆÈ~‚Ìˆø”‚Ì”‚ÆOpenCLƒJ[ƒlƒ‹“à‚Ìˆø”‚Ì”‚ª‡‚í‚È‚¢‚ÆƒGƒ‰[‚É‚È‚è‚Ü‚·B
 
 
-“à•”‚ÅHCLCreateProgram,HCLCreateKernel,HCLSetKernel,HCLCreateBuffer,HCLWriteBuffer,HCLReadBuffer,HCLReleaseKernel,HCLReleaseProgram,HCLReleaseBuffer‚ğg—p‚µ‚Ä‚¢‚Ü‚·B
+“à•”‚ÅclCreateProgram,clCreateKernel,clSetKernel,clCreateBuffer,clWriteBuffer,clReadBuffer,clReleaseKernel,clReleaseProgram,clReleaseBuffer‚ğg—p‚µ‚Ä‚¢‚Ü‚·B
 ‚±‚Ì–½—ß‚ÅŠm•Û‚µ‚½VRAM“™‚ÍA‚±‚Ì–½—ß‚ªI‚í‚é‚Ü‚Å‚É•K‚¸”jŠü‚³‚ê‚Ü‚·B
-HCLDoKernel‚Æˆá‚¢Aƒ^ƒXƒN‚ªŠ®—¹‚·‚é‚Ü‚ÅŸ‚Ì–½—ß‚É‚¤‚Â‚è‚Ü‚¹‚ñB
+clDoKernel‚Æˆá‚¢Aƒ^ƒXƒN‚ªŠ®—¹‚·‚é‚Ü‚ÅŸ‚Ì–½—ß‚É‚¤‚Â‚è‚Ü‚¹‚ñB
 ƒI[ƒo[ƒwƒbƒh‚à‘å‚«‚¢‚Ì‚ÅA‘¬“x‚ª‹‚ß‚ç‚ê‚éê‡‚É‚ÍŒü‚«‚Ü‚¹‚ñB
 
 ¡‚±‚Ì–½—ß‚ğg‚¤‘O‚É
@@ -253,25 +270,25 @@ HCLDoKernel‚Æˆá‚¢Aƒ^ƒXƒN‚ªŠ®—¹‚·‚é‚Ü‚ÅŸ‚Ì–½—ß‚É‚¤‚Â‚è‚Ü‚¹‚ñB
 
 1.OpenCL—p‚Ì–½—ßƒ\[ƒX‚ğ•ÊŒÂ—pˆÓ‚·‚éBiŠÈˆÕ‚ÈCŒ¾Œê‚É‚Ä•\‹Lj
 2.ˆ—‘ÎÛ‚ÌHSP‚Ì”z—ñ•Ï”“™‚ğ—pˆÓ‚·‚éB
-3.HCLCallÀsŒãAHCLCall‚Ìˆø”‚Æ‚µ‚Ä—pˆÓ‚µ‚½•Ï”‚ªOpenCL‚É‚æ‚Á‚Äˆ—‚³‚ê‚½Œ`‚Å’l‚ª•Ô‚éB
+3.clCallÀsŒãAclCall‚Ìˆø”‚Æ‚µ‚Ä—pˆÓ‚µ‚½•Ï”‚ªOpenCL‚É‚æ‚Á‚Äˆ—‚³‚ê‚½Œ`‚Å’l‚ª•Ô‚éB
 
-Šµ‚ê‚Ä‚«‚½‚çHCLDoKernelAHCLDoKrn1,2,3‚Ö‚ÆƒXƒeƒbƒvƒAƒbƒv‚µ‚Ä‚­‚¾‚³‚¢B
+Šµ‚ê‚Ä‚«‚½‚çclDoKernelAclDoKrn1,2,3‚Ö‚ÆƒXƒeƒbƒvƒAƒbƒv‚µ‚Ä‚­‚¾‚³‚¢B
 
 ¡g—p’ˆÓ
 ‚±‚Ì–½—ß‚ğg‚Á‚Ä‚à‚ ‚é’ö“x‚‘¬‚ÉŒvZ‚ğs‚¤‚±‚Æ‚ª‚Å‚«‚Ü‚·‚ªA“¯‚¶ƒ\[ƒX‚Å‰½“x‚àŒJ‚è•Ô‚µg‚¤‚à‚Ì‚Å‚Í‚ ‚è‚Ü‚¹‚ñBã‹L‚Ì‚æ‚¤ƒI[ƒo[ƒwƒbƒh‚ª‘å‚«‚¢‚©‚ç‚Å‚·B
 
 
 %href
-HCLDoKernel
+clDoKernel
 ;--------
 
 %index
-HCLDoKernel
+clDoKernel
 ƒJ[ƒlƒ‹Às
 
 %prm
-int64 p1,int p2,array p3,array p4,int p5
-int64 p1 : ƒJ[ƒlƒ‹id			[in]
+int p1,int p2,array p3,array p4,int p5
+int p1 : ƒJ[ƒlƒ‹id			[in]
 int p2 : work_dim(1`3)			[in]
 array p3 : global_work_size		[in]
 array p4 : local_work_size		[in]
@@ -289,7 +306,7 @@ p5‚Íevent_id‚Å-1`65535‚Ì’l‚ğw’è‚Å‚«‚Ü‚·BÈ—ªƒfƒtƒHƒ‹ƒg‚Å‚Í-1‚Å‚·B
 ˆÈ~A‚»‚Ì”Ô†‚Åevent“à—e‚Ìæ“¾(Àsó‹µAÀsŠJnŠÔAÀsI—¹ŠÔ‚È‚Ç)‚ªs‚¦‚Ü‚·B
 ”Ô†‚Ìã‘‚«‚à‚Å‚«‚Ü‚·‚ªAã‘‚«‚³‚ê‚é‘O‚Ìeventî•ñ‚Í”jŠü‚³‚ê‚Ü‚·B
 
-‚±‚Ì–½—ß©‘Ì‚ÍÀs‚ªŠ®—¹‚·‚é‚Ü‚Å‘Ò‚Â–½—ß‚Å‚Í‚È‚­AOpenCLƒRƒ}ƒ“ƒh‚ğƒLƒ…[‚É“ü‚ê‚é‚¾‚¯‚Å‚ ‚èAÀÛ‚ÌƒJ[ƒlƒ‹‚ÌÀsI—¹‚ğ‘Ò‚Â‚É‚Íevent‚ğg‚¤‚©HCLFinish“™‚Å‘Ò‚Â‚±‚Æ‚É‚È‚è‚Ü‚·B
+‚±‚Ì–½—ß©‘Ì‚ÍÀs‚ªŠ®—¹‚·‚é‚Ü‚Å‘Ò‚Â–½—ß‚Å‚Í‚È‚­AOpenCLƒRƒ}ƒ“ƒh‚ğƒLƒ…[‚É“ü‚ê‚é‚¾‚¯‚Å‚ ‚èAÀÛ‚ÌƒJ[ƒlƒ‹‚ÌÀsI—¹‚ğ‘Ò‚Â‚É‚Íevent‚ğg‚¤‚©clFinish“™‚Å‘Ò‚Â‚±‚Æ‚É‚È‚è‚Ü‚·B
 ‚±‚ê‚ÍˆêŒ©•¡G‚È‚æ‚¤‚Év‚¦‚Ü‚·‚ªAGPU‚ªŒvZ‚µ‚Ä‚¢‚éÅ’†‚ÉCPU‚ª•Ê‚Ìƒ^ƒXƒN‚Éˆ—‚ğ‰ñ‚¹‚é‚Æ‚¢‚¤—˜“_‚ª‚ ‚è‚Ü‚·B
 
 ¡‚±‚Ì–½—ß‚ğg‚¤‘O‚É
@@ -297,9 +314,9 @@ p5‚Íevent_id‚Å-1`65535‚Ì’l‚ğw’è‚Å‚«‚Ü‚·BÈ—ªƒfƒtƒHƒ‹ƒg‚Å‚Í-1‚Å‚·B
 “Æ“Á‚Èˆ—‚ª‘½‚¢OpenCLiGPGPUj‚Ì‰Šú—‰ğ‚ğ•â•‚·‚é‚½‚ß‚É
 ˆ—‚ÌƒŒƒxƒ‹‚ğ‚R’iŠK‚É•ª‚¯‚Ä‚¨‚è‚Ü‚·B
 
-LV1	HCLCall		‚ğ—˜—p‚µ‚½OpenCLiŠÈ’PIj
-LV2	HCLDoKernel	‚ğ—˜—p‚µ‚½OpenCLi’†‚­‚ç‚¢Ij
-LV3	HCLDoKrn1`3‚ğ—˜—p‚µ‚½OpenCLi•’ÊIj
+LV1	clCall		‚ğ—˜—p‚µ‚½OpenCLiŠÈ’PIj
+LV2	clDoKernel	‚ğ—˜—p‚µ‚½OpenCLi’†‚­‚ç‚¢Ij
+LV3	clDoKrn1`3‚ğ—˜—p‚µ‚½OpenCLi•’ÊIj
 
 ŠwK‚Ì—‰ğ“x‚É•¹‚¹‚ÄãˆÊ‚Ì–½—ß‚ğ—˜—p‚µ‚Ä’¸‚¯‚ê‚ÎK‚¢‚Å‚·B
 “–‘Rˆ—‘¬“x‚ÍLV3‚Ì•û‚ª“–‘R‘¬‚¢‚Å‚·B‚µ‚©‚µ‚»‚Ì‚½‚ß‚Ì‚æ‚è‚“x‚Èƒƒ‚ƒŠŠÇ—AƒXƒŒƒbƒhŠÇ—‚Ì’m¯“™‚ª•K—v‚Æ‚È‚è‚Ü‚·B
@@ -308,37 +325,37 @@ OpenCL‚Ìå‚È–ğŠ„‚ÍƒzƒXƒg‘¤iCPU‘¤j‚ÆƒfƒoƒCƒX‘¤iGPU‘¤j‚Ìˆ—‚Ì‹´“n‚µ‚É‚È‚è‚Ü‚·
 ‚µ‚©‚µ‚»‚ê‚É‚Íƒƒ‚ƒŠ‚ÌŠÇ—AƒJ[ƒlƒ‹‚Ìw’è‚Æˆø”‚ÌƒZƒbƒg‚È‚Ç‚ª•K—v‚Æ‚È‚èˆ—‚ª”ÏG‚É‚È‚è‚Ü‚½‰SÒ‚É‚Í—‰ğ‚µh‚¢‚Æl‚¦‚Ä‚¨‚è‚Ü‚·B
 
 ‚»‚Ì‚½‚ßOpenCL‚ğ‚±‚ê‚©‚ç—˜—p‚µ‚æ‚¤AŠwK‚µ‚æ‚¤‚Æ‚·‚é•û‚Í
-g—pÒ‚Ìˆ—‚ğŠÈ‘f‰»‚Å‚«‚éHCLCall‚©‚ç‚Ì—˜—p‚ğƒIƒXƒXƒ‚¢‚½‚µ‚Ü‚·B
+g—pÒ‚Ìˆ—‚ğŠÈ‘f‰»‚Å‚«‚éclCall‚©‚ç‚Ì—˜—p‚ğƒIƒXƒXƒ‚¢‚½‚µ‚Ü‚·B
 
 
-¡HCLDoKernel‚É‚Â‚¢‚Ä
+¡clDoKernel‚É‚Â‚¢‚Ä
 ‚±‚Ì–½—ß‚ÍOpenCL‚Ì“ü–å—p‚Æ‚µ‚ÄA‚Ü‚½ŠÈˆÕ‚ÉOpenCL‚ğ—˜—p‚Å‚«‚é‚±‚Æ‚ğ–Ú“I‚Éì¬‚µ‚½–½—ß‚Å‚·B
 iLV‚Q’†‚­‚ç‚¢ŠÈ’P‚Éˆµ‚¦‚éj
-HCLCall‚Å‚Í©“®“I‚Éˆ—‚µ‚Ä‚¢‚½uHSP‚Å—pˆÓ‚µ‚½”z—ñ•Ï”‚ğVRAM“™‚ÉˆÚ‚·ˆ—vuƒXƒŒƒbƒh‚ÌŸŒ³v‚ğ
+clCall‚Å‚Í©“®“I‚Éˆ—‚µ‚Ä‚¢‚½uHSP‚Å—pˆÓ‚µ‚½”z—ñ•Ï”‚ğVRAM“™‚ÉˆÚ‚·ˆ—vuƒXƒŒƒbƒh‚ÌŸŒ³v‚ğ
 ©‚çİ’è‚µ‚È‚¯‚ê‚Î‚È‚è‚Ü‚¹‚ñB
-‚µ‚©‚µİ’è‚Å‚«‚é•”•ª‚ª­‚È‚¢HCLCall‚Æ”äŠr‚µ‚Äˆ—‚Ì‚‘¬‰»‚â©—R“x‚Ì‚‚¢‚±‚Æ‚ª‰Â”\‚É‚È‚è‚Ü‚·B
+‚µ‚©‚µİ’è‚Å‚«‚é•”•ª‚ª­‚È‚¢clCall‚Æ”äŠr‚µ‚Äˆ—‚Ì‚‘¬‰»‚â©—R“x‚Ì‚‚¢‚±‚Æ‚ª‰Â”\‚É‚È‚è‚Ü‚·B
 
 
-HSPƒ†[ƒU[‚Æ‚µ‚ÄHCLDoKerneliOpneCLƒvƒ‰ƒOƒCƒ“j‚ğ—˜—p‚·‚éA—‰ğ‚Ìã‚ÅçT‚«‚â‚·‚¢“_‚ğƒŠƒXƒgƒAƒbƒv‚µ‚Ü‚µ‚½B
+HSPƒ†[ƒU[‚Æ‚µ‚ÄclDoKerneliOpneCLƒvƒ‰ƒOƒCƒ“j‚ğ—˜—p‚·‚éA—‰ğ‚Ìã‚ÅçT‚«‚â‚·‚¢“_‚ğƒŠƒXƒgƒAƒbƒv‚µ‚Ü‚µ‚½B
 ‚»‚Ì‚½‚ß‚ÉOpenCL‚ğ—˜—p‚·‚éã‚Å‚Ì“Æ“Á‚Èˆ—‚ğà–¾‚µ‚Ü‚·B
 
 	1.OpenCL—p‚Ì–½—ßƒ\[ƒX‚ğ•ÊŒÂ—pˆÓ‚·‚é•K—v‚ª‚ ‚éBiŠÈˆÕ‚ÈCŒ¾Œê‚É‚Ä•\‹Lj
-	‚»‚µ‚Ä‚»‚Ìƒ\[ƒX‚ğHSPã‚ÅŒÅ—L‚Ì–½—ßiHCLCreateProgramj‚Å“Ç‚İ‚İB
+	‚»‚µ‚Ä‚»‚Ìƒ\[ƒX‚ğHSPã‚ÅŒÅ—L‚Ì–½—ßiclCreateProgramj‚Å“Ç‚İ‚İB
 
-	2.‚»‚Ìƒ\[ƒX‚ÌŠÖ”‚ğuƒJ[ƒlƒ‹v‚ÆŒ¾‚í‚ê‚é–½—ß’PˆÊ‚ğHSPã‚ÅŒÅ—L‚Ì–½—ßiHCLCreateKernelj‚Åì¬‚·‚éB
+	2.‚»‚Ìƒ\[ƒX‚ÌŠÖ”‚ğuƒJ[ƒlƒ‹v‚ÆŒ¾‚í‚ê‚é–½—ß’PˆÊ‚ğHSPã‚ÅŒÅ—L‚Ì–½—ßiclCreateKernelj‚Åì¬‚·‚éB
 
 
 	3.ƒJ[ƒlƒ‹ŠÖ”‚Ö‚Ìˆø”‚ğƒZƒbƒg‚·‚éÛA‚»‚Ìˆø”‚Í@CL_mem_object id‚Æ‚¢‚¤ŒÅ—L‚ÌƒIƒuƒWƒFƒNƒgŒ`®‚Å‚ ‚é•K—v‚ª‚ ‚éB
-	CL_mem_object@id‚Í64bit intŒ^‚Ì”’l‚Å‚ ‚éB
-	‚»‚ÌƒIƒuƒWƒFƒNƒg‚ğ—pˆÓ‚·‚é‚É‚ÍHSPã‚ÅŒÅ—L‚Ì–½—ßHCLCreateBuffer‚É‚Äì¬‚·‚éB
-	‚Ü‚½‚»‚ÌƒIƒuƒWƒFƒNƒg‚ÉHSPã‚Å—pˆÓ‚µ‚½”z—ñ‚ğ“ü‚ê‚İ‚½‚¢‚ÍHSPã‚ÅŒÅ—L‚Ì–½—ßHCLWriteBuffer‚É‚Ä“ü‚ê‚ŞB
+	CL_mem_object@id‚ÍintŒ^‚Ì”’l‚Å‚ ‚éB
+	‚»‚ÌƒIƒuƒWƒFƒNƒg‚ğ—pˆÓ‚·‚é‚É‚ÍHSPã‚ÅŒÅ—L‚Ì–½—ßclCreateBuffer‚É‚Äì¬‚·‚éB
+	‚Ü‚½‚»‚ÌƒIƒuƒWƒFƒNƒg‚ÉHSPã‚Å—pˆÓ‚µ‚½”z—ñ‚ğ“ü‚ê‚İ‚½‚¢‚ÍHSPã‚ÅŒÅ—L‚Ì–½—ßclWriteBuffer‚É‚Ä“ü‚ê‚ŞB
 @
 	4.æ‚Ù‚ÇƒJ[ƒlƒ‹ŠÖ”‚É“ü‚ê‚Ş‚½‚ß‚Ìˆø”‚ğŒÅ—L‚ÌƒIƒuƒWƒFƒNƒgŒ`®‚É‚Ä—pˆÓ‚µ‚½B
-	‚»‚Ìˆø”‚ğƒJ[ƒlƒ‹ŠÖ”‚Éˆø”‚ğƒZƒbƒg‚·‚é‚Æ‚«ŒÅ—L‚Ì–½—ßiHCLSetKernel‚âHCLSetKrnsj‚ğg—p‚µ‚È‚¯‚ê‚Î‚È‚ç‚È‚¢B 
+	‚»‚Ìˆø”‚ğƒJ[ƒlƒ‹ŠÖ”‚Éˆø”‚ğƒZƒbƒg‚·‚é‚Æ‚«ŒÅ—L‚Ì–½—ßiclSetKernel‚âclSetKrnsj‚ğg—p‚µ‚È‚¯‚ê‚Î‚È‚ç‚È‚¢B 
 
-	5.‚»‚µ‚Äˆø”‚ğƒZƒbƒg‚µ‚½ƒJ[ƒlƒ‹‚ğŒÅ—L‚Ì–½—ßiHCLDoKernelj‚ÅÀsB
+	5.‚»‚µ‚Äˆø”‚ğƒZƒbƒg‚µ‚½ƒJ[ƒlƒ‹‚ğŒÅ—L‚Ì–½—ßiclDoKernelj‚ÅÀsB
 
-	6.‚»‚µ‚Ä‚»‚ÌŒ‹‰Ê‚ğQÆ‚·‚é‚ÍHSPã‚ÌŒÅ—L‚Ì–½—ßiHCLReadBufferj‚Åƒf[ƒ^‚ğ–ß‚µ‚Ä‚±‚È‚¯‚ê‚Î‚È‚ç‚È‚¢B
+	6.‚»‚µ‚Ä‚»‚ÌŒ‹‰Ê‚ğQÆ‚·‚é‚ÍHSPã‚ÌŒÅ—L‚Ì–½—ßiclReadBufferj‚Åƒf[ƒ^‚ğ–ß‚µ‚Ä‚±‚È‚¯‚ê‚Î‚È‚ç‚È‚¢B
 
 ‚±‚Ì‚æ‚¤‚Èˆ—‚ª•K—v‚Æ‚È‚é‚Ì‚ÍƒzƒXƒg‘¤iCPU‘¤j‚ÆƒfƒoƒCƒX‘¤iGPU‘¤j‚Ìˆ—/ƒƒ‚ƒŠŠÇ—‚ª•ÊŒÂ‚Æ‚È‚Á‚Ä‚¢‚é‚©‚ç‚Å‚·B
 ‚È‚¨•Ö‹XãGPU‘¤‚Æ‘‚¢‚Ä‚¢‚Ü‚·‚ªAOpenCLƒfƒoƒCƒX‚ªIntel CPU‚âAMD CPU‚Ìê‡‚à‚ ‚è‚¦‚Ü‚·B‚»‚Ìê‡‚Å‚àƒƒ‚ƒŠŠÇ—‚ª•ÊŒÂ‚Å‚ ‚é‚±‚Æ‚Í•Ï‚í‚è‚È‚¢‚Å‚·B¦‚Â‚Ü‚èSVM‚Íg‚¦‚È‚¢(ver1.0“_)
@@ -351,7 +368,7 @@ OpenCL‚¾‚¯‚Å‚È‚­CUDA‚Å‚àl‚¦•û‚ğ‚µ‚Ü‚·B
 
 
 html{
-<img src="./doclib/HSPCL64/thumbs/d22.png">
+<img src="./doclib/HSPCL32N/thumbs/d22.png">
 }html
 
 
@@ -383,7 +400,7 @@ local_work_size=2,3
 ‚ğw’è‚µ‚½‚Æ‚µ‚Ü‚·B
 
 html{
-<img src="./doclib/HSPCL64/thumbs/d22.png">
+<img src="./doclib/HSPCL32N/thumbs/d22.png">
 }html
 
 •À—ñÀs‚³‚ê‚éƒXƒŒƒbƒh”‚Í4*6‚Ì24ŒÂ‚Æ‚È‚è‚Ü‚·B
@@ -429,7 +446,7 @@ get_num_groups(1)‚Í1
 ˆÈ‰ºA24ƒXƒŒƒbƒh‚ÌŠe’l‚Ì}
 
 html{
-<img src="./doclib/HSPCL64/thumbs/d2.png">
+<img src="./doclib/HSPCL32N/thumbs/d2.png">
 }html
 
 
@@ -625,59 +642,59 @@ http://sssiii.seesaa.net/article/309874057.html
 
 
 %href
-HCLSetKernel
-HCLSetKrns
-HCLCall
-HCLDokrn1
-HCLDokrn1_sub
-HCLDokrn2
-HCLDokrn3
+clSetKernel
+clSetKrns
+clCall
+clDokrn1
+clDokrn1_sub
+clDokrn2
+clDokrn3
 
 ;--------
 
 %index
-HCLDoKrn1
+clDoKrn1
 ˆêŸŒ³‚ÅƒJ[ƒlƒ‹Às
 
 %prm
-int64 p1,int p2,int p3,int p4
-int64 p1 : ƒJ[ƒlƒ‹id			[in]
+int p1,int p2,int p3,int p4
+int p1 : ƒJ[ƒlƒ‹id			[in]
 int p2 : global_work_size		[in]
 int p3 : local_work_size		[in]
 int p4 : event_id,È—ª‰Â		[in]
 
 %inst
-“®ì‚Íwork_dim‚ª1‚Ìê‡‚ÌHCLDoKernel‚Æ“¯‚¶‚Å‚·B
+“®ì‚Íwork_dim‚ª1‚Ìê‡‚ÌclDoKernel‚Æ“¯‚¶‚Å‚·B
 
 p3‚ª0‚Ìê‡AƒOƒ[ƒoƒ‹ƒ[ƒNƒAƒCƒeƒ€‚ğ‚Ç‚Ì‚æ‚¤‚Éƒ[ƒNƒOƒ‹[ƒv‚É•ªŠ„‚·‚é‚©‚Í OpenCL À‘•‚ªŒˆ’è‚µ‚Ü‚·B
-p4‚Íevent_id‚Å-1`65535‚Ì’l‚ğw’è‚Å‚«‚Ü‚·BÈ—ªƒfƒtƒHƒ‹ƒg‚Å‚Í-1‚Å‚·BÚ×‚ÍHCLDokernel‚ğQÆ‚­‚¾‚³‚¢B
+p4‚Íevent_id‚Å-1`65535‚Ì’l‚ğw’è‚Å‚«‚Ü‚·BÈ—ªƒfƒtƒHƒ‹ƒg‚Å‚Í-1‚Å‚·BÚ×‚ÍclDokernel‚ğQÆ‚­‚¾‚³‚¢B
 
 ¡‚±‚Ì–½—ß‚ğg‚¤‘O‚É
-LV3	HCLDoKrn1`3‚ğ—˜—p‚µ‚½OpenCL
+LV3	clDoKrn1`3‚ğ—˜—p‚µ‚½OpenCL
 OpenCLiGPGPUj‚Ì‰Šú—‰ğ‚ğ•â•‚·‚é‚½‚ß‚ÉƒŒƒxƒ‹‚ğ‚R’iŠK‚É•ª‚¯‚Ä‚¨‚è‚Ü‚µ‚½‚ª
-HCLDoKrn1`3‚ÍLV3‚Æ‚È‚Á‚Ä‚¨‚è‚Ü‚·B
+clDoKrn1`3‚ÍLV3‚Æ‚È‚Á‚Ä‚¨‚è‚Ü‚·B
 
 
 %href
-HCLDoKernel
-HCLCall
-HCLDoKrn1_sub
-HCLDoKrn2
-HCLDoKrn3
-HCLSetKernel
-HCLSetKrns
+clDoKernel
+clCall
+clDoKrn1_sub
+clDoKrn2
+clDoKrn3
+clSetKernel
+clSetKrns
 ;--------
 
 
 ;--------
 
 %index
-HCLDoKrn1_sub
+clDoKrn1_sub
 ˆêŸŒ³‚ÅƒJ[ƒlƒ‹Às
 
 %prm
-int64 p1,int p2,int p3,int p4
-int64 p1 : ƒJ[ƒlƒ‹id			[in]
+int p1,int p2,int p3,int p4
+int p1 : ƒJ[ƒlƒ‹id			[in]
 int p2 : global_work_size		[in]
 int p3 : local_work_size		[in]
 int p4 : event_id,È—ª‰Â		[in]
@@ -686,7 +703,7 @@ int p4 : event_id,È—ª‰Â		[in]
 
 ‚±‚Ì–½—ß‚Å‚Íglobal_work_size‚ªlocal_work_size‚ÅŠ„‚èØ‚ê‚È‚¢ê‡AƒGƒ‰[‚ğo‚³‚¸‚ÉƒJ[ƒlƒ‹‚ğ2‰ñ‚É“n‚èÀs‚·‚é‚à‚Ì‚Å‚·B
 
-HCLDoKrn1‚Å‚Íglobal_work_size‚ªlocal_work_size‚ÅŠ„‚èØ‚ê‚È‚¯‚ê‚Î‚¢‚¯‚Ü‚¹‚ñ‚Å‚µ‚½B
+clDoKrn1‚Å‚Íglobal_work_size‚ªlocal_work_size‚ÅŠ„‚èØ‚ê‚È‚¯‚ê‚Î‚¢‚¯‚Ü‚¹‚ñ‚Å‚µ‚½B
 ‚à‚µlocal_work_size‚É0‚ğw’è‚µ‚ÄOpenCLÀ‘•‚É‚Ü‚©‚¹‚Ä‚àAglobal_work_size‚ª‘f”‚Ìê‡local_work_size‚ª1‚É‚³‚ê‚Ä‚µ‚Ü‚¤‚±‚Æ‚ª‚ ‚èA‚±‚Ìê‡ŒvZ‚ª”ñŒø—¦‚É‚È‚Á‚Ä‚µ‚Ü‚¢‚Ü‚·B
 
 ‚±‚Ì–½—ß‚Å‚Í1‰ñ–Ú‚Élocal_work_size‚ÅŠ„‚èØ‚ê‚é•ª‚¾‚¯‚Ìglobal_work_size‚ğÀs‚µA2‰ñ–Ú‚É‚ ‚Ü‚è‚Ì’[”local_work_sizeglobal_work_size‚Æ‚µ‚ÄÀs‚µ‚Ü‚·B‚±‚Ì‚Æ‚«uget_global_id(0)v‚ª‘±‚«‚©‚çn‚Ü‚é‚æ‚¤‚É‚È‚Á‚Ä‚¢‚Ü‚·B
@@ -696,50 +713,50 @@ p4‚Ìevent id‚ÍÈ—ªƒfƒtƒHƒ‹ƒg‚Å-1‚ÅA0`65535‚Ì’l‚ğw’è‚Å‚«‚Ü‚·‚ª‹L˜^‚³‚ê‚é‚Ì‚Í
 
 
 %href
-HCLDoKernel
-HCLSetKernel
-HCLSetKrns
-HCLDoKrn1
-HCLDoKrn2
-HCLDoKrn3
+clDoKernel
+clSetKernel
+clSetKrns
+clDoKrn1
+clDoKrn2
+clDoKrn3
 
 ;--------
 
 
 %index
-HCLDoKrn2
+clDoKrn2
 ƒjŸŒ³‚ÅƒJ[ƒlƒ‹Às
 
 %prm
-int64 p1,int p2,int p3,int p4,int p5
-int64 p1 : ƒJ[ƒlƒ‹id			[in]
+int p1,int p2,int p3,int p4,int p5
+int p1 : ƒJ[ƒlƒ‹id			[in]
 int p2 : global_work_size.0		[in]
 int p3 : global_work_size.1		[in]
 int p4 : local_work_size.0		[in]
 int p5 : local_work_size.1		[in]
 int p6 : event_id,È—ª‰Â		[in]
 %inst
-work_dim‚ª2‚Ìê‡‚ÌHCLDoKernel‚Æ“¯‚¶‚Å‚·B
+work_dim‚ª2‚Ìê‡‚ÌclDoKernel‚Æ“¯‚¶‚Å‚·B
 
 p4‚ª0‚Ìê‡AƒOƒ[ƒoƒ‹ƒ[ƒNƒAƒCƒeƒ€‚ğ‚Ç‚Ì‚æ‚¤‚Éƒ[ƒNƒOƒ‹[ƒv‚É•ªŠ„‚·‚é‚©‚Í OpenCL À‘•‚ªŒˆ’è‚µ‚Ü‚·B
 
 %href
-HCLDoKernel
-HCLSetKernel
-HCLSetKrns
-HCLDoKrn1
-HCLDoKrn1_sub
-HCLDoKrn3
+clDoKernel
+clSetKernel
+clSetKrns
+clDoKrn1
+clDoKrn1_sub
+clDoKrn3
 
 ;--------
 
 %index
-HCLDoKrn3
+clDoKrn3
 OŸŒ³‚ÅƒJ[ƒlƒ‹Às
 
 %prm
-int64 p1,int p2,int p3,int p4,int p5,int p6,int p7
-int64 p1 : ƒJ[ƒlƒ‹id			[in]
+int p1,int p2,int p3,int p4,int p5,int p6,int p7
+int p1 : ƒJ[ƒlƒ‹id			[in]
 int p2 : global_work_size.0		[in]
 int p3 : global_work_size.1		[in]
 int p4 : global_work_size.2		[in]
@@ -749,22 +766,22 @@ int p7 : local_work_size.2		[in]
 int p8 : event_id,È—ª‰Â		[in]
 
 %inst
-work_dim‚ª3‚Ìê‡‚ÌHCLDoKernel‚Æ“¯‚¶‚Å‚·B
+work_dim‚ª3‚Ìê‡‚ÌclDoKernel‚Æ“¯‚¶‚Å‚·B
 
 p5‚ª0‚Ìê‡AƒOƒ[ƒoƒ‹ƒ[ƒNƒAƒCƒeƒ€‚ğ‚Ç‚Ì‚æ‚¤‚Éƒ[ƒNƒOƒ‹[ƒv‚É•ªŠ„‚·‚é‚©‚Í OpenCL À‘•‚ªŒˆ’è‚µ‚Ü‚·B
 
 %href
-HCLDoKernel
-HCLSetKernel
-HCLSetKrns
-HCLDoKrn1
-HCLDoKrn1_sub
-HCLDoKrn2
+clDoKernel
+clSetKernel
+clSetKrns
+clDoKrn1
+clDoKrn1_sub
+clDoKrn2
 
 ;--------
 
 %index
-HCLFinish
+clFinish
 OpenCLƒRƒ}ƒ“ƒh‘Ò‚¿
 
 %prm
@@ -773,75 +790,90 @@ OpenCLƒRƒ}ƒ“ƒh‘Ò‚¿
 
 “¯‚¶ƒRƒ}ƒ“ƒhƒLƒ…[“à‚É“ü‚ê‚ç‚ê‚½OpenCLƒRƒ}ƒ“ƒh‚ÌÀs‚ª‚·‚×‚ÄI‚í‚é‚Ü‚Å‘Ò‚¿‚Ü‚·B
 ‚±‚±‚ÅŒ¾‚¤OpenCLƒRƒ}ƒ“ƒh‚Æ‚Í
-HCLDoKernel
-HCLDoKrn1
-HCLDoKrn1_sub
-HCLDoKrn2
-HCLDoKrn3
-HCLCopyBuffer
-HCLWriteBuffer
-HCLReadBuffer
-HCLFillBuffer_i32
-HCLFillBuffer_i64
-HCLFillBuffer_dp
+clDoKernel
+clDoKrn1
+clDoKrn1_sub
+clDoKrn2
+clDoKrn3
+clCopyBuffer
+clWriteBuffer
+clReadBuffer
+clFillBuffer_i32
+clFillBuffer_fp
+clFillBuffer_dp
 ‚Ì–½—ß‚Å”­s‚µ‚½‚à‚Ì‚É‚È‚è‚Ü‚·B
 
 %href
-HCLDoKernel
-HCLDoKrn1
-HCLDoKrn1_sub
-HCLDoKrn2
-HCLDoKrn3
-HCLCopyBuffer
-HCLWriteBuffer
-HCLReadBuffer
-HCLFillBuffer_i32
-HCLFillBuffer_i64
-HCLFillBuffer_dp
-HCLFlush
+clDoKernel
+clDoKrn1
+clDoKrn1_sub
+clDoKrn2
+clDoKrn3
+clCopyBuffer
+clWriteBuffer
+clReadBuffer
+clFillBuffer_i32
+clFillBuffer_fp
+clFillBuffer_dp
+clFlush
 ;--------
 
 %index
-HCLFlush
+clWaitTask
+OpenCLƒRƒ}ƒ“ƒh‘Ò‚¿(‹Œ–½—ß)
+
+%prm
+
+%inst
+
+“¯‚¶ƒRƒ}ƒ“ƒhƒLƒ…[“à‚É“ü‚ê‚ç‚ê‚½OpenCLƒRƒ}ƒ“ƒh‚ÌÀs‚ª‚·‚×‚ÄI‚í‚é‚Ü‚Å‘Ò‚¿‚Ü‚·B
+‚±‚ê‚Í‹Œ–½—ß‚Å‚·BclFinish‚ğg—p‚µ‚Ä‰º‚³‚¢B
+
+%href
+clFinish
+;--------
+
+%index
+clFlush
 OpenCLƒRƒ}ƒ“ƒh‚ğ”­s
 
 %prm
 
 %inst
 
-HCLSetDevice‚Åw’è‚µ‚Ä‚¢‚éƒfƒoƒCƒX‚Ì‚·‚×‚Ä‚ÌƒRƒ}ƒ“ƒhƒLƒ…[‚É“ü‚ê‚ç‚ê‚½‘S‚Ä‚ÌOpenCLƒRƒ}ƒ“ƒh‚ğ”­s‚µ‚Ü‚·B
+clSetDevice‚Åw’è‚µ‚Ä‚¢‚éƒfƒoƒCƒX‚Ì‚·‚×‚Ä‚ÌƒRƒ}ƒ“ƒhƒLƒ…[‚É“ü‚ê‚ç‚ê‚½‘S‚Ä‚ÌOpenCLƒRƒ}ƒ“ƒh‚ğ”­s‚µ‚Ü‚·B
 
 ‚±‚±‚ÅŒ¾‚¤OpenCLƒRƒ}ƒ“ƒh‚Æ‚Í
-HCLDoKernel
-HCLDoKrn1
-HCLDoKrn1_sub
-HCLDoKrn2
-HCLDoKrn3
-HCLCopyBuffer
-HCLWriteBuffer
-HCLReadBuffer
-HCLFillBuffer_i32
-HCLFillBuffer_i64
-HCLFillBuffer_dp
+clDoKernel
+clDoKrn1
+clDoKrn1_sub
+clDoKrn2
+clDoKrn3
+clCopyBuffer
+clWriteBuffer
+clReadBuffer
+clFillBuffer_i32
+clFillBuffer_fp
+clFillBuffer_dp
 ‚Ì–½—ß‚Å”­s‚µ‚½‚à‚Ì‚É‚È‚è‚Ü‚·B
 
 %href
-HCLDoKernel
-HCLDoKrn1
-HCLDoKrn1_sub
-HCLDoKrn2
-HCLDoKrn3
-HCLCopyBuffer
-HCLWriteBuffer
-HCLReadBuffer
-HCLFillBuffer_i32
-HCLFillBuffer_i64
-HCLFillBuffer_dp
-HCLFinish
+clDoKernel
+clDoKrn1
+clDoKrn1_sub
+clDoKrn2
+clDoKrn3
+clCopyBuffer
+clWriteBuffer
+clReadBuffer
+clFillBuffer_i32
+clFillBuffer_fp
+clFillBuffer_dp
+clFinish
 ;--------
 
 %index
-HCLSetCommandQueue
+clSetCommandQueue
 ƒRƒ}ƒ“ƒhƒLƒ…[”Ô†‚ğƒZƒbƒg
 
 %prm
@@ -850,82 +882,82 @@ int p1 : ƒRƒ}ƒ“ƒhƒLƒ…[”Ô†	[in]
 
 %inst
 
-HCLSetDevice‚Åw’è‚µ‚Ä‚¢‚éƒfƒoƒCƒX‚Ì‚¤‚¿Ag‚¦‚éƒRƒ}ƒ“ƒhƒLƒ…[‚Í0`3‚Ü‚Å‚ ‚è‚Ü‚·B
+clSetDevice‚Åw’è‚µ‚Ä‚¢‚éƒfƒoƒCƒX‚Ì‚¤‚¿Ag‚¦‚éƒRƒ}ƒ“ƒhƒLƒ…[‚Í0`3‚Ü‚Å‚ ‚è‚Ü‚·B
 ƒfƒtƒHƒ‹ƒg‚Å‚Í0‚Å‚·B
 ‰º‹L–½—ß‚Íw’è‚µ‚½ƒRƒ}ƒ“ƒhƒLƒ…[‚ÉOpenCLƒRƒ}ƒ“ƒh‚Æ‚µ‚Ä“ü‚èÀs‚³‚ê‚Ü‚·B
 
-HCLDoKernel
-HCLDoKrn1
-HCLDoKrn1_sub
-HCLDoKrn2
-HCLDoKrn3
-HCLCopyBuffer
-HCLWriteBuffer
-HCLReadBuffer
-HCLFillBuffer_i32
-HCLFillBuffer_i64
-HCLFillBuffer_dp
+clDoKernel
+clDoKrn1
+clDoKrn1_sub
+clDoKrn2
+clDoKrn3
+clCopyBuffer
+clWriteBuffer
+clReadBuffer
+clFillBuffer_i32
+clFillBuffer_fp
+clFillBuffer_dp
 
 “¯‚¶ƒfƒoƒCƒX‚Å‚àˆá‚¤ƒRƒ}ƒ“ƒhƒLƒ…[‚É“ü‚ê‚ç‚ê‚½OpenCLƒRƒ}ƒ“ƒh‚ÍA‡•s“¯‚ÅÀs‚³‚ê‚Ü‚·B
 —á‚¦‚Î“¯‚¶ƒƒ‚ƒŠ‚Éƒf[ƒ^‚ğ‘‚«‚ŞƒJ[ƒlƒ‹‚ğ•ÊX‚ÌƒRƒ}ƒ“ƒhƒLƒ…[‚É‚¢‚ê‚ÄÀs‚·‚é‚ÆAƒJ[ƒlƒ‹‚ª“¯‚ÉÀs‚³‚ê‚é‰Â”\«‚ª‚ ‚èAƒƒ‚ƒŠ‚É‚Í‚»‚ê‚¼‚ê‚ÌƒJ[ƒlƒ‹‚ª‘‚«‚ñ‚¾’l‚ª¬İ‚µ‚Ä‚¢‚é‰Â”\«‚ª‚ ‚è‚Ü‚·B
 •¡G‚Å•s•Ö‚È‚æ‚¤‚Év‚¢‚Ü‚·‚ªAOpenCLƒRƒ}ƒ“ƒh‚ÌƒI[ƒo[ƒ‰ƒbƒvÀs‚ª‰Â”\‚É‚È‚èAg‚¢•û‚É‚æ‚Á‚Ä‚Í‘¬“x–Ê‚Å—L—˜‚É‚È‚è‚Ü‚·B
 
 %href
-HCLDoKernel
-HCLDoKrn1
-HCLDoKrn1_sub
-HCLDoKrn2
-HCLDoKrn3
-HCLCopyBuffer
-HCLWriteBuffer
-HCLReadBuffer
-HCLFillBuffer_i32
-HCLFillBuffer_i64
-HCLFillBuffer_dp
-HCLFlush
-HCLFinish
-HCLGetSettingCommandQueue
-_ExHCLSetCommandQueueMax
-_ExHCLSetCommandQueueProperties
+clDoKernel
+clDoKrn1
+clDoKrn1_sub
+clDoKrn2
+clDoKrn3
+clCopyBuffer
+clWriteBuffer
+clReadBuffer
+clFillBuffer_i32
+clFillBuffer_fp
+clFillBuffer_dp
+clFlush
+clFinish
+clGetSettingCommandQueue
+_ExclSetCommandQueueMax
+_ExclSetCommandQueueProperties
 ;--------
 
 %index
-HCLGetSettingCommandQueue
+clGetSettingCommandQueue
 ƒZƒbƒg‚µ‚Ä‚¢‚éƒRƒ}ƒ“ƒhƒLƒ…[”Ô†‚ğæ“¾
 
 %prm
 ()
 
 %inst
-HCLSetCommandQueue‚ÅƒZƒbƒg‚µ‚½”Ô†‚ğ•Ô‚µ‚Ü‚·B
+clSetCommandQueue‚ÅƒZƒbƒg‚µ‚½”Ô†‚ğ•Ô‚µ‚Ü‚·B
 ;--------
 %index
-HCLReleaseKernel
+clReleaseKernel
 ƒJ[ƒlƒ‹”jŠü
 
 %prm
-int64 p1
-int64 p1 : ƒJ[ƒlƒ‹id			[in]
+int p1
+int p1 : ƒJ[ƒlƒ‹id			[in]
 
 %inst
 
 “o˜^ƒJ[ƒlƒ‹‚ğ”jŠü‚µ‚Ü‚·B
 
 %href
-HCLCreateKernel
+clCreateKernel
 ;--------
 
 %index
-HCLReleaseProgram
+clReleaseProgram
 ƒvƒƒOƒ‰ƒ€”jŠü
 
 %prm
-int64 p1
-int64 p1 : ƒvƒƒOƒ‰ƒ€id			[in]
+int p1
+int p1 : ƒvƒƒOƒ‰ƒ€id			[in]
 %inst
 
 “o˜^ƒRƒ“ƒpƒCƒ‹Ï‚İƒvƒƒOƒ‰ƒ€‚ğ”jŠü‚µ‚Ü‚·B
 
 %href
-HCLCreateProgram
+clCreateProgram
 ;--------

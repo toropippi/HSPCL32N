@@ -1,5 +1,5 @@
 ■概要
-HSPCL64はOpenCLを64bitランタイム版HSP3から簡単にいじれるプラグインです。
+HSPCL32NはOpenCLを32bitランタイム版HSP3から簡単にいじれるプラグインです。
 
 ・OpenCLとは
 	OpenCLとはグラフィックボードやCELLプロセッサー、マルチコアCPU上で汎用計算できるようKhronos Groupに策定された言語(API)。

@@ -1,33 +1,30 @@
 ■更新履歴
-	ver 1.0  
-	HCLDokrn2,3実装  
-	HCLdim_i64FromBuffer命令実装  
-	HCLdim_i32FromBuffer命令実装  
-	HCLdim_dpFromBuffer命令実装  
-	ソースリファクタリング&若干の高速化  
+	Ver 2.2  
+	2021/6/14
+	ほとんどの命令をHSPCL64から逆輸入  
+	以前の命令と互換性を保つため関数型とコマンド型どちらでも命令を実行できるように変更  
 	
-	ver 0.9  
-	HCLReadBufferやHCLWriteBufferのノンブロッキングモードがNVIDIA GPUでつかえないため、同命令のみ別スレッドを立ち上げて強制的にノンブロッキングできるよう命令追加  
-	DoubleToFloat実装  
-	FloatToDouble実装  
-	HCLReadBufferやHCLWriteBufferでメモリアクセスチェックを行ってエラーを出すように  
-	HCLFillBuffer系とReadIndex、WriteIndexの型指定(i32 i64 dp)を共通に  
-	HCLFillBufferで引数省略できるよう修正  
-	サンプル多数追加  
-	他バグ多数修正  
+	Ver 2.1  
+	2021/5/28
+	命令をHSPCL32 ver2.0から引き継ぎ。バージョン表記も引き継ぎ  
 	
-	ver 0.3  
-	HCLCreateBufferFrom,HCLFlushなど実装  
-	HCLFillBuffer実装  
-	  
-	ver 0.2  
-	2021/5/6  
-	HCLCallを実装  
-	  
-	Ver 0.1  
-	2020/2/14  
-	HSPCL32からHSPCL64へ命令群を移行  
-	OpenGL関連は全部削除  
-	fdimは削除、それに伴いHSP側でfloat型が使えなくなった  
-	clEvent関連を実装  
-	CommandQueue関連を実装  
+	Ver 2.0
+	2013/8/29
+	HCLbye実行時の不具合を修正
+	HCLDoKrn1～3まで追加
+	HCLWaitTaskでタスク待できるように
+	メモリアクセス違反以外の大概のプログラムミスに対しエラーメッセージを出すようにチェック機能搭載
+	その他エラーメッセージがでるように機能追加
+	リリース前最終調整
+	
+	Ver 1.11
+	2013/8/10
+	カーネル実行においてlocal_work_sizeとglobal_work_sizeに配列を指定できるように変更
+	
+	Ver 1.10
+	2013/5/14
+	プログラムビルド、カーネル、メモリ周りの実装
+	
+	Ver 1.0
+	2013/5/9
+	コンテキストの作成命令

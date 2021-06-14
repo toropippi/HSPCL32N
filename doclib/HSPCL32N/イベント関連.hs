@@ -4,22 +4,22 @@
 
 ;-------- header --------
 %dll
-HSPCL64.dll
+HSPCL32N.dll
 
 %ver
-1.0
+2.2
 
 %date
-2021/06/07
+2021/06/14
 
 %author
-toropippi
+pippi
 
 %note
-hspcl64.as をインクルードしてください。
+hspcl32n.as をインクルードしてください。
 
 %type
-64bitランタイムGPGPU用プラグイン
+32bitランタイムGPGPU用プラグイン
 
 %group
 OpenCLイベント関連
@@ -30,7 +30,7 @@ Win
 ;-------- ref --------
 
 %index
-HCLSetWaitEvent
+clSetWaitEvent
 event待ちに使うeventを1つセット
 
 %prm
@@ -41,36 +41,36 @@ int p1 : event id [in]
 p1に実行完了を行いたいevent idを入れて下さい。
 下記命令を次に実行する際のみに、そのevent待ちが行われます。
 
-HCLDoKernel
-HCLDoKrn1
-HCLDoKrn1_sub
-HCLDoKrn2
-HCLDoKrn3
-HCLCopyBuffer
-HCLWriteBuffer
-HCLReadBuffer
-HCLWriteBuffer_NonBlocking
-HCLReadBuffer_NonBlocking
-HCLFillBuffer_i32
-HCLFillBuffer_i64
-HCLFillBuffer_dp
+clDoKernel
+clDoKrn1
+clDoKrn1_sub
+clDoKrn2
+clDoKrn3
+clCopyBuffer
+clWriteBuffer
+clReadBuffer
+clWriteBuffer_NonBlocking
+clReadBuffer_NonBlocking
+clFillBuffer_i32
+clFillBuffer_fp
+clFillBuffer_dp
 
 
 使い方
-HCLSetCommandQueue 0
-HCLWriteBuffer memA,data,,,,0,0 //eventid=0
-HCLSetCommandQueue 1
-HCLSetWaitEvent 0
-HCLDoKrn1 krnid,65536,256
+clSetCommandQueue 0
+clWriteBuffer memA,data,,,,0,0 //eventid=0
+clSetCommandQueue 1
+clSetWaitEvent 0
+clDoKrn1 krnid,65536,256
 
-これで、HCLWriteBufferの転送が終了したあとにkrnidのカーネルの実行が始まることが保証されます。(HCLSetWaitEvent 0をしてないと転送とカーネル実行が同時に起こる可能性がある)
+これで、clWriteBufferの転送が終了したあとにkrnidのカーネルの実行が始まることが保証されます。(clSetWaitEvent 0をしてないと転送とカーネル実行が同時に起こる可能性がある)
 
 %href
-HCLSetWaitEvents
+clSetWaitEvents
 ;--------
 
 %index
-HCLSetWaitEvents
+clSetWaitEvents
 event待ちに使うeventを複数セット
 
 %prm
@@ -81,28 +81,28 @@ array p1 : event idが格納されたint型配列 [in]
 p1にevent idが格納されたint型配列を入れて下さい。
 下記命令を次に実行する際のみに、そのevent待ちが行われます。
 
-HCLDoKernel
-HCLDoKrn1
-HCLDoKrn1_sub
-HCLDoKrn2
-HCLDoKrn3
-HCLCopyBuffer
-HCLWriteBuffer
-HCLReadBuffer
-HCLWriteBuffer_NonBlocking
-HCLReadBuffer_NonBlocking
-HCLFillBuffer_i32
-HCLFillBuffer_i64
-HCLFillBuffer_dp
+clDoKernel
+clDoKrn1
+clDoKrn1_sub
+clDoKrn2
+clDoKrn3
+clCopyBuffer
+clWriteBuffer
+clReadBuffer
+clWriteBuffer_NonBlocking
+clReadBuffer_NonBlocking
+clFillBuffer_i32
+clFillBuffer_fp
+clFillBuffer_dp
 
 
 %href
-HCLSetWaitEvent
+clSetWaitEvent
 
 ;--------
 
 %index
-HCLGetEventLogs
+clGetEventLogs
 event情報取得
 
 %prm
@@ -112,7 +112,7 @@ int p2 ： parameter	[in]
 
 %inst
 p1にevent idを指定してp2で0～7のパラメーターを指定することで下記情報を取得できます。
-返り値は必ず64bit intです。
+返り値は必ずint型です。
 
 0:eventと紐付いているOpenCLコマンドの種類
 #define global CL_COMMAND_NDRANGE_KERNEL                   0x11F0
@@ -152,22 +152,26 @@ CL_COMMAND_WRITE_BUFFERやCL_COMMAND_Read_BUFFERやCL_COMMAND_FILL_BUFFERやCL_COMM
 
 4:CL_PROFILING_COMMAND_QUEUEDの時間
 単位はナノセカンド(ns)
+本来返り値は64bit intですが、本関数の返り値はそのうちの下位32bitです。上位32bitはstatに代入されます。
 
 5:CL_PROFILING_COMMAND_SUBMITの時間
 単位はナノセカンド(ns)
+本来返り値は64bit intですが、本関数の返り値はそのうちの下位32bitです。上位32bitはstatに代入されます。
 
 6:CL_PROFILING_COMMAND_STARTの時間
 単位はナノセカンド(ns)
+本来返り値は64bit intですが、本関数の返り値はそのうちの下位32bitです。上位32bitはstatに代入されます。
 
 7:CL_PROFILING_COMMAND_ENDの時間
 単位はナノセカンド(ns)
+本来返り値は64bit intですが、本関数の返り値はそのうちの下位32bitです。上位32bitはstatに代入されます。
 
 %href
-HCLGetEventStatus
+clGetEventStatus
 ;--------
 
 %index
-HCLGetEventStatus
+clGetEventStatus
 イベント実行状態取得
 
 %prm
@@ -194,7 +198,7 @@ CL_EVENT_COMMAND_EXECUTION_STATUS
 ;--------
 
 %index
-HCLWaitForEvent
+clWaitForEvent
 event完了待ち
 
 %prm
@@ -205,11 +209,11 @@ int p1 ： event id [in]
 eventの実行完了を待ちます。
 
 %href
-HCLWaitForEvents
+clWaitForEvents
 
 ;--------
 %index
-HCLWaitForEvents
+clWaitForEvents
 event完了待ち
 
 %prm
@@ -220,12 +224,12 @@ array p1 ： event idのint型配列 [in]
 eventの実行完了を待ちます。
 
 %href
-HCLWaitForEvent
+clWaitForEvent
 
 ;--------
 
 %index
-HCLCreateUserEvent
+clCreateUserEvent
 UserEvent作成
 
 %prm
@@ -234,22 +238,22 @@ int p1 ： event id [in]
 
 %inst
 p1で指定したevent番号をユーザーイベントとして登録します。
-HCLSetUserEventStatusとHCLSetWaitEvent等と組み合わせて使います。
-HCLSetUserEventStatusで任意のタイミングでユーザーイベントにCL_COMPLETEをセットすることで
-HCLSetWaitEventにより、あるOpenCLコマンドの実行開始を制御することができます。
+clSetUserEventStatusとclSetWaitEvent等と組み合わせて使います。
+clSetUserEventStatusで任意のタイミングでユーザーイベントにCL_COMPLETEをセットすることで
+clSetWaitEventにより、あるOpenCLコマンドの実行開始を制御することができます。
 
 初期状態ではCL_SUBMITTEDがセットされています。
-注意としてはHCLGetEventLogs命令でUserEventが扱えないことです。
+注意としてはclGetEventLogs命令でUserEventが扱えないことです。
 
 %href
-HCLSetUserEventStatus
-HCLSetWaitEvent
-HCLSetWaitEvents
+clSetUserEventStatus
+clSetWaitEvent
+clSetWaitEvents
 
 ;--------
 
 %index
-HCLSetUserEventStatus
+clSetUserEventStatus
 UserEventに状態をセット
 
 %prm
@@ -269,7 +273,7 @@ https://www.khronos.org/registry/OpenCL/sdk/2.2/docs/man/html/clSetUserEventStat
 
 
 %href
-HCLCreateUserEvent
-HCLSetWaitEvent
-HCLSetWaitEvents
+clCreateUserEvent
+clSetWaitEvent
+clSetWaitEvents
 ;--------

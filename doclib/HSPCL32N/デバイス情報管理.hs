@@ -4,22 +4,22 @@
 
 ;-------- header --------
 %dll
-HSPCL64.dll
+HSPCL32N.dll
 
 %ver
-1.0
+2.2
 
 %date
-2021/06/07
+2021/06/14
 
 %author
-toropippi
+pippi
 
 %note
-hspcl64.as をインクルードしてください。
+hspcl32n.as をインクルードしてください。
 
 %type
-64bitランタイムGPGPU用プラグイン
+32bitランタイムGPGPU用プラグイン
 
 %group
 OpenCLデバイス情報管理
@@ -30,24 +30,54 @@ Win
 ;-------- ref --------
 
 %index
-HCLinit
-HSPCL64を初期化
+clinit
+HSPCL32Nを初期化
 
 %prm
 
 %inst
-HSPCL64を初期化します。
-hspcl64.asをインクルードしたあとに実行して下さい。
+HSPCL32Nを初期化します。
+hspcl32n.asをインクルードしたあとに実行して下さい。
+認識したOpenCLデバイス数がstatに代入されます。
 
 %href
-HCLGetDeviceCount
-_ExHCLSetCommandQueueMax
-_ExHCLSetCommandQueueProperties
-_ExHCLSetEventMax
+clini
+clGetDeviceCount
+;--------
+%index
+clini
+HSPCL32Nを初期化(旧命令)
+
+%prm
+
+%inst
+HSPCL32Nを初期化します。
+hspcl32n.asをインクルードしたあとに実行して下さい。
+これは旧命令でありclinitをお使い下さい。
+
+%href
+clinit
+clGetDeviceCount
+
+;--------
+%index
+clbye
+HSPCL32Nを終了(旧命令)
+
+%prm
+
+%inst
+HSPCL32Nを終了します。
+これは旧命令であり互換性のため残しています。
+HCPCL32N ver2.2以降ではこの命令自体はなにも行なわない命令となりました。
+
+%href
+clini
+clinit
 ;--------
 
 %index
-HCLGetDeviceCount
+clGetDeviceCount
 OpenCLデバイス数取得
 
 %prm
@@ -55,17 +85,16 @@ OpenCLデバイス数取得
 
 %inst
 OpenCLデバイスとして認識されるデバイス数が返ります。
-HCLSetDeviceで指定できる番号は0～HCLGetDeviceCount()-1の範囲となります。
+clSetDeviceで指定できる番号は0～clGetDeviceCount()-1の範囲となります。
 
 %href
-HCLinit
-HCLSetDevice
+clinit
+clSetDevice
 
 ;--------
 
-
 %index
-HCLSetDevice
+clSetDevice
 デバイスセット
 
 %prm
@@ -75,97 +104,127 @@ int p1	デバイスid [in]
 %inst
 
 カーネル命令やカーネル登録、メモリ確保を実行するデバイスを指定します。
-HCLSetDeviceで指定できる番号は0～HCLGetDeviceCount()-1の範囲となります。
+clSetDeviceで指定できる番号は0～clGetDeviceCount()-1の範囲となります。
 
 以下の命令は設定したデバイスのみに実行されます。
 
-HCLGetSettingDevice
-HCLCreateProgram
-HCLCreateProgramWithSource
-HCLCreateKernel
-HCLCreateBuffer
-HCLCreateBufferFrom
-HCLWriteBuffer
-HCLWriteBuffer_NonBlocking
-HCLReadBuffer
-HCLReadBuffer_NonBlocking
-HCLCopyBuffer
-HCLFillBuffer_i32
-HCLFillBuffer_i64
-HCLFillBuffer_dp
-HCLdim_i32FromBuffer
-HCLdim_i64FromBuffer
-HCLdim_dpFromBuffer
-HCLReadIndex_i32
-HCLReadIndex_i64
-HCLReadIndex_dp
-HCLWriteIndex_i32
-HCLWriteIndex_i64
-HCLWriteIndex_dp
-HCLCall
-HCLDoKrn1
-HCLDoKrn2
-HCLDoKrn3
-HCLDoKernel
-HCLDoKrn1_sub
-HCLFinish
-HCLFlush
-HCLSetCommandQueue
+clGetSettingDevice
+clCreateProgram
+clCreateProgramWithSource
+clCreateKernel
+clCreateBuffer
+clCreateBufferFrom
+clWriteBuffer
+clWriteBuffer_NonBlocking
+clReadBuffer
+clReadBuffer_NonBlocking
+clCopyBuffer
+clFillBuffer_i32
+clFillBuffer_i64
+clFillBuffer_dp
+cldim_i32FromBuffer
+cldim_i64FromBuffer
+cldim_dpFromBuffer
+clReadIndex_i32
+clReadIndex_i64
+clReadIndex_dp
+clWriteIndex_i32
+clWriteIndex_i64
+clWriteIndex_dp
+clCall
+clDoKrn1
+clDoKrn2
+clDoKrn3
+clDoKernel
+clDoKrn1_sub
+clFinish
+clFlush
+clSetCommandQueue
 
 
-HCLSetDeviceを実行していない場合は、カレントデバイスはデバイス0です。
+clSetDeviceを実行していない場合は、カレントデバイスはデバイス0です。
 
 %href
-HCLGetSettingDevice
-HCLCreateProgram
-HCLCreateProgramWithSource
-HCLCreateKernel
-HCLCreateBuffer
-HCLCreateBufferFrom
-HCLWriteBuffer
-HCLWriteBuffer_NonBlocking
-HCLReadBuffer
-HCLReadBuffer_NonBlocking
-HCLCopyBuffer
-HCLFillBuffer_i32
-HCLFillBuffer_i64
-HCLFillBuffer_dp
-HCLdim_i32FromBuffer
-HCLdim_i64FromBuffer
-HCLdim_dpFromBuffer
-HCLReadIndex_i32
-HCLReadIndex_i64
-HCLReadIndex_dp
-HCLWriteIndex_i32
-HCLWriteIndex_i64
-HCLWriteIndex_dp
-HCLCall
-HCLDoKrn1
-HCLDoKrn2
-HCLDoKrn3
-HCLDoKernel
-HCLDoKrn1_sub
-HCLFinish
-HCLFlush
-HCLSetCommandQueue
+clGetSettingDevice
+clCreateProgram
+clCreateProgramWithSource
+clCreateKernel
+clCreateBuffer
+clCreateBufferFrom
+clWriteBuffer
+clWriteBuffer_NonBlocking
+clReadBuffer
+clReadBuffer_NonBlocking
+clCopyBuffer
+clFillBuffer_i32
+clFillBuffer_i64
+clFillBuffer_dp
+cldim_i32FromBuffer
+cldim_i64FromBuffer
+cldim_dpFromBuffer
+clReadIndex_i32
+clReadIndex_i64
+clReadIndex_dp
+clWriteIndex_i32
+clWriteIndex_i64
+clWriteIndex_dp
+clCall
+clDoKrn1
+clDoKrn2
+clDoKrn3
+clDoKernel
+clDoKrn1_sub
+clFinish
+clFlush
+clSetCommandQueue
 ;--------
 
 %index
-HCLGetSettingDevice
+clSetDev
+デバイスセット(旧命令)
+
+%prm
+int p1
+int p1	デバイスid [in]
+
+%inst
+
+カーネル命令やカーネル登録、メモリ確保を実行するデバイスを指定します。
+clSetDevで指定できる番号は0～clGetDeviceCount()-1の範囲となります。
+これは旧命令でありclSetDeviceをお使い下さい。
+
+;--------
+
+%index
+clGetDevName
+デバイス名取得(旧命令)
+
+%prm
+()
+
+%inst
+
+clSetDeviceでセットされたデバイスのデバイス名を文字列で返します。
+これは旧命令でありclGetDeviceInfo_sをお使い下さい。
+;--------
+
+
+%index
+clGetSettingDevice
 セットデバイスno取得
 
 %prm
 ()
 
 %inst
-HCLSetDeviceで指定したデバイスのidが返ります。
+clSetDeviceで指定したデバイスのidが返ります。
 
 %href
-HCLSetDevice
+clSetDevice
 ;--------
 
 %index
-HCLGetDeviceInfo_s
+clGetDeviceInfo_s
 デバイス情報取得
 
 %prm
@@ -173,7 +232,7 @@ HCLGetDeviceInfo_s
 int p1 ： param_name [in]
 
 %inst
-HCLSetDeviceでセットしたデバイスの情報を文字列で取得します。
+clSetDeviceでセットしたデバイスの情報を文字列で取得します。
 p1にparam_nameを指定して下さい。戻り値は文字列になります。
 
 p1は下記のURLの表にある値からひとつ選んで指定できます。
@@ -181,12 +240,12 @@ p1は下記のURLの表にある値からひとつ選んで指定できます。
 英語サイト：https://www.khronos.org/registry/cl/sdk/1.0/docs/man/xhtml/clGetDeviceInfo.html
 
 %href
-HCLGetDeviceInfo_i
-HCLGetDeviceInfo_i64
+clGetDeviceInfo_i
+clGetDeviceInfo_d
 ;--------
 
 %index
-HCLGetDeviceInfo_i
+clGetDeviceInfo_i
 デバイス情報取得
 
 %prm
@@ -195,7 +254,7 @@ int p1 ： param_name [in]
 int p2 ： index [in]
 
 %inst
-HCLSetDevice でセットしたデバイスの情報を文字列で取得します。
+clSetDevice でセットしたデバイスの情報を文字列で取得します。
 p1にparam_nameを指定して下さい。戻り値はint型の整数になります。
 戻り値の数値が配列の場合は、p2にindexを指定することで、p2番目の要素の情報を得ることができます。
 
@@ -204,12 +263,12 @@ p1は下記のURLの表にある値からひとつ選んで指定できます。
 英語サイト：https://www.khronos.org/registry/cl/sdk/1.0/docs/man/xhtml/clGetDeviceInfo.html
 
 %href
-HCLGetDeviceInfo_i64
-HCLGetDeviceInfo_s
+clGetDeviceInfo_d
+clGetDeviceInfo_s
 ;--------
 
 %index
-HCLGetDeviceInfo_i64
+clGetDeviceInfo_d
 デバイス情報取得
 
 %prm
@@ -218,8 +277,8 @@ int p1 ： param_name [in]
 int p2 ： index [in]
 
 %inst
-HCLSetDevice でセットしたデバイスの情報を文字列で取得します。
-p1にparam_nameを指定して下さい。戻り値は64bit int型の整数になります。
+clSetDevice でセットしたデバイスの情報を文字列で取得します。
+p1にparam_nameを指定して下さい。戻り値はdouble型の実数になります。
 戻り値の数値が配列の場合は、p2にindexを指定することで、p2番目の要素の情報を得ることができます。
 
 p1は下記のURLの表にある値からひとつ選んで指定できます。
@@ -227,12 +286,12 @@ p1は下記のURLの表にある値からひとつ選んで指定できます。
 英語サイト：https://www.khronos.org/registry/cl/sdk/1.0/docs/man/xhtml/clGetDeviceInfo.html
 
 %href
-HCLGetDeviceInfo_i
-HCLGetDeviceInfo_s
+clGetDeviceInfo_i
+clGetDeviceInfo_s
 ;--------
 
 %index
-_ExHCLSetCommandQueueMax
+_ExclSetCommandQueueMax
 コマンドキューの最大数をセット
 
 %prm
@@ -241,16 +300,16 @@ int p1	コマンドキューの最大数 [in]
 
 
 %inst
-HCLInitの実行前に指定することで、1つのデバイスあたりのコマンドキューの最大を増やすことができます。
+clInitの実行前に指定することで、1つのデバイスあたりのコマンドキューの最大を増やすことができます。
 デフォルトでは1つのデバイスあたりのコマンドキューは0～3までつかえます。
 
 %href
-_ExHCLSetCommandQueueProperties
-_ExHCLSetEventMax
+_ExclSetCommandQueueProperties
+_ExclSetEventMax
 ;--------
 
 %index
-_ExHCLSetCommandQueueProperties
+_ExclSetCommandQueueProperties
 コマンドキュープロパティのセット
 
 %prm
@@ -258,18 +317,18 @@ int p1
 int p1	properties [in]
 
 %inst
-HCLInitの実行前に指定することで、OpenCLのコマンドキューのプロパティの設定を変えることができます。
+clInitの実行前に指定することで、OpenCLのコマンドキューのプロパティの設定を変えることができます。
 コマンドキュープロパティはデフォルトではCL_QUEUE_PROFILING_ENABLEが指定されています。
 http://wiki.tommy6.net/wiki/clCreateCommandQueue
 を参考にして下さい。
 
 %href
-_ExHCLSetCommandQueueMax
-_ExHCLSetEventMax
+_ExclSetCommandQueueMax
+_ExclSetEventMax
 ;--------
 
 %index
-_ExHCLSetEventMax
+_ExclSetEventMax
 イベントの最大数をセット
 
 %prm
@@ -277,10 +336,10 @@ int p1
 int p1	イベントの最大数 [in]
 
 %inst
-HCLInitの実行前に指定することで、記録可能イベントの最大を増やすことができます。
+clInitの実行前に指定することで、記録可能イベントの最大を増やすことができます。
 デフォルトでイベントidは0～65535番までつかえます。
 
 %href
-_ExHCLSetCommandQueueMax
-_ExHCLSetCommandQueueProperties
+_ExclSetCommandQueueMax
+_ExclSetCommandQueueProperties
 ;--------

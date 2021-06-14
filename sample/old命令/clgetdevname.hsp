@@ -1,0 +1,12 @@
+#include "hspcl32n.as"
+	clini
+	if stat==0:dialog "対応ビデオカードがありません。終了します",1:end
+	cldevcount=stat
+	mes "OpenCL対応デバイス数"+cldevcount
+
+		repeat cldevcount
+		clsetDev cnt
+		mes clgetdevname();デバイス名取得
+		loop
+	clbye
+	stop

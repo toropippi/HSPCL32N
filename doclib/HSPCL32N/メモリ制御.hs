@@ -4,22 +4,22 @@
 
 ;-------- header --------
 %dll
-HSPCL64.dll
+HSPCL32N.dll
 
 %ver
-1.0
+2.2
 
 %date
-2021/06/07
+2021/06/14
 
 %author
-toropippi
+pippi
 
 %note
-hspcl64.as ‚ğƒCƒ“ƒNƒ‹[ƒh‚µ‚Ä‚­‚¾‚³‚¢B
+hspcl32n.as ‚ğƒCƒ“ƒNƒ‹[ƒh‚µ‚Ä‚­‚¾‚³‚¢B
 
 %type
-64bitƒ‰ƒ“ƒ^ƒCƒ€GPGPU—pƒvƒ‰ƒOƒCƒ“
+32bitƒ‰ƒ“ƒ^ƒCƒ€GPGPU—pƒvƒ‰ƒOƒCƒ“
 
 %group
 OpenCLƒƒ‚ƒŠ§Œä
@@ -30,59 +30,75 @@ Win
 ;-------- ref --------
 
 %index
-HCLCreateBuffer
+clCreateBuffer
 VRAMì¬
 
 %prm
-(int64 p1)
-int64 p1 : Šm•Û‚·‚ébyte”	[in]
+(int p1)
+int p1 : Šm•Û‚·‚ébyte”	[in]
 
 %inst
-HCLSetDevice‚Åw’è‚³‚ê‚½ƒOƒ‰ƒtƒBƒbƒNƒ{[ƒh‚È‚Ç‚ÌƒfƒoƒCƒXã‚Éƒƒ‚ƒŠ‚ğŠm•Û‚µ‚Ü‚·B
+clSetDevice‚Åw’è‚³‚ê‚½ƒOƒ‰ƒtƒBƒbƒNƒ{[ƒh‚È‚Ç‚ÌƒfƒoƒCƒXã‚Éƒƒ‚ƒŠ‚ğŠm•Û‚µ‚Ü‚·B
 CL_mem_object id‚ª•Ô‚è‚Ü‚·B
-‚±‚ê‚Í64bit intŒ^‚Å‚·B
+‚±‚ê‚ÍintŒ^‚Å‚·B
 å‚ÉGDDR5,6‚È‚Ç‚Ìƒƒ‚ƒŠ‚Ì‚ ‚éƒOƒ‰ƒ{ã‚ÉAw’è‚µ‚½ƒTƒCƒY‚Ìƒƒ‚ƒŠ‚ªŠm•Û‚³‚ê‚é‚±‚Æ‚É‚È‚è‚Ü‚·B
-HCLReleaseBuffer‚Å‰ğ•ú‚·‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B
+clReleaseBuffer‚Å‰ğ•ú‚·‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B
 
 ‚±‚ÌCL_mem_object id‚ğ‰ğ•ú‘O‚ÉƒƒXƒg‚·‚é‚ÆAGPU‘¤‚Ìƒƒ‚ƒŠ‚ÉƒAƒNƒZƒX‚Å‚«‚È‚¢‚±‚Æ‚É‚È‚èAƒƒ‚ƒŠƒŠ[ƒN‚É‹ß‚¢ó‘Ô‚É‚È‚Á‚Ä‚µ‚Ü‚¢‚Ü‚·B
 CL_mem_object id‚ğ•Ï”‚Å•Û‚µ‚Ä‚¢‚éê‡ã‘‚«‚É‚Í‚²’ˆÓ‰º‚³‚¢B
 
 
 %href
-HCLSetDevice
-HCLReleaseBuffer
+clSetDevice
+clReleaseBuffer
 ;--------
 
 %index
-HCLReleaseBuffer
+clReleaseBuffer
 VRAM”jŠü
 
 %prm
-int64 p1
-int64 p1 : CL_mem_object id			[in]
+int p1
+int p1 : CL_mem_object id			[in]
 %inst
 ƒfƒoƒCƒXã‚Ìƒƒ‚ƒŠ‚ğ‰ğ•ú‚µ‚Ü‚·B
 
 %href
-HCLCreateBuffer
+clCreateBuffer
+;--------
+%index
+clReleaseMemObject
+VRAM”jŠü(‹Œ–½—ß)
+
+%prm
+int p1
+int p1 : CL_mem_object id			[in]
+%inst
+ƒfƒoƒCƒXã‚Ìƒƒ‚ƒŠ‚ğ‰ğ•ú‚µ‚Ü‚·B
+‚±‚ê‚Í‹Œ–½—ß‚Å‚·BclReleaseBuffer‚ğ‚²g—p‰º‚³‚¢B
+
+
+%href
+clReleaseBuffer
+clCreateBuffer
 ;--------
 
 %index
-HCLWriteBuffer
+clWriteBuffer
 HSP”z—ñî•ñ‚ğVRAM‚É‘
 
 %prm
-int64 p1,array p2,int64 p3,int64 p4,int64 p5,int p6,int p7
-int64 p1 : ƒRƒs[æCL_mem_object id		[in]
+int p1,array p2,int p3,int p4,int p5,int p6,int p7
+int p1 : ƒRƒs[æCL_mem_object id		[in]
 array p2:ƒRƒs[Œ³”z—ñ•Ï”			[in]
-int64 p3 : ƒRƒs[ƒTƒCƒYbyte,È—ª‰Â		[in]
-int64 p4 : ƒRƒs[æ‚ÌƒIƒtƒZƒbƒg,È—ª‰Â		[in]
-int64 p5 : ƒRƒs[Œ³‚ÌƒIƒtƒZƒbƒg,È—ª‰Â		[in]
+int p3 : ƒRƒs[ƒTƒCƒYbyte,È—ª‰Â		[in]
+int p4 : ƒRƒs[æ‚ÌƒIƒtƒZƒbƒg,È—ª‰Â		[in]
+int p5 : ƒRƒs[Œ³‚ÌƒIƒtƒZƒbƒg,È—ª‰Â		[in]
 int p6 : ƒuƒƒbƒLƒ“ƒOƒ‚[ƒhoff,È—ª‰Â		[in]
 int p7 : event_id,È—ª‰Â			[in]
 
 %inst
-ƒzƒXƒg(CPU)‚©‚çHCLSetDevice‚Åw’è‚µ‚½ƒfƒoƒCƒX(GPU)‘¤‚Éƒf[ƒ^‚ğ“]‘—‚µ‚Ü‚·B
+ƒzƒXƒg(CPU)‚©‚çclSetDevice‚Åw’è‚µ‚½ƒfƒoƒCƒX(GPU)‘¤‚Éƒf[ƒ^‚ğ“]‘—‚µ‚Ü‚·B
 p3‚ÍÈ—ªAƒRƒs[æ‚ÆƒRƒs[Œ³‚Ì”z—ñ‚Ì‚¤‚¿¬‚³‚¢•û‚ªÌ—p‚³‚ê‚Ü‚·B
 p4,p5‚ÍÈ—ª0‚Å‚·B
 p3,p4,p5‚Ì’PˆÊ‚Íbyte‚Å‚·B
@@ -91,27 +107,27 @@ p6‚ÍÈ—ªƒfƒtƒHƒ‹ƒg‚Å1‚Å‚·B‚Â‚Ü‚èƒuƒƒbƒLƒ“ƒOƒ‚[ƒh‚ªon‚É‚È‚Á‚Ä‚¨‚èA“]‘—‚ªI‚
 
 
 %href
-HCLCreateBuffer
-HCLReadBuffer
+clCreateBuffer
+clReadBuffer
 
 ;--------
 
 %index
-HCLReadBuffer
+clReadBuffer
 VRAM‚©‚çHSP”z—ñî•ñ‚É“Ç
 
 %prm
-int64 p1,array p2,int64 p3,int64 p4,int64 p5,int p6,int p7
-int64 p1 : ƒRƒs[Œ³CL_mem_object id		[in]
+int p1,array p2,int p3,int p4,int p5,int p6,int p7
+int p1 : ƒRƒs[Œ³CL_mem_object id		[in]
 array p2:ƒRƒs[æ”z—ñ•Ï”			[out]
-int64 p3 : ƒRƒs[ƒTƒCƒYbyte,È—ª‰Â		[in]
-int64 p4 : ƒRƒs[Œ³‚ÌƒIƒtƒZƒbƒg,È—ª‰Â		[in]
-int64 p5 : ƒRƒs[æ‚ÌƒIƒtƒZƒbƒg,È—ª‰Â		[in]
+int p3 : ƒRƒs[ƒTƒCƒYbyte,È—ª‰Â		[in]
+int p4 : ƒRƒs[Œ³‚ÌƒIƒtƒZƒbƒg,È—ª‰Â		[in]
+int p5 : ƒRƒs[æ‚ÌƒIƒtƒZƒbƒg,È—ª‰Â		[in]
 int p6 : ƒuƒƒbƒLƒ“ƒOƒ‚[ƒhoff,È—ª‰Â		[in]
 int p7 : event_id,È—ª‰Â			[in]
 
 %inst
-HCLSetDevice‚Åw’è‚µ‚½ƒfƒoƒCƒX(GPU)‚©‚çƒzƒXƒg(CPU)‘¤‚Éƒf[ƒ^‚ğ“]‘—‚µ‚Ü‚·B
+clSetDevice‚Åw’è‚µ‚½ƒfƒoƒCƒX(GPU)‚©‚çƒzƒXƒg(CPU)‘¤‚Éƒf[ƒ^‚ğ“]‘—‚µ‚Ü‚·B
 p3‚ÍÈ—ªAƒRƒs[æ‚ÆƒRƒs[Œ³‚Ì”z—ñ‚Ì‚¤‚¿¬‚³‚¢•û‚ªÌ—p‚³‚ê‚Ü‚·B
 p4,p5‚ÍÈ—ª0‚Å‚·B
 p3,p4,p5‚Ì’PˆÊ‚Íbyte‚Å‚·B
@@ -120,39 +136,39 @@ p6‚ÍÈ—ªƒfƒtƒHƒ‹ƒg‚Å1‚Å‚·B‚Â‚Ü‚èƒuƒƒbƒLƒ“ƒOƒ‚[ƒh‚ªon‚É‚È‚Á‚Ä‚¨‚èA“]‘—‚ªI‚
 
 
 %href
-HCLCreateBuffer
-HCLWriteBuffer
+clCreateBuffer
+clWriteBuffer
 
 ;--------
 
 %index
-HCLCopyBuffer
+clCopyBuffer
 VRAM“¯mƒRƒs[
 
 %prm
-int64 p1,int64 p2,int64 p3,int64 p4,int64 p5,int p6
-int64 p1 : ƒRƒs[æCL_mem_object id		[in]
-int64 p2 : ƒRƒs[Œ³CL_mem_object id		[in]
-int64 p3 : ƒRƒs[ƒTƒCƒYbyte,È—ª‰Â		[in]
-int64 p4 : ƒRƒs[æ‚ÌƒIƒtƒZƒbƒg,È—ª‰Â		[in]
-int64 p5 : ƒRƒs[Œ³‚ÌƒIƒtƒZƒbƒg,È—ª‰Â		[in]
+int p1,int p2,int p3,int p4,int p5,int p6
+int p1 : ƒRƒs[æCL_mem_object id		[in]
+int p2 : ƒRƒs[Œ³CL_mem_object id		[in]
+int p3 : ƒRƒs[ƒTƒCƒYbyte,È—ª‰Â		[in]
+int p4 : ƒRƒs[æ‚ÌƒIƒtƒZƒbƒg,È—ª‰Â		[in]
+int p5 : ƒRƒs[Œ³‚ÌƒIƒtƒZƒbƒg,È—ª‰Â		[in]
 int p6 : event_id,È—ª‰Â			[in]
 
 %inst
-HCLSetDevice‚Åw’è‚µ‚½ƒfƒoƒCƒXã‚Ìƒƒ‚ƒŠŠÔ‚ÅƒRƒs[‚ğ‚µ‚Ü‚·B
+clSetDevice‚Åw’è‚µ‚½ƒfƒoƒCƒXã‚Ìƒƒ‚ƒŠŠÔ‚ÅƒRƒs[‚ğ‚µ‚Ü‚·B
 p3‚ÍÈ—ªAƒRƒs[æ‚ÆƒRƒs[Œ³‚Ì”z—ñ‚Ì‚¤‚¿¬‚³‚¢•û‚ªÌ—p‚³‚ê‚Ü‚·B
 p4,p5‚ÍÈ—ª0‚Å‚·B
 p3,p4,p5‚Ì’PˆÊ‚Íbyte‚Å‚·B
 
 
 %href
-HCLCreateBuffer
-HCLWriteBuffer
-HCLReadBuffer
+clCreateBuffer
+clWriteBuffer
+clReadBuffer
 
 ;--------
 %index
-HCLCreateBufferFrom
+clCreateBufferFrom
 VRAMì¬(HSP”z—ñ•Ï”‚©‚ç)
 
 %prm
@@ -162,90 +178,90 @@ array p1 : HSP‘¤‚Ì”z—ñ•Ï”		[in]
 %inst
 dim–½—ß‚È‚Ç‚ÅŠm•Û‚µ‚½HSP‚Ì”z—ñ•Ï”‚ğA‚»‚Ì‚Ü‚ÜƒRƒs[‚µ‚ÄVRAM‚Ìì¬‚ğ‚µ‚Ü‚·B
 CL_mem_object id‚ª•Ô‚è‚Ü‚·B
-‚±‚ê‚Í64bit intŒ^‚Å‚·B
+‚±‚ê‚ÍintŒ^‚Å‚·B
 
 %href
-HCLCreateBuffer
+clCreateBuffer
 ;--------
 
 %index
-HCLWriteBuffer_NonBlocking
+clWriteBuffer_NonBlocking
 HSP”z—ñî•ñ‚ğVRAM‚É‘A‹­§ƒmƒ“ƒuƒƒbƒLƒ“ƒOƒ‚[ƒh
 
 %prm
-int64 p1,array p2,int64 p3,int64 p4,int64 p5,int p6,int p7
-int64 p1 : ƒRƒs[æCL_mem_object id		[in]
+int p1,array p2,int p3,int p4,int p5,int p6,int p7
+int p1 : ƒRƒs[æCL_mem_object id		[in]
 array p2:ƒRƒs[Œ³”z—ñ•Ï”			[in]
-int64 p3 : ƒRƒs[ƒTƒCƒYbyte,È—ª‰Â		[in]
-int64 p4 : ƒRƒs[æ‚ÌƒIƒtƒZƒbƒg,È—ª‰Â		[in]
-int64 p5 : ƒRƒs[Œ³‚ÌƒIƒtƒZƒbƒg,È—ª‰Â		[in]
+int p3 : ƒRƒs[ƒTƒCƒYbyte,È—ª‰Â		[in]
+int p4 : ƒRƒs[æ‚ÌƒIƒtƒZƒbƒg,È—ª‰Â		[in]
+int p5 : ƒRƒs[Œ³‚ÌƒIƒtƒZƒbƒg,È—ª‰Â		[in]
 int p6 : ƒuƒƒbƒLƒ“ƒOƒ‚[ƒhoff,È—ª‰Â		[in]
 int p7 : event_id,È—ª‰Â			[in]
 
 %inst
 
-ƒzƒXƒg(CPU)‚©‚çHCLSetDevice‚Åw’è‚µ‚½ƒfƒoƒCƒX(GPU)‘¤‚Éƒf[ƒ^‚ğ“]‘—‚µ‚Ü‚·B
+ƒzƒXƒg(CPU)‚©‚çclSetDevice‚Åw’è‚µ‚½ƒfƒoƒCƒX(GPU)‘¤‚Éƒf[ƒ^‚ğ“]‘—‚µ‚Ü‚·B
 
-¡HCLWriteBuffer‚Æ‚Ìˆá‚¢
-HCLWriteBuffer‚Ìƒmƒ“ƒuƒƒbƒLƒ“ƒOƒ‚[ƒhw’è‚ÍNVIDIA GPU‚Å‚Í–³Œø‚È‚æ‚¤‚ÅA•K‚¸ƒuƒƒbƒLƒ“ƒO‚ªon‚É‚È‚Á‚Ä‚µ‚Ü‚¢‚Ü‚·B
-“]‘—‚ªI‚í‚é‚Ü‚Å‘Ò‚½‚³‚ê‚é‚Ì‚ª‚Ç‚¤‚µ‚Ä‚à¢‚éê‡A‚±‚ÌHCLWriteBuffer_NonBlocking–½—ß‚ğg—p‚µ‚Ä‚­‚¾‚³‚¢B
+¡clWriteBuffer‚Æ‚Ìˆá‚¢
+clWriteBuffer‚Ìƒmƒ“ƒuƒƒbƒLƒ“ƒOƒ‚[ƒhw’è‚ÍNVIDIA GPU‚Å‚Í–³Œø‚È‚æ‚¤‚ÅA•K‚¸ƒuƒƒbƒLƒ“ƒO‚ªon‚É‚È‚Á‚Ä‚µ‚Ü‚¢‚Ü‚·B
+“]‘—‚ªI‚í‚é‚Ü‚Å‘Ò‚½‚³‚ê‚é‚Ì‚ª‚Ç‚¤‚µ‚Ä‚à¢‚éê‡A‚±‚ÌclWriteBuffer_NonBlocking–½—ß‚ğg—p‚µ‚Ä‚­‚¾‚³‚¢B
 ƒvƒ‰ƒOƒCƒ““à•”‚Å‚Í
 std::thread
 ‚Å•ÊƒXƒŒƒbƒh‚ğ—§‚¿ã‚°A‚»‚Ì’†‚ÅclEnqueueWriteBuffer‚ğÀs‚µ‚Ä‚¢‚Ü‚·B
 ‚±‚Ì‚Æ‚«A•ÊƒXƒŒƒbƒh‚ª‚¢‚Â‚Ç‚Ìƒ^ƒCƒ~ƒ“ƒO‚ÅÀs‚³‚ê‚é‚©‚Í‚í‚©‚ç‚È‚¢‚±‚Æ‚É’ˆÓ‚µ‚Ä‚­‚¾‚³‚¢B
 
-—á‚¦‚ÎHCLWriteBuffer_NonBlocking‚Ì“]‘—‚ªI‚í‚é‚Ü‚Å‘Ò‚¿‚½‚¢ê‡HCLFinish‚ğÀs‚µ‚Ä‚àAclEnqueueWriteBuffer©‘Ì‚ÌÀs‚ª‚Ü‚¾‚Ì‰Â”\«‚à‚ ‚è‚Ü‚·B
-‚»‚Ìê‡“]‘—‚ªI‚í‚é‘O‚ÉHCLFinish‚ÌÀs‚ªŠ®—¹‚µ‚Ä‚µ‚Ü‚¤‚Æ‚¢‚¤‚±‚Æ‚ª‹N‚±‚è‚Ü‚·B
+—á‚¦‚ÎclWriteBuffer_NonBlocking‚Ì“]‘—‚ªI‚í‚é‚Ü‚Å‘Ò‚¿‚½‚¢ê‡clFinish‚ğÀs‚µ‚Ä‚àAclEnqueueWriteBuffer©‘Ì‚ÌÀs‚ª‚Ü‚¾‚Ì‰Â”\«‚à‚ ‚è‚Ü‚·B
+‚»‚Ìê‡“]‘—‚ªI‚í‚é‘O‚ÉclFinish‚ÌÀs‚ªŠ®—¹‚µ‚Ä‚µ‚Ü‚¤‚Æ‚¢‚¤‚±‚Æ‚ª‹N‚±‚è‚Ü‚·B
 
-‚»‚Ì‚½‚ß‚ÉHCLGet_NonBlocking_Status‚Æ‚¢‚¤–½—ß‚ª‚ ‚èA‚±‚ê‚ª0‚É‚È‚Á‚Ä‚¢‚ê‚ÎŠmÀ‚ÉHCLWriteBuffer_NonBlocking‚Ìˆ—‚ªI‚í‚Á‚Ä‚¢‚é‚±‚Æ‚ª•ÛØ‚³‚ê‚Ü‚·B
+‚»‚Ì‚½‚ß‚ÉclGet_NonBlocking_Status‚Æ‚¢‚¤–½—ß‚ª‚ ‚èA‚±‚ê‚ª0‚É‚È‚Á‚Ä‚¢‚ê‚ÎŠmÀ‚ÉclWriteBuffer_NonBlocking‚Ìˆ—‚ªI‚í‚Á‚Ä‚¢‚é‚±‚Æ‚ª•ÛØ‚³‚ê‚Ü‚·B
 
 
 %href
-HCLWriteBuffer
-HCLReadBuffer_NonBlocking
-HCLGet_NonBlocking_Status
+clWriteBuffer
+clReadBuffer_NonBlocking
+clGet_NonBlocking_Status
 ;--------
 
 %index
-HCLReadBuffer_NonBlocking
+clReadBuffer_NonBlocking
 VRAM‚©‚çHSP”z—ñî•ñ‚É“ÇA‹­§ƒmƒ“ƒuƒƒbƒLƒ“ƒOƒ‚[ƒh
 
 %prm
-int64 p1,array p2,int64 p3,int64 p4,int64 p5,int p6,int p7
-int64 p1 : ƒRƒs[Œ³CL_mem_object id		[in]
+int p1,array p2,int p3,int p4,int p5,int p6,int p7
+int p1 : ƒRƒs[Œ³CL_mem_object id		[in]
 array p2:ƒRƒs[æ”z—ñ•Ï”			[out]
-int64 p3 : ƒRƒs[ƒTƒCƒYbyte,È—ª‰Â		[in]
-int64 p4 : ƒRƒs[Œ³‚ÌƒIƒtƒZƒbƒg,È—ª‰Â		[in]
-int64 p5 : ƒRƒs[æ‚ÌƒIƒtƒZƒbƒg,È—ª‰Â		[in]
+int p3 : ƒRƒs[ƒTƒCƒYbyte,È—ª‰Â		[in]
+int p4 : ƒRƒs[Œ³‚ÌƒIƒtƒZƒbƒg,È—ª‰Â		[in]
+int p5 : ƒRƒs[æ‚ÌƒIƒtƒZƒbƒg,È—ª‰Â		[in]
 int p6 : ƒuƒƒbƒLƒ“ƒOƒ‚[ƒhoff,È—ª‰Â		[in]
 int p7 : event_id,È—ª‰Â			[in]
 
 %inst
 
-HCLSetDevice‚Åw’è‚µ‚½ƒfƒoƒCƒX(GPU)‚©‚çƒzƒXƒg(CPU)‘¤‚Éƒf[ƒ^‚ğ“]‘—‚µ‚Ü‚·B
+clSetDevice‚Åw’è‚µ‚½ƒfƒoƒCƒX(GPU)‚©‚çƒzƒXƒg(CPU)‘¤‚Éƒf[ƒ^‚ğ“]‘—‚µ‚Ü‚·B
 
-¡HCLReadBuffer‚Æ‚Ìˆá‚¢
-HCLReadBuffer‚Ìƒmƒ“ƒuƒƒbƒLƒ“ƒOƒ‚[ƒhw’è‚ÍNVIDIA GPU‚Å‚Í–³Œø‚È‚æ‚¤‚ÅA•K‚¸ƒuƒƒbƒLƒ“ƒO‚ªon‚É‚È‚Á‚Ä‚µ‚Ü‚¢‚Ü‚·B
-“]‘—‚ªI‚í‚é‚Ü‚Å‘Ò‚½‚³‚ê‚é‚Ì‚ª‚Ç‚¤‚µ‚Ä‚à¢‚éê‡A‚±‚ÌHCLReadBuffer_NonBlocking–½—ß‚ğg—p‚µ‚Ä‚­‚¾‚³‚¢B
+¡clReadBuffer‚Æ‚Ìˆá‚¢
+clReadBuffer‚Ìƒmƒ“ƒuƒƒbƒLƒ“ƒOƒ‚[ƒhw’è‚ÍNVIDIA GPU‚Å‚Í–³Œø‚È‚æ‚¤‚ÅA•K‚¸ƒuƒƒbƒLƒ“ƒO‚ªon‚É‚È‚Á‚Ä‚µ‚Ü‚¢‚Ü‚·B
+“]‘—‚ªI‚í‚é‚Ü‚Å‘Ò‚½‚³‚ê‚é‚Ì‚ª‚Ç‚¤‚µ‚Ä‚à¢‚éê‡A‚±‚ÌclReadBuffer_NonBlocking–½—ß‚ğg—p‚µ‚Ä‚­‚¾‚³‚¢B
 ƒvƒ‰ƒOƒCƒ““à•”‚Å‚Í
 std::thread
 ‚Å•ÊƒXƒŒƒbƒh‚ğ—§‚¿ã‚°A‚»‚Ì’†‚ÅclEnqueueReadBuffer‚ğÀs‚µ‚Ä‚¢‚Ü‚·B
 ‚±‚Ì‚Æ‚«A•ÊƒXƒŒƒbƒh‚ª‚¢‚Â‚Ç‚Ìƒ^ƒCƒ~ƒ“ƒO‚ÅÀs‚³‚ê‚é‚©‚Í‚í‚©‚ç‚È‚¢‚±‚Æ‚É’ˆÓ‚µ‚Ä‚­‚¾‚³‚¢B
 
-—á‚¦‚ÎHCLReadBuffer_NonBlocking‚Ì“]‘—‚ªI‚í‚é‚Ü‚Å‘Ò‚¿‚½‚¢ê‡HCLFinish‚ğÀs‚µ‚Ä‚àAclEnqueueReadBuffer©‘Ì‚ÌÀs‚ª‚Ü‚¾‚Ì‰Â”\«‚à‚ ‚è‚Ü‚·B
-‚»‚Ìê‡“]‘—‚ªI‚í‚é‘O‚ÉHCLFinish‚ÌÀs‚ªŠ®—¹‚µ‚Ä‚µ‚Ü‚¤‚Æ‚¢‚¤‚±‚Æ‚ª‹N‚±‚è‚Ü‚·B
+—á‚¦‚ÎclReadBuffer_NonBlocking‚Ì“]‘—‚ªI‚í‚é‚Ü‚Å‘Ò‚¿‚½‚¢ê‡clFinish‚ğÀs‚µ‚Ä‚àAclEnqueueReadBuffer©‘Ì‚ÌÀs‚ª‚Ü‚¾‚Ì‰Â”\«‚à‚ ‚è‚Ü‚·B
+‚»‚Ìê‡“]‘—‚ªI‚í‚é‘O‚ÉclFinish‚ÌÀs‚ªŠ®—¹‚µ‚Ä‚µ‚Ü‚¤‚Æ‚¢‚¤‚±‚Æ‚ª‹N‚±‚è‚Ü‚·B
 
-‚»‚Ì‚½‚ß‚ÉHCLGet_NonBlocking_Status‚Æ‚¢‚¤–½—ß‚ª‚ ‚èA‚±‚ê‚ª0‚É‚È‚Á‚Ä‚¢‚ê‚ÎŠmÀ‚ÉHCLReadBuffer_NonBlocking‚Ìˆ—‚ªI‚í‚Á‚Ä‚¢‚é‚±‚Æ‚ª•ÛØ‚³‚ê‚Ü‚·B
+‚»‚Ì‚½‚ß‚ÉclGet_NonBlocking_Status‚Æ‚¢‚¤–½—ß‚ª‚ ‚èA‚±‚ê‚ª0‚É‚È‚Á‚Ä‚¢‚ê‚ÎŠmÀ‚ÉclReadBuffer_NonBlocking‚Ìˆ—‚ªI‚í‚Á‚Ä‚¢‚é‚±‚Æ‚ª•ÛØ‚³‚ê‚Ü‚·B
 
 %href
-HCLReadBuffer
-HCLWriteBuffer_NonBlocking
-HCLGet_NonBlocking_Status
+clReadBuffer
+clWriteBuffer_NonBlocking
+clGet_NonBlocking_Status
 ;--------
 
 
 %index
-HCLGet_NonBlocking_Status
+clGet_NonBlocking_Status
 NonBlockingÀsó‹µæ“¾
 
 %prm
@@ -253,31 +269,31 @@ NonBlockingÀsó‹µæ“¾
 
 %inst
 
-HCLReadBuffer_NonBlocking‚ÆHCLWriteBuffer_NonBlocking‚ÌÀsó‹µ‚ª‚Ç‚¤‚È‚Á‚Ä‚¢‚é‚©‚ğæ“¾‚µ‚Ü‚·B
+clReadBuffer_NonBlocking‚ÆclWriteBuffer_NonBlocking‚ÌÀsó‹µ‚ª‚Ç‚¤‚È‚Á‚Ä‚¢‚é‚©‚ğæ“¾‚µ‚Ü‚·B
 ˆÈ~‚±‚Ì2‚Â‚ğNonBlocking–½—ß‚ÆŒ¾‚¢‚Ü‚·B
 ‚Ü‚¸NonBlocking–½—ß‚ğŒÄ‚Ño‚µ‚½‚ ‚Æ‚Íƒvƒ‰ƒOƒCƒ““à•”‚Ìthread_start•Ï”‚ªƒCƒ“ƒNƒŠƒƒ“ƒg‚³‚ê‚Ü‚·B
 ‚»‚ÌŒã•ÊƒXƒŒƒbƒh‚ª—§‚¿ã‚ª‚èANonBlocking–½—ß“à•”‚ÅclEnqueueReadBuffer,clEnqueueWriteBuffer‚ªÀs‚³‚êA‚»‚Ì–½—ß‚ğ’Ê‚è‰ß‚¬‚½Œã‚Éthread_start•Ï”‚ªƒfƒNƒŠƒƒ“ƒg‚³‚ê‚Ü‚·B
 ‚±‚±‚ÅclEnqueueReadBuffer,clEnqueueWriteBuffer©‘Ì‚Í“]‘—‚ğƒLƒ…[‚É“ü‚ê‚é‚¾‚¯‚Ì–½—ß‚Å‚ ‚é‚±‚Æ‚É’ˆÓ‚ª•K—v‚ÅA(ƒuƒƒbƒLƒ“ƒOƒ‚[ƒhoff)‚©‚Â(NVIDIA‚ÌGPU‚Å‚È‚¢)ê‡‚É“]‘—‚ªI‚í‚é‘O‚Éthread_start‚ªƒfƒNƒŠƒƒ“ƒg‚³‚ê‚Ä‚¢‚é‚±‚Æ‚à‚ ‚é‚±‚Æ‚ğl—¶‚µ‚Ä‚­‚¾‚³‚¢B
 
-‚±‚ÌHCLGet_NonBlocking_Status–½—ß‚Íthread_start‚Ì”’l‚ğæ“¾‚·‚é–½—ß‚Å‚·B
+‚±‚ÌclGet_NonBlocking_Status–½—ß‚Íthread_start‚Ì”’l‚ğæ“¾‚·‚é–½—ß‚Å‚·B
 
 NVIDIA GPU‚Ìê‡ANonBlocking–½—ß‚É‚æ‚éƒf[ƒ^“]‘—Š®—¹”»’è‚Ég‚¤‚±‚Æ‚ª‚Å‚«‚Ü‚·B
 ‚Ü‚½NonBlocking–½—ß‚Åevent id‚ğw’è‚µ‚½ê‡Aƒvƒ‰ƒOƒCƒ““à•”‚ÌclEnqueueReadBuffer,clEnqueueWriteBuffer‚Ìs‚ğ’Ê‚è‚·‚¬‚È‚¢‚Æevent©‘Ìæ“¾‚Å‚«‚È‚¢‚½‚ß(ƒGƒ‰[‚É‚È‚é)Aeventæ“¾‰Â”\”»’è‚É‚àg‚¤‚±‚Æ‚ª‚Å‚«‚Ü‚·B
 
 %href
-HCLWriteBuffer_NonBlocking
-HCLReadBuffer_NonBlocking
+clWriteBuffer_NonBlocking
+clReadBuffer_NonBlocking
 ;--------
 
 %index
-HCLReadIndex_i32
+clReadIndex_i32
 VRAM‚©‚çintŒ^‚ğ1—v‘f“Ç‚İ‚İ
 
 %prm
-(int64 p1,int64 p2)
+(int p1,int p2)
 
-int64 p1 : CL_mem_object id		[in]
-int64 p2 : ”z—ñ‚Ì—v‘f(index)		[in]
+int p1 : CL_mem_object id		[in]
+int p2 : ”z—ñ‚Ì—v‘f(index)		[in]
 
 %inst
 GPU‚ÌVRAM‚©‚ç’¼Ú1‚Â‚Ì’l‚ğ‚Æ‚è‚¾‚µ•Ô‚µ‚Ü‚·B
@@ -287,23 +303,23 @@ p2‚Í“Ç‚İo‚µƒCƒ“ƒfƒbƒNƒX‚ğw’è‚µ‚Ä‰º‚³‚¢B
 
 VRAM‚Ì“à—e‚ªintŒ^4‚Â‚Ì”z—ñ•Ï”@(100,400,500,700)
 ‚¾‚Á‚½ê‡
-HCLReadIndex_i32(memid,3)@‚Í@700
+clReadIndex_i32(memid,3)@‚Í@700
 ‚ğ•Ô‚µ‚Ü‚·B
 
 %href
-HCLReadIndex_dp
-HCLReadIndex_i64
+clReadIndex_dp
+clReadIndex_fp
 ;--------
 
 %index
-HCLReadIndex_i64
-VRAM‚©‚ç64bit intŒ^‚ğ1—v‘f“Ç‚İ‚İ
+clReadIndex_fp
+VRAM‚©‚çfloatŒ^‚ğ1—v‘f“Ç‚İ‚İ
 
 %prm
-(int64 p1,int64 p2)
+(int p1,int p2)
 
-int64 p1 : CL_mem_object id		[in]
-int64 p2 : ”z—ñ‚Ì—v‘f(index)		[in]
+int p1 : CL_mem_object id		[in]
+int p2 : ”z—ñ‚Ì—v‘f(index)		[in]
 
 %inst
 GPU‚ÌVRAM‚©‚ç’¼Ú1‚Â‚Ì’l‚ğ‚Æ‚è‚¾‚µ•Ô‚µ‚Ü‚·B
@@ -311,26 +327,21 @@ p1‚ÍCL mem obj id
 p2‚Í“Ç‚İo‚µƒCƒ“ƒfƒbƒNƒX‚ğw’è‚µ‚Ä‰º‚³‚¢B
 ƒuƒƒbƒLƒ“ƒOƒ‚[ƒh‚ÍƒIƒ“(“]‘—Š®—¹‚Ü‚Å‘Ò‚Â)‚Å‚·B
 
-VRAM‚Ì“à—e‚ª64bit intŒ^4‚Â‚Ì”z—ñ•Ï”@(10000000000,40000000000,50000000000,70000000000)
-‚¾‚Á‚½ê‡
-HCLReadIndex_i64(memid,3)@‚Í@70000000000
-‚ğ•Ô‚µ‚Ü‚·B
-
 %href
-HCLReadIndex_i32
-HCLReadIndex_dp
+clReadIndex_i32
+clReadIndex_dp
 
 ;--------
 
 %index
-HCLReadIndex_dp
+clReadIndex_dp
 VRAM‚©‚çdoubleŒ^‚ğ1—v‘f“Ç‚İ‚İ
 
 %prm
-(int64 p1,int64 p2)
+(int p1,int p2)
 
-int64 p1 : CL_mem_object id		[in]
-int64 p2 : ”z—ñ‚Ì—v‘f(index)		[in]
+int p1 : CL_mem_object id		[in]
+int p2 : ”z—ñ‚Ì—v‘f(index)		[in]
 
 %inst
 GPU‚ÌVRAM‚©‚ç’¼Ú1‚Â‚Ì’l‚ğ‚Æ‚è‚¾‚µ•Ô‚µ‚Ü‚·B
@@ -340,23 +351,23 @@ p2‚Í“Ç‚İo‚µƒCƒ“ƒfƒbƒNƒX‚ğw’è‚µ‚Ä‰º‚³‚¢B
 
 VRAM‚Ì“à—e‚ªdoubleŒ^4‚Â‚Ì”z—ñ•Ï”@(100.0,400.0,500.0,700.0)
 ‚¾‚Á‚½ê‡
-HCLReadIndex_d(memid,3)@‚Í@700.0
+clReadIndex_d(memid,3)@‚Í@700.0
 ‚ğ•Ô‚µ‚Ü‚·B
 
 %href
-HCLReadIndex_i32
-HCLReadIndex_i64
+clReadIndex_i32
+clReadIndex_fp
 ;--------
 
 %index
-HCLWriteIndex_i32
+clWriteIndex_i32
 VRAM‚É1—v‘f‘‚«‚İ
 
 %prm
-int64 p1,int64 p2,int p3
+int p1,int p2,int p3
 
-int64 p1 : CL_mem_object id		[in]
-int64 p2 : ”z—ñ‚Ì—v‘f(index)		[in]
+int p1 : CL_mem_object id		[in]
+int p2 : ”z—ñ‚Ì—v‘f(index)		[in]
 int p3 : “à—e				[in]
 
 %inst
@@ -367,42 +378,42 @@ p1‚Åw’è‚µ‚½VRAM(CL mem obj id)‚Ì“à—e‚Ép3’l‚ğ‘‚«‚İ‚Ü‚·B
 ƒuƒƒbƒLƒ“ƒOƒ‚[ƒh‚ÍƒIƒ“(“]‘—Š®—¹‚Ü‚Å‘Ò‚Â)‚Å‚·B
 
 %href
-HCLWriteIndex_i64
-HCLWriteIndex_dp
+clWriteIndex_fp
+clWriteIndex_dp
 ;--------
 
 %index
-HCLWriteIndex_i64
+clWriteIndex_fp
 VRAM‚É1—v‘f‘‚«‚İ
 
 %prm
-int64 p1,int64 p2,int64 p3
+int p1,int p2,float p3
 
-int64 p1 : CL_mem_object id		[in]
-int64 p2 : ”z—ñ‚Ì—v‘f(index)		[in]
-int64 p3 : “à—e				[in]
+int p1 : CL_mem_object id		[in]
+int p2 : ”z—ñ‚Ì—v‘f(index)		[in]
+float p3 : “à—e				[in]
 
 %inst
 p1‚Åw’è‚µ‚½VRAM(CL mem obj id)‚Ì“à—e‚Ép3’l‚ğ‘‚«‚İ‚Ü‚·B
 ‘‚«‚İƒCƒ“ƒfƒbƒNƒX‚Íp2‚Åw’è‚µ‚Ü‚·B
-‚±‚Ì‚Æ‚«VRAM‚Í64bit intŒ^‚Ì”z—ñ•Ï”‚Æ‚µ‚Äl‚¦‚Ü‚·B
+‚±‚Ì‚Æ‚«VRAM‚ÍfloatŒ^‚Ì”z—ñ•Ï”‚Æ‚µ‚Äl‚¦‚Ü‚·B
 
 ƒuƒƒbƒLƒ“ƒOƒ‚[ƒh‚ÍƒIƒ“(“]‘—Š®—¹‚Ü‚Å‘Ò‚Â)‚Å‚·B
 
 %href
-HCLWriteIndex_i32
-HCLWriteIndex_dp
+clWriteIndex_i32
+clWriteIndex_dp
 ;--------
 
 %index
-HCLWriteIndex_dp
+clWriteIndex_dp
 VRAM‚É1—v‘f‘‚«‚İ
 
 %prm
-int64 p1,int64 p2,double p3
+int p1,int p2,double p3
 
-int64 p1 : CL_mem_object id		[in]
-int64 p2 : ”z—ñ‚Ì—v‘f(index)		[in]
+int p1 : CL_mem_object id		[in]
+int p2 : ”z—ñ‚Ì—v‘f(index)		[in]
 double p3:“à—e				[in]
 
 %inst
@@ -414,21 +425,21 @@ p1‚Åw’è‚µ‚½VRAM(CL mem obj id)‚Ì“à—e‚Ép3’l‚ğ‘‚«‚İ‚Ü‚·B
 
 
 %href
-HCLWriteIndex_i32
-HCLWriteIndex_i64
+clWriteIndex_i32
+clWriteIndex_i64
 ;--------
 
 %index
-HCLFillBuffer_i32
+clFillBuffer_i32
 VRAM‚ğw’è‚Ì”’l‚Å–„‚ß‚é
 
 %prm
-int64 p1,int p2,int64 p3,int64 p4,int p5
+int p1,int p2,int p3,int p4,int p5
 
-int64 p1 : CL_mem_object id		[in]
+int p1 : CL_mem_object id		[in]
 int p2 : pattern,È—ª‰Â			[in]
-int64 p3 : offset,È—ª‰Â		[in]
-int64 p4 : size,È—ª‰Â			[in]
+int p3 : offset,È—ª‰Â		[in]
+int p4 : size,È—ª‰Â			[in]
 int p5 : event_id,È—ª‰Â		[in]
 
 %inst
@@ -438,50 +449,50 @@ p2‚ÍÈ—ª0‚É‚È‚è‚Ü‚·B
 È—ªp3=0,p4=ƒƒ‚ƒŠƒTƒCƒY
 ‚Æ‚È‚è‚Ü‚·B
 
-‚±‚Ì–½—ß©‘Ì‚ÍÀs‚ªŠ®—¹‚·‚é‚Ü‚Å‘Ò‚Â–½—ß‚Å‚Í‚È‚­AOpenCLƒRƒ}ƒ“ƒh‚ğƒLƒ…[‚É“ü‚ê‚é‚¾‚¯‚Å‚ ‚èAÀÛ‚ÌƒJ[ƒlƒ‹‚ÌÀsI—¹‚ğ‘Ò‚Â‚É‚Íevent‚ğg‚¤‚©HCLFinish“™‚Å‘Ò‚Â‚±‚Æ‚É‚È‚è‚Ü‚·B
+‚±‚Ì–½—ß©‘Ì‚ÍÀs‚ªŠ®—¹‚·‚é‚Ü‚Å‘Ò‚Â–½—ß‚Å‚Í‚È‚­AOpenCLƒRƒ}ƒ“ƒh‚ğƒLƒ…[‚É“ü‚ê‚é‚¾‚¯‚Å‚ ‚èAÀÛ‚ÌƒJ[ƒlƒ‹‚ÌÀsI—¹‚ğ‘Ò‚Â‚É‚Íevent‚ğg‚¤‚©clFinish“™‚Å‘Ò‚Â‚±‚Æ‚É‚È‚è‚Ü‚·B
 
 %href
-HCLFillBuffer_i64
-HCLFillBuffer_dp
+clFillBuffer_fp
+clFillBuffer_dp
 ;--------
 %index
-HCLFillBuffer_i64
+clFillBuffer_fp
 VRAM‚ğw’è‚Ì”’l‚Å–„‚ß‚é
 
 %prm
-int64 p1,int64 p2,int64 p3,int64 p4,int p5
+int p1,float p2,int p3,int p4,int p5
 
-int64 p1 : CL_mem_object id		[in]
-int64 p2 : pattern,È—ª‰Â		[in]
-int64 p3 : offset,È—ª‰Â		[in]
-int64 p4 : size,È—ª‰Â			[in]
+int p1 : CL_mem_object id		[in]
+float p2 : pattern		[in]
+int p3 : offset,È—ª‰Â		[in]
+int p4 : size,È—ª‰Â			[in]
 int p5 : event_id,È—ª‰Â		[in]
 
 %inst
 p1‚Åw’è‚µ‚½VRAM(CL mem obj id)‚Ép2‚Ì’l‚ğ8byte‚¨‚«‚É‘‚«‚İ‚Ü‚·B
-p2‚ÍÈ—ª0‚É‚È‚è‚Ü‚·B
+p2‚É‚ÍfloatŒ^‚Åpattern‚ğw’è‚µ‚Ü‚·B
 ‘‚«‚Şæ‚Ìindex‚Æ‘‚«‚ŞƒTƒCƒY‚Íp3,p4‚Åw’è‚µ‚Ü‚·‚ªA’PˆÊ‚ğbyte‚Åw’è‚·‚é‚±‚Æ‚É’ˆÓ‚µ‚Ä‚­‚¾‚³‚¢B
 È—ªp3=0,p4=ƒƒ‚ƒŠƒTƒCƒY
 ‚Æ‚È‚è‚Ü‚·B
 
-‚±‚Ì–½—ß©‘Ì‚ÍÀs‚ªŠ®—¹‚·‚é‚Ü‚Å‘Ò‚Â–½—ß‚Å‚Í‚È‚­AOpenCLƒRƒ}ƒ“ƒh‚ğƒLƒ…[‚É“ü‚ê‚é‚¾‚¯‚Å‚ ‚èAÀÛ‚ÌƒJ[ƒlƒ‹‚ÌÀsI—¹‚ğ‘Ò‚Â‚É‚Íevent‚ğg‚¤‚©HCLFinish“™‚Å‘Ò‚Â‚±‚Æ‚É‚È‚è‚Ü‚·B
+‚±‚Ì–½—ß©‘Ì‚ÍÀs‚ªŠ®—¹‚·‚é‚Ü‚Å‘Ò‚Â–½—ß‚Å‚Í‚È‚­AOpenCLƒRƒ}ƒ“ƒh‚ğƒLƒ…[‚É“ü‚ê‚é‚¾‚¯‚Å‚ ‚èAÀÛ‚ÌƒJ[ƒlƒ‹‚ÌÀsI—¹‚ğ‘Ò‚Â‚É‚Íevent‚ğg‚¤‚©clFinish“™‚Å‘Ò‚Â‚±‚Æ‚É‚È‚è‚Ü‚·B
 
 %href
-HCLFillBuffer_i32
-HCLFillBuffer_dp
+clFillBuffer_i32
+clFillBuffer_dp
 ;--------
 
 %index
-HCLFillBuffer_dp
+clFillBuffer_dp
 VRAM‚ğw’è‚Ì”’l‚Å–„‚ß‚é
 
 %prm
-int64 p1,double p2,int64 p3,int64 p4,int p5
+int p1,double p2,int p3,int p4,int p5
 
-int64 p1 : CL_mem_object id		[in]
+int p1 : CL_mem_object id		[in]
 double p2 : pattern,È—ª‰Â		[in]
-int64 p3 : offset,È—ª‰Â		[in]
-int64 p4 : size,È—ª‰Â			[in]
+int p3 : offset,È—ª‰Â		[in]
+int p4 : size,È—ª‰Â			[in]
 int p5 : event_id,È—ª‰Â		[in]
 
 %inst
@@ -491,21 +502,21 @@ p2‚ÍÈ—ª0.0‚É‚È‚è‚Ü‚·B
 È—ªp3=0,p4=ƒƒ‚ƒŠƒTƒCƒY
 ‚Æ‚È‚è‚Ü‚·B
 
-‚±‚Ì–½—ß©‘Ì‚ÍÀs‚ªŠ®—¹‚·‚é‚Ü‚Å‘Ò‚Â–½—ß‚Å‚Í‚È‚­AOpenCLƒRƒ}ƒ“ƒh‚ğƒLƒ…[‚É“ü‚ê‚é‚¾‚¯‚Å‚ ‚èAÀÛ‚ÌƒJ[ƒlƒ‹‚ÌÀsI—¹‚ğ‘Ò‚Â‚É‚Íevent‚ğg‚¤‚©HCLFinish“™‚Å‘Ò‚Â‚±‚Æ‚É‚È‚è‚Ü‚·B
+‚±‚Ì–½—ß©‘Ì‚ÍÀs‚ªŠ®—¹‚·‚é‚Ü‚Å‘Ò‚Â–½—ß‚Å‚Í‚È‚­AOpenCLƒRƒ}ƒ“ƒh‚ğƒLƒ…[‚É“ü‚ê‚é‚¾‚¯‚Å‚ ‚èAÀÛ‚ÌƒJ[ƒlƒ‹‚ÌÀsI—¹‚ğ‘Ò‚Â‚É‚Íevent‚ğg‚¤‚©clFinish“™‚Å‘Ò‚Â‚±‚Æ‚É‚È‚è‚Ü‚·B
 
 %href
-HCLFillBuffer_i32
-HCLFillBuffer_i64
+clFillBuffer_i32
+clFillBuffer_fp
 ;--------
 
 %index
-HCLdim_i32FromBuffer
+cldim_i32FromBuffer
 HSP”z—ñ•Ï”Šm•Û‚µVRAM‚©‚çƒRƒs[
 
 %prm
-array p1,int64 p2
+array p1,int p2
 array p1 : HSP‘¤‚Ì”z—ñ•Ï”			[out]
-int64 p2 : ƒRƒs[Œ³CL_mem_object id		[in]
+int p2 : ƒRƒs[Œ³CL_mem_object id		[in]
 
 %inst
 p1‚Åw’è‚µ‚½•Ï”‚ğintŒ^”z—ñ•Ï”‚Æ‚µ‚Ä‰Šú‰»‚µA“à—e‚ğp2‚©‚çƒRƒs[‚µ‚Ü‚·B
@@ -514,36 +525,36 @@ p1‚Åw’è‚µ‚½•Ï”‚ğintŒ^”z—ñ•Ï”‚Æ‚µ‚Ä‰Šú‰»‚µA“à—e‚ğp2‚©‚çƒRƒs[‚µ‚Ü‚·B
 
 
 %href
-HCLdim_i64FromBuffer
-HCLdim_dpFromBuffer
+cldim_fpFromBuffer
+cldim_dpFromBuffer
 ;--------
 %index
-HCLdim_i64FromBuffer
+cldim_fpFromBuffer
 HSP”z—ñ•Ï”Šm•Û‚µVRAM‚©‚çƒRƒs[
 
 %prm
-array p1,int64 p2
+array p1,int p2
 array p1 : HSP‘¤‚Ì”z—ñ•Ï”			[out]
-int64 p2 : ƒRƒs[Œ³CL_mem_object id		[in]
+int p2 : ƒRƒs[Œ³CL_mem_object id		[in]
 
 %inst
-p1‚Åw’è‚µ‚½•Ï”‚ğ64bit intŒ^”z—ñ•Ï”‚Æ‚µ‚Ä‰Šú‰»‚µA“à—e‚ğp2‚©‚çƒRƒs[‚µ‚Ü‚·B
+p1‚Åw’è‚µ‚½•Ï”‚ğfloatŒ^”z—ñ•Ï”‚Æ‚µ‚Ä‰Šú‰»‚µA“à—e‚ğp2‚©‚çƒRƒs[‚µ‚Ü‚·B
 ƒTƒCƒY‚Í©“®‚ÅŒˆ’è‚³‚ê‚Ü‚·B
 ‚È‚¨HSP‚Ìd—lãAŠm•Û‚Å‚«‚éƒTƒCƒY‚ÌãŒÀ‚Í1GB‚Ü‚Å‚Å‚·B
 
 
 %href
-HCLdim_i32FromBuffer
-HCLdim_dpFromBuffer
+cldim_i32FromBuffer
+cldim_dpFromBuffer
 ;--------
 %index
-HCLdim_dpFromBuffer
+cldim_dpFromBuffer
 HSP”z—ñ•Ï”Šm•Û‚µVRAM‚©‚çƒRƒs[
 
 %prm
-array p1,int64 p2
+array p1,int p2
 array p1 : HSP‘¤‚Ì”z—ñ•Ï”			[out]
-int64 p2 : ƒRƒs[Œ³CL_mem_object id		[in]
+int p2 : ƒRƒs[Œ³CL_mem_object id		[in]
 
 %inst
 p1‚Åw’è‚µ‚½•Ï”‚ğdoubleŒ^”z—ñ•Ï”‚Æ‚µ‚Ä‰Šú‰»‚µA“à—e‚ğp2‚©‚çƒRƒs[‚µ‚Ü‚·B
@@ -552,7 +563,7 @@ p1‚Åw’è‚µ‚½•Ï”‚ğdoubleŒ^”z—ñ•Ï”‚Æ‚µ‚Ä‰Šú‰»‚µA“à—e‚ğp2‚©‚çƒRƒs[‚µ‚Ü‚·B
 
 
 %href
-HCLdim_i64FromBuffer
-HCLdim_i32FromBuffer
+cldim_fpFromBuffer
+cldim_i32FromBuffer
 ;--------
 
