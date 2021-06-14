@@ -136,7 +136,6 @@ static void _ConvRGBtoRGBA(void)
 
 
 
-
 void mes(const char* strc, int val)
 {
 	char c[10];
