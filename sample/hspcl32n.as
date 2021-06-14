@@ -3,7 +3,7 @@
 
 
 
-//#regcmd "_hsp3cmdinit@4","HSPCL32N.dll"
+#regcmd "_hsp3cmdinit@4","HSPCL32N.dll"
 
 #cmd clGetDeviceCount $054
 #cmd clGetSettingDevice $056

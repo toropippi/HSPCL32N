@@ -33,7 +33,9 @@
 	bsave "clcode.cl",progrm
 	wait 20
 	clBuildProgram "clcode.cl",prgid;↑のコードのプログラムをビルド！
+	krnid=clCreateKernel(prgid,"dainyu")
 	clCreateKernel prgid,"dainyu",krnid;カーネルid作成。↑の"dainyu"関数というのが1カーネル
+	
 	clCreateBuffer vram,64;vramに64byte確保する。int型でいうと64/4で16配列をグラボ上に確保したことになる。この命令で確保するデータの配列の「型」は指定できない。つまりこの時点で64byte確保できたがdouble型でもint型でもfloat型で使用してもいい。型はカーネル実行時にカーネル側で指定する
 	clSetKernel krnid,0,vram;↑の__global int *vram0・・・の「vram0」に割り当てるメモリオブジェクトを指定。引数の数だけ命令を呼び出し指定する。今回は引数１こなので１回だけ
 	clDoKernel krnid,1,16,1;16配列全部に数字(12345)を代入したいために並列実行数には16を指定。

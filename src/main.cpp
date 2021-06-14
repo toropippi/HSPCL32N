@@ -14,7 +14,6 @@
 #include "RGB.h"
 
 
-
 const int MAX_PLATFORM_IDS = 32;//platform_idの最大値
 const int MAX_DEVICE_IDS = 2048;//一度に取得できるdeviceの最大値
 const int CLCALL_LOOP = 32;//HCLCallの引数の可能な数
@@ -175,6 +174,28 @@ cl_program WithSource_func(cl_context contxt, std::string s_source, std::string 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*------------------------------------------------------------*/
 
 static int cmdfunc(int cmd)
@@ -227,9 +248,8 @@ static int cmdfunc(int cmd)
 		break;
 	}
 
-	case 0x79://A4
+	case 0x5A://A4//clCreateKernel();
 	{
-		//clCreateKernel();
 		p1 = code_getdi(0);		// パラメータ1:数値
 		char* ps;
 		char pathname[_MAX_PATH];
@@ -282,32 +302,6 @@ static int cmdfunc(int cmd)
 		exinfo->HspFunc_dim(pval1, 8, 0, code_getdi(0), 0, 0, 0);
 		break;
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1592,9 +1586,7 @@ static void* reffunc(int* type_res, int cmd)
 	{
 		int prm1 = code_geti();
 		char* p;
-		//char pathname[_MAX_PATH];
 		p = code_gets();								// 文字列を取得
-		//strncpy(pathname, p, _MAX_PATH - 1);			// 取得した文字列をコピー
 		cl_int ret;
 		kernel = clCreateKernel((cl_program)prm1, p, &ret);
 
