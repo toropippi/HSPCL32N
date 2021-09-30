@@ -1,0 +1,43 @@
+//バイトニックソートは並列にソートが可能なアルゴリズムです。
+//詳しくは
+//http://blog.livedoor.jp/toropippi/archives/54817221.html
+//
+
+#include "hspcl32n.as"
+	clinit
+	M=21//冪指数
+	N=1<<M//ソートしたい要素数
+
+	memA=clCreateBuffer(N*(4+4))//sizeof(key)+sizeof(index)
+	
+	prgid=clCreateProgram("BitonicSort.cl")
+	krnSort=clCreateKernel(prgid,"ParallelBitonic_B2")
+	krnRnd=clCreateKernel(prgid,"GenerateRandom")
+
+	//まずは初期値をGPUで生成
+	clSetKernel krnRnd,0,memA
+	clDoKrn1 krnRnd,N,limit(N,1,256)
+
+	mes "初期値"
+		repeat 20
+		mes "key="+clReadIndex_i32(memA,cnt*2+0)+"\tindex="+clReadIndex_i32(memA,cnt*2+1)+""
+		loop
+
+	//ソート計算
+	clSetKernel krnSort,0,memA
+		repeat M
+		i=cnt
+		inc=1<<cnt
+			repeat cnt+1
+			clSetKrns krnSort,memA,inc,2 << i
+			clDoKrn1 krnSort,N/2,limit(N/2,1,256)
+            inc /= 2
+			loop
+		loop
+
+	pos 320,0
+	mes "ソート後"
+		repeat 20
+		mes "key="+clReadIndex_i32(memA,cnt*2+0)+"\tindex="+clReadIndex_i32(memA,cnt*2+1)+""
+		loop
+	

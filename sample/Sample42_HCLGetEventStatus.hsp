@@ -1,0 +1,32 @@
+//clGetEventStatusでカーネル実行が終了したかどうかを判定できます。
+//clFinishでもカーネル実行終了待ちができますが、ブロッキングされるためCPU稼働率が100%(コアあたり)にはりつくので気持ち悪いです。
+//それを回避する策として、clGetEventStatusでカーネル完了していなければwaitをいれる
+//というプログラムを組むことでCPUに負荷をかけずに待つことができます。
+#include "hspcl32n.as"
+	randomize
+	clinit
+
+	prg=clCreateProgram("SinDiv.cl")
+	krn=clCreateKernel(prg,"SinDiv")
+	
+	n=1024*1024
+	clmem_A=clCreateBuffer(n*4)
+	clmem_B=clCreateBuffer(n*4)
+	clSetKrns krn,clmem_A,clmem_B,18911//1thread内のループ数
+
+	mes "計算中...数秒くらいかかります"
+	redraw 1
+	wait 1
+
+	//重い計算
+	event_id=0
+	clDoKrn1 krn,n,64,event_id//event id=0
+
+	clFlush//ここにFlushをはさまないと永遠とkrnを実行してくれないことがある。
+	repeat -1//直前のカーネルが終了したらループを抜ける
+		await 16
+		if clGetEventStatus(event_id)==0:break
+	loop
+	
+	mes "計算終了"
+	stop

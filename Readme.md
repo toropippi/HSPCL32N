@@ -1,1 +1,107 @@
---------------------------------------------------------------------------  【  ソフト名   】HSPCL32N.dll  【 バージョン  】2.1  【    作者     】pippi  【  必要環境１ 】Windows7 以降  【  必要環境２ 】HSP Ver3.5以降  【  必要環境３ 】OpenCL対応グラフィックボードまたはCPUまたはCellプロセッサー  			GeForce 400 Series以降  			RADEON HD 6xxx以降  			HD Graphics 2500/4000以降(Ivy Bridge以降)  【  取扱種別   】フリープラグイン  【    内容     】HSP3(32bit)用OpenCLプラグイン  【     HP      】http://toropippi.web.fc2.com/  --------------------------------------------------------------------------    ## ■使用方法  １、sampleフォルダにある「HSPCL32N.dll」をHSPインストールフォルダ「C:\hsp35」ないしは「C:\Program Files (x86)\hsp35」に順ずる階層へコピーして下さい。  ２、sampleフォルダにある「hspcl32n.as」をHSPインストールフォルダの「common」フォルダの中へ入れて下さい。  ３、ヘルプデータをコピーしたい場合は、「doclib」フォルダ自体をそのままHSPインストールフォルダの中へ上書きして下さい。      ## ■概要    OpenCLをHSPから簡単に触れるようにしたプラグインです。HSPは計算速度が遅いのが課題ですが、このプラグインがあればGPU上で計算(GPGPU)させることができ、とてつもない高速化が可能になります。    現在HSPCLシリーズは3種類あります。    ### HSPCL32 ver2.0(HSPコンテスト2013) → HSPCL32Nへ改名    ここで公開しているものです。    HSPCL32 ver2.0はOpenCL機能しかないプラグインです。    youdaiさんによる修正を反映し下記点が更新されました。    ・cliniの返り値の cldevcount が stat へ変更    ・fdim が clfdim へ変更    ・float() が clfloat() へ変更    その後HSPCL64から命令を逆輸入して、互換性を保ちつつHSPCL64とほぼ同じような形で使えるようになりました。    今後さらに更新を続ける予定です。    ### HSPCL32 ver4.02    HSPコンテスト2014版はコチラ  http://dev.onionsoft.net/seed/info.ax?id=929    ただしこれは「varsize」関数がかち合ってhsp35以降ではエラーが出るようになりました。      そこでyoudaiさんによりhspcl32.asの中身を修正して頂いた安定バージョンが公開されました。    http://youdaizone.webcrow.jp/hsp3/hspcl32_fix.html    現在はコチラを使用するのが良いでしょう。      なおver4.02以降更新の予定はございません。    ### HSPCL64  HSPCL32Nの64bit版です。    https://github.com/toropippi/HSPCL64    HSPCL32Nと比較し、GPU上で確保できるメモリサイズ4GBまでの制約がなくなりました。    ## ■インストール  HSPインストールフォルダにHSPCL32.dllをコピー  アンインストールはゴミ箱へ削除    ## ■注意点  このプラグインではカーネルコードによるメモリアクセス違反に対して防護する機能がありません。  メモリアクセス違反によるエラーがシステムに影響を及ぼすことがあります。    最悪、ブルースクリーンになったり、GPUからの信号が途絶え画面が落ちたり、GPUがフリーズしたりなどの現象が起こります。  これに関するいかなる損失も、責任を負えません。    ただ私は100回以上ブルスクを出してきましたが、これでGPUが壊れたことは1回もありませんでした。    ## ■連絡先  efghiqippi@yahoo.co.jp    ## ■免責  このプラグインの使用により発生した如何なる問題について当方は一切の責任を負いません。  商用問わず配布、転載、改造は無断かつ自由にして構いません（大歓迎）    ## ■License  HSPCL32N Copyright (c) 2021 toropippi  Released under the MIT License  see https://opensource.org/licenses/MIT    ## ■更新履歴  	Ver 2.2  	2021/6/14	ほとんどの命令をHSPCL64から逆輸入  	以前の命令と互換性を保つため関数型とコマンド型どちらでも命令を実行できるように変更  		Ver 2.1  	2021/5/28	命令をHSPCL32 ver2.0から引き継ぎ。バージョン表記も引き継ぎ  		Ver 2.0	2013/8/29	HCLbye実行時の不具合を修正	HCLDoKrn1～3まで追加	HCLWaitTaskでタスク待できるように	メモリアクセス違反以外の大概のプログラムミスに対しエラーメッセージを出すようにチェック機能搭載	その他エラーメッセージがでるように機能追加	リリース前最終調整		Ver 1.11	2013/8/10	カーネル実行においてlocal_work_sizeとglobal_work_sizeに配列を指定できるように変更		Ver 1.10	2013/5/14	プログラムビルド、カーネル、メモリ周りの実装		Ver 1.0	2013/5/9	コンテキストの作成命令
+--------------------------------------------------------------------------  
+�y  �\�t�g��   �zHSPCL32N.dll  
+�y �o�[�W����  �z2.1  
+�y    ���     �zpippi  
+�y  �K�v���P �zWindows7 �ȍ~  
+�y  �K�v���Q �zHSP Ver3.5�ȍ~  
+�y  �K�v���R �zOpenCL�Ή��O���t�B�b�N�{�[�h�܂���CPU�܂���Cell�v���Z�b�T�[  
+			GeForce 400 Series�ȍ~  
+			RADEON HD 6xxx�ȍ~  
+			HD Graphics 2500/4000�ȍ~(Ivy Bridge�ȍ~)  
+�y  �戵���   �z�t���[�v���O�C��  
+�y    ���e     �zHSP3(32bit)�pOpenCL�v���O�C��  
+�y     HP      �zhttp://toropippi.web.fc2.com/  
+--------------------------------------------------------------------------  
+  
+## ���g�p���@  
+�P�Asample�t�H���_�ɂ���uHSPCL32N.dll�v��HSP�C���X�g�[���t�H���_�uC:\hsp35�v�Ȃ����́uC:\Program Files (x86)\hsp35�v�ɏ�����K�w�փR�s�[���ĉ������B  
+�Q�Asample�t�H���_�ɂ���uhspcl32n.as�v��HSP�C���X�g�[���t�H���_�́ucommon�v�t�H���_�̒��֓���ĉ������B  
+�R�A�w���v�f�[�^���R�s�[�������ꍇ�́A�udoclib�v�t�H���_���̂����̂܂�HSP�C���X�g�[���t�H���_�̒��֏㏑�����ĉ������B  
+  
+  
+## ���T�v  
+  OpenCL��HSP����ȒP�ɐG���悤�ɂ����v���O�C���ł��BHSP�͌v�Z���x���x���̂��ۑ�ł����A���̃v���O�C���������GPU��Ōv�Z(GPGPU)�����邱�Ƃ��ł��A�ƂĂ��Ȃ����������\�ɂȂ�܂��B  
+  ����HSPCL�V���[�Y��3��ނ���܂��B  
+  
+### HSPCL32 ver2.0(HSP�R���e�X�g2013) �� HSPCL32N�։���  
+  �����Ō��J���Ă�����̂ł��B  
+  HSPCL32 ver2.0��OpenCL�@�\�����Ȃ��v���O�C���ł��B  
+  youdai����ɂ��C���𔽉f�����L�_���X�V����܂����B  
+  �Eclini�̕Ԃ�l�� cldevcount �� stat �֕ύX  
+  �Efdim �� clfdim �֕ύX  
+  �Efloat() �� clfloat() �֕ύX  
+  ���̌�HSPCL64���疽�߂��t�A�����āA�݊�����ۂ���HSPCL64�Ƃقړ����悤�Ȍ`�Ŏg����悤�ɂȂ�܂����B  
+  ���コ��ɍX�V�𑱂���\��ł��B  
+  
+### HSPCL32 ver4.02  
+  HSP�R���e�X�g2014�ł̓R�`��
+  http://dev.onionsoft.net/seed/info.ax?id=929  
+  ����������́uvarsize�v�֐�������������hsp35�ȍ~�ł̓G���[���o��悤�ɂȂ�܂����B  
+  
+  ������youdai����ɂ��hspcl32.as�̒��g���C�����Ē���������o�[�W���������J����܂����B  
+  http://youdaizone.webcrow.jp/hsp3/hspcl32_fix.html  
+  ���݂̓R�`�����g�p����̂��ǂ��ł��傤�B  
+  
+  �Ȃ�ver4.02�ȍ~�X�V�̗\��͂������܂���B  
+  
+### HSPCL64
+  HSPCL32N��64bit�łł��B  
+  https://github.com/toropippi/HSPCL64  
+  HSPCL32N�Ɣ�r���AGPU��Ŋm�ۂł��郁�����T�C�Y4GB�܂ł̐��񂪂Ȃ��Ȃ�܂����B  
+  
+## ���C���X�g�[��  
+HSP�C���X�g�[���t�H���_��HSPCL32.dll���R�s�[  
+�A���C���X�g�[���̓S�~���֍폜  
+  
+## �����ӓ_  
+���̃v���O�C���ł̓J�[�l���R�[�h�ɂ�郁�����A�N�Z�X�ᔽ�ɑ΂��Ėh�삷��@�\������܂���B  
+�������A�N�Z�X�ᔽ�ɂ��G���[���V�X�e���ɉe�����y�ڂ����Ƃ�����܂��B  
+  
+�ň��A�u���[�X�N���[���ɂȂ�����AGPU����̐M�����r�₦��ʂ���������AGPU���t���[�Y������Ȃǂ̌��ۂ��N����܂��B  
+����Ɋւ��邢���Ȃ鑹�����A�ӔC�𕉂��܂���B  
+  
+��������100��ȏ�u���X�N���o���Ă��܂������A�����GPU����ꂽ���Ƃ�1�������܂���ł����B  
+  
+## ���A����  
+efghiqippi@yahoo.co.jp  
+  
+## ���Ɛ�  
+���̃v���O�C���̎g�p�ɂ�蔭�������@���Ȃ���ɂ��ē����͈�؂̐ӔC�𕉂��܂���B  
+���p��킸�z�z�A�]�ځA�����͖��f�����R�ɂ��č\���܂���i�劽�}�j  
+  
+## ��License  
+HSPCL32N Copyright (c) 2021 toropippi  
+Released under the MIT License  
+see https://opensource.org/licenses/MIT  
+  
+
+## ���X�V����  
+	Ver 2.2  
+	2021/6/14
+	�قƂ�ǂ̖��߂�HSPCL64����t�A��  
+	�ȑO�̖��߂ƌ݊�����ۂ��ߊ֐��^�ƃR�}���h�^�ǂ���ł����߂����s�ł���悤�ɕύX  
+	
+	Ver 2.1  
+	2021/5/28
+	���߂�HSPCL32 ver2.0��������p���B�o�[�W�����\�L�������p��  
+	
+	Ver 2.0
+	2013/8/29
+	HCLbye���s���̕s����C��
+	HCLDoKrn1�`3�܂Œǉ�
+	HCLWaitTask�Ń^�X�N�҂ł���悤��
+	�������A�N�Z�X�ᔽ�ȊO�̑�T�̃v���O�����~�X�ɑ΂��G���[���b�Z�[�W���o���悤�Ƀ`�F�b�N�@�\����
+	���̑��G���[���b�Z�[�W���ł�悤�ɋ@�\�ǉ�
+	�����[�X�O�ŏI����
+	
+	Ver 1.11
+	2013/8/10
+	�J�[�l�����s�ɂ�����local_work_size��global_work_size�ɔz����w��ł���悤�ɕύX
+	
+	Ver 1.10
+	2013/5/14
+	�v���O�����r���h�A�J�[�l���A����������̎���
+	
+	Ver 1.0
+	2013/5/9
+	�R���e�L�X�g�̍쐬����

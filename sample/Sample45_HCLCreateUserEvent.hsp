@@ -1,0 +1,63 @@
+//eventは必ずしもDoKernelやWriteReadBufferに絡めたものでないといけないわけではありません。
+//自分で"UserEvent"を作成することもできます。
+//注意としてはclGetEventLogs命令で"UserEvent"が扱えないことです。タイムスタンプ代わりにするのは難しそうです・・・
+#include "hspcl32n.as"
+#include "ViewTimeStamp_module.as"
+	randomize
+	wait 1
+	clinit
+	prg=clCreateProgram("VecAdd.cl")
+	krn=clCreateKernel(prg,"vecAdd")
+	
+	n=65536
+	clmem_A=clCreateBuffer(n*4)
+	clmem_B=clCreateBuffer(n*4)
+	clmem_C=clCreateBuffer(n*4)
+	
+	dim host_A,n
+	dim host_B,n
+	dim host_C,n
+		repeat n
+		host_A.cnt=cnt
+		host_B.cnt=cnt
+		loop
+	
+	clWriteBuffer clmem_A,host_A,n*4,,,1,0//event_id 0
+	clWriteBuffer clmem_B,host_B,n*4,,,1,1//event_id 1
+	
+	clSetKrns krn,clmem_A,clmem_B,clmem_C
+
+	//UserEvent作成。これはclDoKrn1の実行開始タイミングを
+	//Eventで制御したいために作成
+	clCreateUserEvent 10//event_id 10
+	//これをした時点でevent id 10はCL_SUBMITEDの状態になる
+
+	//次に実行するclDoKrn1やReadBuffer系命令に、Event待ちしてもらう
+	//具体的にはevent id 10がCL_COMPLETEになるまでclDoKrn1の実行開始を待つ
+	clSetWaitEvent 10
+	
+	clDoKrn1 krn,n,64,2//event_id 2。ここではキューに入れる操作をするだけ、実行はまだ
+	clFlush
+
+	//CPUのタイミングでCL_COMPLETEにセット。つまりGPUへGOサインを出すことができる
+	//ここでは3ms時間待つ
+	gosub*wait3ms
+	clSetUserEventStatus 10,CL_COMPLETE//この後clDoKrn1のカーネルの計算が走る
+	//
+	clFinish
+	
+	clReadBuffer clmem_C,host_C,n*4,,,0,3//event_id 3
+	clFinish
+	
+	event_num=4
+	ViewEvents2 4
+	stop
+	
+
+*wait3ms
+	ms0=gettime(7)
+		repeat 9999999
+		ms1=gettime(7)
+		if (ms1-ms0+1000)\1000>=3:break
+		loop
+	return
