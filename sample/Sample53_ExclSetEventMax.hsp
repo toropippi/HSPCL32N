@@ -1,0 +1,13 @@
+#include "hspcl32n.as"
+#include "ViewTimeStamp_module.as"
+	_ExclSetEventMax 1000000
+	clinit
+
+	n=1024*1024*16
+	dim host_A,n
+	clmem_A=clCreateBuffer(n*4)
+	clWriteBuffer clmem_A,host_A,,,,,0//event_id 0
+	ViewEvents1 1
+
+	//event idÇ™0Å`999999Ç‹Ç≈égÇ¶ÇÈ
+	clWriteBuffer clmem_A,host_A,n*4,,,,999999//event_id 999999

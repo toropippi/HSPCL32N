@@ -1,0 +1,15 @@
+#include "hspcl32n.as"
+	clinit
+	
+	n=1024
+	dim data,n
+		repeat n
+		data.cnt=77+cnt
+		loop
+	clmem=clCreateBufferFrom(data)
+	//今GPUに数値の入ったデータが転送されている状態
+
+	//GPUの中身を見たいけどわざわざReadBufferするのは面倒というとき
+	mes clReadIndex_i32(clmem,0)
+	mes clReadIndex_i32(clmem,1)
+	mes clReadIndex_i32(clmem,2)

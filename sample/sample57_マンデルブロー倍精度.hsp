@@ -1,0 +1,87 @@
+#include "hspcl32n.as"
+	clinit
+
+	winx=768
+	winy=768
+	screen 0,winx,winy
+	maxkz=winx*winy;マンデルブロー画像の大きさ
+	title "マンデルブロー倍精度。マウス、ホイール操作可"
+	
+	clSetDevice 0//計算に使うデバイス
+	prg=clCreateProgram("Mandelbrot.cl")
+	krn=clCreateKernel(prg,"dp_calc")//マンデルブロー計算カーネル設定
+	vram=clCreateBuffer(3*maxkz)//HSP側VRAMと同じ 1ドット=3*char
+	clSetKernel krn,0,vram;グラボ上のメモリ、mref で取得した変数にこれをコピーすれば画面更新できる;この「vram」はGPUメモリ上に確保したメモリ領域のポインタ値で、これは不変なのでここで一回セットすればループごとに設定しなくていい
+	clSetKernel krn,4,winx
+	
+	mref hspvram,66
+	flm=0
+	gtx=-1.0;画面の左上x
+	gty=-1.0;画面の左上y
+	gtz=2.0;画面の範囲
+
+	global_size=winx,winy
+	local_size=8,8
+	gosub*check0
+
+*main
+	gosub*keymove
+
+	clSetKernel krn,1,gtx//ここに直接doubleを指定するようにした
+	clSetKernel krn,2,gty//ここに直接doubleを指定するようにした
+	clSetKernel krn,3,gtz/winx//ここに直接doubleを指定するようにした
+
+	clDoKernel krn,2,global_size,local_size
+	clReadBuffer vram,hspvram;mref で取得した変数にvramをコピー
+
+	flm++
+	gosub*fpsview
+	
+	redraw 1
+	await 0;fpsは無限まで
+	goto*main
+
+
+
+*check0
+	if winx\4!=0:dialog "画面の横幅が4の倍数でないと予期しない動作が起こります。",1
+	if global_size.0\local_size.0!=0:dialog "global_size[0]がlocal_size[0]で割り切れません",1
+	if global_size.1\local_size.1!=0:dialog "global_size[1]がlocal_size[1]で割り切れません",1
+	return
+
+
+*keymove
+	//マウスホイール
+	mww=mousew
+	if mww!=0{//マウスホイール
+		tyux=gtx+gtz*mousex/winx
+		tyuy=gty+gtz*(winy-mousey)/winy
+		if mww>0{;ズーム
+			gtz*=0.9
+		}else{
+			gtz*=1.11111111
+		}
+		gtx=tyux-gtz*mousex/winx
+		gty=tyuy-gtz*(winy-mousey)/winy
+	}
+
+	//Lクリック
+	mkey=key
+	getkey key,1
+	if key:if mkey==0{//Lクリック down
+		mgtx=gtx
+		mgty=gty
+		mossx=mousex
+		mossy=mousey
+	}
+	if mww=0:if key:if mkey{//Lクリック now
+		gtx=mgtx+gtz*(mossx-mousex)/winx
+		gty=mgty+gtz*(mousey-mossy)/winy
+	}
+	return
+
+
+*fpsview
+	if ms!gettime(6):ms=gettime(6):fps=flm:flm=0
+	pos 0,0:color 255,55,55:mes "fps="+fps+""
+	return
