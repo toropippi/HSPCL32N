@@ -83,9 +83,19 @@
   <ItemGroup>
     <ClCompile Include="hsp3plugin.cpp" />
     <ClCompile Include="hspvar_float.cpp" />
+    <ClCompile Include="hspvar_int64.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="call_extfunc64.asm" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="hsp3debug.h" />
+    <ClInclude Include="hsp3plugin.h" />
+    <ClInclude Include="hsp3struct.h" />
+    <ClInclude Include="hspvar_core.h" />
+    <ClInclude Include="hspvar_float.h" />
+    <ClInclude Include="hspvar_int64.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

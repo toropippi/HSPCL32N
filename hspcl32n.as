@@ -1,77 +1,114 @@
-#regcmd "_hsp3cmdinit@4","HSPCL32N.dll",1
-#cmd clfloat $0FF
+#regcmd "_hsp3cmdinit@4","HSPCL32N.dll",2
 
-#regcmd "_hsp3cmdinit@4","HSPCL32N.dll"
-#cmd clGetDeviceCount $054
-#cmd clGetSettingDevice $056
-#cmd clCreateProgram $057
-#cmd clCreateProgramWithSource $058
-#cmd clCreateKernel $05A
-#cmd clCreateBuffer $05E
-#cmd clCreateBufferFrom $05F
-#cmd clReadIndex_i32 $066
-#cmd clReadIndex_fp $067
-#cmd clReadIndex_dp $068
-#cmd clGetSettingCommandQueue $075
-#cmd clGetEventLogs $07A
-#cmd clGetEventStatus $07B
-#cmd clGetKernelName $079//A4
-#cmd clGetDevName $0AF
-#cmd clGet_NonBlocking_Status $088
+#cmd int64 $00
+#cmd float $01
 
-#cmd clini				$050
-#cmd clinit				$050
-#cmd clGetDeviceInfo	$055
-#cmd clbye				$0A2
-#cmd clBuildProgram 	$0A3
-//#cmd clCreateKernel		$079
-//#cmd clCreateBuffer		$0A6
-#cmd clfdim				$0AE
-#cmd cldim_i32FromBuffer	$08C
-#cmd cldim_fpFromBuffer	$08D
-#cmd cldim_dpFromBuffer	$08E
-#cmd clSetDev			$053
-#cmd clSetDevice		$053
-#cmd clReleaseProgram	$059
-#cmd clSetKernel		$05B
-#cmd clSetKrns			$05C
-#cmd clReleaseKernel	$05D
-#cmd clWriteBuffer		$060
-#cmd clReadBuffer		$061
-#cmd clWriteBuffer_NonBlocking	$086
-#cmd clReadBuffer_NonBlocking	$087
-#cmd clCopyBuffer		$062
-#cmd clFillBuffer_i32	$063
-#cmd clFillBuffer_fp	$064
-#cmd clFillBuffer_dp	$08B
-#cmd clReleaseMemObject	$065
-#cmd clReleaseBuffer	$065
-#cmd clWriteIndex_i32	$069
-#cmd clWriteIndex_fp	$06A
-#cmd clWriteIndex_dp	$06B
-#cmd clCall				$06C
-#cmd clDoKrn1			$06D
-#cmd clDoKrn2			$052
-#cmd clDoKrn3			$07E
-#cmd clDoKernel			$06E
-#cmd clDoKrn1_sub		$06F
-#cmd clWaitTask			$070
-#cmd clFinish			$070
-#cmd clFlush			$071
-#cmd _ExclSetCommandQueueMax	$072
-#cmd _ExclSetCommandQueueProperties $073
-#cmd clSetCommandQueue	 $074
-#cmd _ExclSetEventMax	$076
-#cmd clSetWaitEvent 	$077
-#cmd clSetWaitEvents	$078
-#cmd clWaitForEvent	$07C
-#cmd clWaitForEvents	$07D
-#cmd clCreateUserEvent	$089
-#cmd clSetUserEventStatus	$08A
-#cmd _ConvRGBtoBGR	$083
-#cmd _ConvRGBAtoRGB	$084
-#cmd _ConvRGBtoRGBA	$085
+#cmd clinit $50
+#cmd clGetPluginVersion $64
 
+#cmd dim64 $51
+#cmd fdim $02
+
+#cmd clSetDevice $53
+#cmd clGetDeviceCount $54
+#cmd clGetDeviceInfo_s $03
+#cmd clGetDeviceInfo_i $04
+#cmd clGetDeviceInfo_i64 $05
+#cmd clGetSettingDevice $56
+
+#cmd clCreateProgram $57
+#cmd clCreateProgramWithSource	$58
+#cmd clReleaseProgram $59
+#cmd clGetProgramBinary $0B
+#cmd clCreateProgramWithBinary $0C
+
+#cmd clCreateKernel $5A
+#cmd clSetKernel $5B
+#cmd clSetKrns $5C
+#cmd clGetKernelName $79
+#cmd clReleaseKernel $5D
+
+#cmd clCreateBuffer $5E
+#cmd clCreateBufferFrom $5F
+#cmd clWriteBuffer $60
+#cmd clWriteBuffer_NonBlocking $86
+#cmd clReadBuffer $61
+#cmd clReadBuffer_NonBlocking $87
+#cmd clGet_NonBlocking_Status $88
+#cmd clCopyBuffer $62
+#cmd clFillBuffer $63
+#cmd clReleaseBuffer $65
+#cmd cldim_i32FromBuffer $8C
+#cmd cldim_i64FromBuffer $8D
+#cmd cldim_dpFromBuffer $8E
+#cmd cldim_fpFromBuffer $06
+#cmd clGetSize $90
+#cmd clGetAllBufferSize $91
+#cmd clGarbageCollectionNow $92
+#cmd clIncRefcntCLBufferId $93
+#cmd clDecRefcntCLBufferId $94
+
+#cmd clReadIndex_i32 $66
+#cmd clReadIndex_i64 $67
+#cmd clReadIndex_dp $68
+#cmd clReadIndex_fp $08
+#cmd clWriteIndex_i32 $69
+#cmd clWriteIndex_i64 $6A
+#cmd clWriteIndex_dp $6B
+#cmd clWriteIndex_fp $07
+
+#cmd clCall $6C
+#cmd clDoKrn1 $6D
+#cmd clDoKrn2 $52
+#cmd clDoKrn3 $7E
+#cmd clDoKernel $6E
+#cmd clDoKrn1_sub $6F
+
+#cmd clCall2 $8F
+#cmd clDoXc $9B
+#cmd clDoXi $9C
+#cmd clDoXl $9D
+#cmd clDoXf $9E
+#cmd clDoXd $9F
+#cmd clDoXuc $A1
+#cmd clDoXui $A3
+#cmd clDoXul $A4
+
+#cmd clFinish $70
+#cmd clFlush $71
+
+#cmd _ExclSetCommandQueueMax $72
+#cmd _ExclSetCommandQueueProperties $73
+#cmd clSetCommandQueue $74
+#cmd clGetSettingCommandQueue $75
+
+#cmd _ExclSetEventMax $76
+#cmd clSetWaitEvent $77
+#cmd clSetWaitEvents $78
+#cmd clGetEventLogs $7A
+#cmd clGetEventStatus $7B
+#cmd clWaitForEvent $7C
+#cmd clWaitForEvents $7D
+#cmd clCreateUserEvent $89
+#cmd clSetUserEventStatus $8A
+#cmd clEventAutoProfilingStart $09
+#cmd clEventAutoProfilingEnd $0A
+
+#cmd Min64 $7F
+#cmd Max64 $80
+
+#cmd clBLAS_Set2DShape $95
+#cmd clBLAS_Get2DShape $96
+#cmd clBLAS_sgemm $97
+#cmd clBLAS_dgemm $98
+#cmd clBLAS_sT $99
+#cmd clBLAS_dT $9A
+#cmd clBLAS_sgemv $A0
+#cmd clBLAS_dgemv $A2
+#cmd clBLAS_sdot $A5
+#cmd clBLAS_ddot $A6
+#cmd clBLAS_snrm2 $A7
+#cmd clBLAS_dnrm2 $A8
 
 
 
@@ -540,71 +577,3 @@
 #define global CL_PROFILING_COMMAND_SUBMIT                 0x1281
 #define global CL_PROFILING_COMMAND_START                  0x1282
 #define global CL_PROFILING_COMMAND_END                    0x1283
-
-
-
-
-
-
-
-#module hspcl32n
-
-#defcfunc clGetDeviceInfo_s int a
-	ptrk=0:szs=0
-	clGetDeviceInfo a,ptrk,szs
-	if szs!=0{
-		dupptr out,ptrk,szs,2;2文字列型、ptrkは整数ポインタ、szsはサイズ、「out」はここで作成された新しい変数
-		//この時点でoutは、C++側で定義している変数のポインタを参照している→今後内容が変わる可能性
-		sdim retstr,szs
-		retstr=out
-		return retstr
-	}else{
-		return ""
-	}
-#defcfunc clGetDeviceInfo_i int a,int index
-	ptrk=0:szs=0
-	clGetDeviceInfo a,ptrk,szs
-	if szs!=0{
-		dupptr out,ptrk,szs,4;4整数型、ptrkは整数ポインタ、szsはサイズ、変数名はここで作成された新しい変数
-		return out.index
-	}else{
-		return 0
-	}
-
-#defcfunc clGetDeviceInfo_d int a,int index
-	ptrk=0:szs=0
-	clGetDeviceInfo a,ptrk,szs
-	if szs!=0{
-		dupptr out,ptrk,szs,4;4整数型、ptrkは整数ポインタ、szsはサイズ、変数名はここで作成された新しい変数
-		i0=out.(index*2)
-		i1=out.(index*2+1)
-		d0=1.0*i0
-		d1=1.0*i1
-		if d0<0.0:d0+=4294967296.0
-		if d1<0.0:d1+=4294967296.0
-		outd=4294967296.0*d1+d0
-		return outd
-	}else{
-		return 0
-	}
-	
-#deffunc convRGBtoBGR array a,array b
-	sizea=varsize(a)
-	sizeb=varsize(b)
-	if sizea>sizeb:sizea=sizeb
-	_convRGBtoBGR a,b,sizea
-	return
-#deffunc convRGBAtoRGB array a,array b
-	sizea=varsize(a)
-	sizeb=(varsize(b)/3)*4
-	if sizea>sizeb:sizea=sizeb
-	_convRGBAtoRGB a,b,sizea
-	return
-#deffunc convRGBtoRGBA array a,array b,int toumeiflg
-	if toumeiflg:tmpr=ginfo_r:tmpg=ginfo_g:tmpb=ginfo_b
-	sizea=varsize(a)
-	sizeb=(varsize(b)/4)*3
-	if sizea>sizeb:sizea=sizeb
-	if toumeiflg=0:_convRGBtoRGBA a,b,sizea,0,0,0,0:else:_convRGBtoRGBA a,b,sizea,1,tmpr,tmpg,tmpb
-	return
-#global

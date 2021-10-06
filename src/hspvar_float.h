@@ -7,17 +7,13 @@
 
 #include "hspvar_core.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#define HSP_VAR_NAME_FLOAT "float"
 
-void HspVarFloat_Init( HspVarProc *p );
-int HspVarFloat_typeid( void );
+EXPORT void HspVarFloat_Init(HspVarProc *p);
+EXPORT int HspVarFloat_typeid(void);
 
-#ifdef __cplusplus
-}
-#endif
-
+void *HspVarFloat_Cnv(const void *buffer, int flag);
+void *HspVarFloat_CnvCustom(const void *buffer, int flag);
 
 #endif
 

@@ -1,0 +1,23 @@
+// 今までclCallでやってきましたが、次からはまじめにカーネル生成やメモリ確保をやっていきます。
+// その前段階として、こちらのGPUのメモリ確保だけをやるコードをご参照ください
+#include "hspcl32n.as"
+	clinit
+	
+	n=256//配列サイズ 256byte
+	clmem0=clCreateBuffer(n)
+
+	n=1024*1024*512//配列サイズ 512MB
+	clmem1=clCreateBuffer(n)
+
+	n=int64(1024)*1024*1024*2//配列サイズ 2GB
+	clmem2=clCreateBuffer(n)
+
+	dim data,64
+	clWriteBuffer clmem0,data,256
+	clWriteBuffer clmem1,data,256
+	clWriteBuffer clmem2,data,256//writeしないと実際には確保されない
+
+	//これでGPUメモリが2.0GB+0.5GB+α確保されたことに
+	//GPU-Zなどで確認するとメモリが使われているのがわかります。
+	//解放はclReleaseBuffer clmem0
+	//なおvramが5GBないGPUの場合エラーになります

@@ -1,0 +1,50 @@
+//そもそもOpenCLデバイスがあるかどうかをこのサンプルで確認できます。
+//列挙されたのは全部使えます。clSetDevice xで指定することで任意のデバイスで計算できるようになります。
+#include "hspcl32n.as"
+
+	clinit
+	if clGetDeviceCount()==0:dialog "対応ビデオカードがありません。終了します",1:end
+	
+	repeat clGetDeviceCount()
+		screen cnt,1280,840
+		clSetDevice cnt
+		mes "デバイスid								"+clGetSettingDevice()
+		mes "プラットフォーム名							"+clGetDeviceInfo_s(CL_PLATFORM_NAME);プラットフォームid取得
+		mes "プラットフォームベンダー名						"+clGetDeviceInfo_s(CL_PLATFORM_VERSION);プラットフォームベンダー
+		mes "デバイス名								"+clGetDeviceInfo_s(CL_DEVICE_NAME);デバイス名取得
+		mes "デバイスベンダー名							"+clGetDeviceInfo_s(CL_DEVICE_VENDOR);ベンダー名取得
+		mes "タイプ 2(CPU) 4(GPU)							"+clGetDeviceInfo_i(CL_DEVICE_TYPE,0);2ならCPU,4ならGPU
+		mes "OpenCLソフトウェアドライバのバージョン					"+clGetDeviceInfo_s(CL_DRIVER_VERSION)
+		mes "デバイスがサポートするOpenCLプロファイルの名称				"+clGetDeviceInfo_s(CL_DEVICE_PROFILE)
+		mes "デバイスがサポートするOpenCLのバージョン				"+clGetDeviceInfo_s(CL_DEVICE_VERSION)
+		mes "デバイスに対応するコンパイラがサポートする OpenCL C 言語 のバージョン	"+clGetDeviceInfo_s(CL_DEVICE_OPENCL_C_VERSION)
+		mes "並列演算コアの数							"+clGetDeviceInfo_i(CL_DEVICE_MAX_COMPUTE_UNITS,0);
+		mes "周波数(MHz)								"+clGetDeviceInfo_i(CL_DEVICE_MAX_CLOCK_FREQUENCY,0);
+		mes "演算デバイスのアドレス空間のサイズbit					"+clGetDeviceInfo_i(CL_DEVICE_ADDRESS_BITS,0);
+		mes "確保可能最大メモリbyte							"+clGetDeviceInfo_i64(CL_DEVICE_MAX_MEM_ALLOC_SIZE,0);
+		mes "グループごとのワークアイテム数のそれぞれの次元についての最大値		"+clGetDeviceInfo_i64(CL_DEVICE_MAX_WORK_ITEM_SIZES,0)+","+clGetDeviceInfo_i64(CL_DEVICE_MAX_WORK_ITEM_SIZES,1)+","+clGetDeviceInfo_i64(CL_DEVICE_MAX_WORK_ITEM_SIZES,2);
+		mes "グローバルメモリのキャッシュのタイプ 1(read only) 2(read&write)		"+clGetDeviceInfo_i(CL_DEVICE_GLOBAL_MEM_CACHE_TYPE,0);
+		mes "グローバルメモリのキャッシュラインのサイズbyte				"+clGetDeviceInfo_i(CL_DEVICE_GLOBAL_MEM_CACHELINE_SIZE)
+		mes "グローバルメモリのキャッシュのサイズbyte				"+clGetDeviceInfo_i(CL_DEVICE_GLOBAL_MEM_CACHE_SIZE)
+		mes "グローバルメモリのサイズbyte						"+clGetDeviceInfo_i64(CL_DEVICE_GLOBAL_MEM_SIZE,0)
+		mes "グローバルメモリの確保可能最大サイズbyte				"+clGetDeviceInfo_i64(CL_DEVICE_MAX_MEM_ALLOC_SIZE,0)
+		mes "専用のローカルメモリが用意されている 1有り 2無し			"+clGetDeviceInfo_i(CL_DEVICE_LOCAL_MEM_TYPE,0);
+		mes "ローカルメモリ領域のサイズbyte						"+clGetDeviceInfo_i(CL_DEVICE_LOCAL_MEM_SIZE,0);
+		mes "コマンドキュー特性 1(アウトオブオーダー有効) 2(プロファイリング有効)	"+clGetDeviceInfo_i(CL_DEVICE_QUEUE_PROPERTIES,0);
+		mes "メモリエラー訂正機能が実装されている					"+clGetDeviceInfo_i(CL_DEVICE_ERROR_CORRECTION_SUPPORT)
+		mes "ホストとデバイスが統一されたメモリサブシステムをもつ			"+clGetDeviceInfo_i(CL_DEVICE_HOST_UNIFIED_MEMORY)
+		mes "ベクトル内に格納できるスカラ要素の数(CHAR)				"+clGetDeviceInfo_i(CL_DEVICE_NATIVE_VECTOR_WIDTH_CHAR)
+		mes "ベクトル内に格納できるスカラ要素の数(SHORT)				"+clGetDeviceInfo_i(CL_DEVICE_NATIVE_VECTOR_WIDTH_SHORT)
+		mes "ベクトル内に格納できるスカラ要素の数(INT)				"+clGetDeviceInfo_i(CL_DEVICE_NATIVE_VECTOR_WIDTH_INT)
+		mes "ベクトル内に格納できるスカラ要素の数(LONG)				"+clGetDeviceInfo_i(CL_DEVICE_NATIVE_VECTOR_WIDTH_LONG)
+		mes "ベクトル内に格納できるスカラ要素の数(FLOAT)				"+clGetDeviceInfo_i(CL_DEVICE_NATIVE_VECTOR_WIDTH_FLOAT)
+		mes "ベクトル内に格納できるスカラ要素の数(DOUBLE)				"+clGetDeviceInfo_i(CL_DEVICE_NATIVE_VECTOR_WIDTH_DOUBLE)
+		mes "ベクトル内に格納できるスカラ要素の数(HALF)				"+clGetDeviceInfo_i(CL_DEVICE_NATIVE_VECTOR_WIDTH_HALF)
+		mes "デバイスがサポートする拡張機能	"+clGetDeviceInfo_s(CL_DEVICE_EXTENSIONS)
+		sdim k,65536
+		k="デバイスがサポートする拡張機能\n"+clGetDeviceInfo_s(CL_DEVICE_EXTENSIONS)
+		pos 0,630
+		mesbox k,1200,200,5
+	loop
+
+	stop

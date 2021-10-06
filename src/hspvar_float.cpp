@@ -12,6 +12,8 @@
 #include "hsp3plugin.h"
 #include "hspvar_core.h"
 #include "hsp3debug.h"
+#include "hspvar_float.h"
+#include "hspvar_int64.h"
 
 /*------------------------------------------------------------*/
 /*
@@ -34,12 +36,19 @@ static PDAT *HspVarFloat_GetPtr( PVal *pval )
 	return (PDAT *)(( (float *)(pval->pt))+pval->offset);
 }
 
-static void *HspVarFloat_Cnv( const void *buffer, int flag )
+void *HspVarFloat_Cnv( const void *buffer, int flag )
 {
 	//		リクエストされた型 -> 自分の型への変換を行なう
 	//		(組み込み型にのみ対応でOK)
 	//		(参照元のデータを破壊しないこと)
 	//
+
+	// 自信の型の場合
+	if ( flag == mytype) 
+	{
+		return (void *)buffer;
+	}
+
 	switch( flag ) {
 	case HSPVAR_FLAG_STR:
 		conv = (float)atof( (char *)buffer );
@@ -49,15 +58,22 @@ static void *HspVarFloat_Cnv( const void *buffer, int flag )
 		return &conv;
 	case HSPVAR_FLAG_DOUBLE:
 		conv = (float)( *(double *)buffer );
-		break;
+		return &conv;
+		// break;
 	default:
+		if ( flag == HspVarInt64_typeid())
+		{
+			conv = (float)(*(INT64 *)buffer);
+			return &conv;
+		}
+		else;
+
 		throw HSPVAR_ERROR_TYPEMISS;
 	}
 	return (void *)buffer;
 }
 
-
-static void *HspVarFloat_CnvCustom( const void *buffer, int flag )
+void *HspVarFloat_CnvCustom( const void *buffer, int flag )
 {
 	//		(カスタムタイプのみ)
 	//		自分の型 -> リクエストされた型 への変換を行なう
@@ -77,6 +93,13 @@ static void *HspVarFloat_CnvCustom( const void *buffer, int flag )
 		*(double *)custom = (double)p;
 		break;
 	default:
+		if ( flag == HspVarInt64_typeid())
+		{
+			*(INT64 *)custom = (INT64)p;
+			break;
+		}
+		else;
+
 		throw HSPVAR_ERROR_TYPEMISS;
 	}
 	return custom;
@@ -290,7 +313,7 @@ EXPORT void HspVarFloat_Init( HspVarProc *p )
 //	p->RrI = HspVarFloat_Invalid;
 //	p->LrI = HspVarFloat_Invalid;
 
-	p->vartype_name = "float";				// タイプ名
+	p->vartype_name = HSP_VAR_NAME_FLOAT;				// タイプ名
 	p->version = 0x001;					// 型タイプランタイムバージョン(0x100 = 1.0)
 	p->support = HSPVAR_SUPPORT_STORAGE|HSPVAR_SUPPORT_FLEXARRAY;
 										// サポート状況フラグ(HSPVAR_SUPPORT_*)

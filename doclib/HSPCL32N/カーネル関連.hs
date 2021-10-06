@@ -7,10 +7,10 @@
 HSPCL32N.dll
 
 %ver
-2.2
+3.0
 
 %date
-2021/06/14
+2021/10/06
 
 %author
 pippi

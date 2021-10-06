@@ -1,0 +1,46 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////
+//一般的に連続したメモリ番地にアクセスするときはアクセス速度が早いです。
+//これをバーストモードアクセスやコアレスドアクセスとよんだりします。(多分)
+//今回カーネルでビット逆順を使って擬似的なランダムアクセスを行ない、どのくらいのバンド幅がでるかを測定します。
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+#include "hspcl32n.as"
+	clinit
+	source={"
+//簡易ランダム、ワングハッシュ
+uint wang_hash(uint seed)
+{
+	seed = (seed ^ 61) ^ (seed >> 16);
+	seed *= 9;
+	seed = seed ^ (seed >> 4);
+	seed *= 0x27d4eb2d;
+	seed = seed ^ (seed >> 15);
+	return seed;
+}
+
+__kernel void test(__global int *vram) {
+	uint ic = get_global_id(0);//0～1024*1024*256 つまり2^28
+	uint nweic=wang_hash(ic*99326473)%N;
+	vram[nweic]=get_global_id(0);//ここでのメモリアクセスはランダムである
+}
+"}
+
+	n=int64(1024)*1024*256//int型の要素数
+	clmemm=clCreateBuffer(n*4)//1GB vram取得
+	
+	prg=clCreateProgramWithSource(source,"-D N="+n+"")
+	krn=clCreateKernel(prg,"test")
+	
+	clSetKernel krn,0,clmemm
+
+	//初回カーネル起動
+	clDoKrn1 krn,1024*1024*256,256
+	clFinish
+	//本番測定
+	clDoKrn1 krn,1024*1024*256,256,0
+	clFinish
+	
+	//eventから時間情報を取得。返り値は64bit int。単位はナノセカンド
+	c_time=clGetEventLogs(0,7)-clGetEventLogs(0,6)
+	mes "計算時間 = "+c_time+" (ns)"
+	mes "実行メモリバンド幅 = "+(int64("1000000000000")/c_time)+" MB/s"

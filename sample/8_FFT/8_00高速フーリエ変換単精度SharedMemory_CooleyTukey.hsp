@@ -1,0 +1,83 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////
+//単精度で高速フーリエ変換
+//Nサイズが少ないので1SM内で完結するコード
+/////////////////////////////////////////////////////////////////////////////////////////////////
+#include "hspcl32n.as"
+	clinit
+	randomize
+	M=8//冪指数。多分9以降は共有メモリサイズオーバーでエラーになる
+	N=1<<M
+	
+	fdim hsp_dataF_r,N//実数float初期値
+	fdim hsp_dataF_i,N//虚数float初期値
+	fdim hsp_retF_i,N//実数float結果格納用
+	fdim hsp_retF_r,N//虚数float結果格納用
+	fdim hsp_dataF,N*2//実数と虚数が交互にはいるfloat型配列、初期値
+	fdim hsp_retF,N*2//実数と虚数が交互にはいるfloat型配列、結果格納用
+	gosub*fftの初期値設定
+	
+	prgid=clCreateProgram("FFTlocal.cl")
+	krnfft=clCreateKernel(prgid,"fp_FFTlocal")
+	fftarray=clCreateBuffer(N*2*4)//1要素当たり実数と虚数があり、1つの数字は4byte
+	clWriteBuffer fftarray,hsp_dataF,N*2*4
+
+	clSetKernel krnfft,0,fftarray
+	clSetKernel krnfft,1,M
+	clSetKernel krnfft,2,0,N*8//ローカルメモリ作成。第4引数に0以外を指定することが必須。１ワークグループにつきN*sizeof(float2)
+
+	//GPUでFFTの部分/////////////////////////////////////////////////////////
+	clDoKrn1 krnfft,N/2,N/2//共有メモリにおさまるサイズなら一括で計算できる。カーネル内でビット逆順もしてる
+	//GPUでFFTの部分/////////////////////////////////////////////////////////
+	clReadBuffer fftarray,hsp_retF,N*2*4//結果取得
+
+	pos 0,0
+	mes "GPU\n実数		虚数"
+	pos 0,38
+		repeat limit(N,1,9)
+		mes ""+hsp_retF(cnt*2)+"	"+hsp_retF(cnt*2+1)
+		loop
+
+	gosub*DFT検算
+	stop
+
+
+
+*fftの初期値設定
+		repeat N//初期値
+		hsp_dataF_r.cnt=float(0.01*(rnd(101)-50))//虚数部
+		hsp_dataF_i.cnt=float(0.01*(rnd(101)-50))//実数部
+		loop
+		
+		repeat N
+		hsp_dataF(cnt*2+0)=float(hsp_dataF_r.cnt)//実数部
+		hsp_dataF(cnt*2+1)=float(hsp_dataF_i.cnt)//虚数部
+		loop
+	return
+
+
+*DFT検算
+	//DFT計算。二重ループ
+		repeat N
+		t=cnt
+			repeat N
+			x=cnt
+			w=-3.14159265358979323846264338328*2.0*t*x/N
+
+			s=sin(w)
+			c=cos(w)
+
+			r=hsp_dataF_r.x
+			i=hsp_dataF_i.x
+
+			hsp_retF_r.t+=float(r*c-i*s)
+			hsp_retF_i.t+=float(r*s+i*c)
+			loop
+		loop
+	
+	pos 0,220
+	mes "CPUで検算(DFT)\n実数		虚数"
+	pos 0,258
+		repeat limit(N,1,9)
+		mes ""+hsp_retF_r(cnt)+"	"+hsp_retF_i(cnt)
+		loop
+	return

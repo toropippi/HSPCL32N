@@ -1,0 +1,84 @@
+//コード自体は最適化してなく、生存ture 、死滅falseをint型で保持しているので効率は悪い
+//ただ可読性という点では良いし
+//HSPと比較し十分速いはず
+#include "hspcl32n.as"
+	clinit
+#const WX 512
+#const WY 512
+
+	//clSetDevice 0
+	
+	prg=clCreateProgram("LifeGame.cl","-D WX="+WX+" -D WY="+WY+"")
+	krnGameMain=clCreateKernel(prg,"GameMain")
+	krnCellView=clCreateKernel(prg,"CellView")
+
+	//メモリ初期化、カーネル設定
+	memA=clCreateBuffer(WX*WY*4)
+	memB=clCreateBuffer(WX*WY*4)
+	memvrm=clCreateBuffer(WX*WY*3)
+	clFillBuffer memA,0
+	clFillBuffer memB,0
+
+	gosub*重量級宇宙船
+	gosub*ダイハード
+	gosub*どんぐり
+	
+	screen 0,WX,WY
+	mref vrm,66
+
+*main
+	clSetKrns krnGameMain,memA,memB
+	clDokrn1 krnGameMain,WX*WY,64
+	clSetKrns krnCellView,memB,memvrm
+	clDokrn1 krnCellView,WX*WY,64
+	
+	clReadBuffer memvrm,vrm
+	redraw 1
+	await 16
+	
+	tmp=memA//swap3行
+	memA=memB//swap3行
+	memB=tmp//swap3行
+	goto*main
+
+
+*重量級宇宙船
+	//重量級宇宙船をセット
+	idx=WX/2*WY+WX/2
+	clWriteIndex_i32 memA,idx+3,1
+	clWriteIndex_i32 memA,idx+4,1
+	clWriteIndex_i32 memA,idx+WX+1,1
+	clWriteIndex_i32 memA,idx+WX+6,1
+	clWriteIndex_i32 memA,idx+WX*2,1
+	clWriteIndex_i32 memA,idx+WX*3,1
+	clWriteIndex_i32 memA,idx+WX*3+6,1
+	clWriteIndex_i32 memA,idx+WX*4+0,1
+	clWriteIndex_i32 memA,idx+WX*4+1,1
+	clWriteIndex_i32 memA,idx+WX*4+2,1
+	clWriteIndex_i32 memA,idx+WX*4+3,1
+	clWriteIndex_i32 memA,idx+WX*4+4,1
+	clWriteIndex_i32 memA,idx+WX*4+5,1
+	return
+	
+*どんぐり
+	//どんぐりをセット
+	idx=WX/7*WY+WX*2/3
+	clWriteIndex_i32 memA,idx+1,1
+	clWriteIndex_i32 memA,idx+WX+3,1
+	clWriteIndex_i32 memA,idx+WX*2,1
+	clWriteIndex_i32 memA,idx+WX*2+1,1
+	clWriteIndex_i32 memA,idx+WX*2+4,1
+	clWriteIndex_i32 memA,idx+WX*2+5,1
+	clWriteIndex_i32 memA,idx+WX*2+6,1
+	return
+
+*ダイハード
+	idx=WX/2*WY+WX+WX/2-30
+	clWriteIndex_i32 memA,idx+6,1
+	clWriteIndex_i32 memA,idx+WX,1
+	clWriteIndex_i32 memA,idx+WX+1,1
+	clWriteIndex_i32 memA,idx+WX*2+1,1
+	clWriteIndex_i32 memA,idx+WX*2+5,1
+	clWriteIndex_i32 memA,idx+WX*2+6,1
+	clWriteIndex_i32 memA,idx+WX*2+7,1
+	return
