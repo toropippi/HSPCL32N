@@ -40,7 +40,7 @@ int p1 : Šm•Û‚·‚ébyte”	[in]
 %inst
 clSetDevice‚Åw’è‚³‚ê‚½ƒOƒ‰ƒtƒBƒbƒNƒ{[ƒh‚È‚Ç‚ÌƒfƒoƒCƒXã‚Éƒƒ‚ƒŠ‚ğŠm•Û‚µ‚Ü‚·B
 CL_mem_object id‚ª•Ô‚è‚Ü‚·B
-‚±‚ê‚ÍintŒ^‚Å‚·B
+‚±‚ê‚Í32bit intŒ^‚Å‚·B
 å‚ÉGDDR5,6‚È‚Ç‚Ìƒƒ‚ƒŠ‚Ì‚ ‚éƒOƒ‰ƒ{ã‚ÉAw’è‚µ‚½ƒTƒCƒY‚Ìƒƒ‚ƒŠ‚ªŠm•Û‚³‚ê‚é‚±‚Æ‚É‚È‚è‚Ü‚·B
 clReleaseBuffer‚Å‰ğ•ú‚·‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B
 
@@ -64,22 +64,6 @@ int p1 : CL_mem_object id			[in]
 ƒfƒoƒCƒXã‚Ìƒƒ‚ƒŠ‚ğ‰ğ•ú‚µ‚Ü‚·B
 
 %href
-clCreateBuffer
-;--------
-%index
-clReleaseMemObject
-VRAM”jŠü(‹Œ–½—ß)
-
-%prm
-int p1
-int p1 : CL_mem_object id			[in]
-%inst
-ƒfƒoƒCƒXã‚Ìƒƒ‚ƒŠ‚ğ‰ğ•ú‚µ‚Ü‚·B
-‚±‚ê‚Í‹Œ–½—ß‚Å‚·BclReleaseBuffer‚ğ‚²g—p‰º‚³‚¢B
-
-
-%href
-clReleaseBuffer
 clCreateBuffer
 ;--------
 
@@ -109,7 +93,7 @@ p6‚ÍÈ—ªƒfƒtƒHƒ‹ƒg‚Å1‚Å‚·B‚Â‚Ü‚èƒuƒƒbƒLƒ“ƒOƒ‚[ƒh‚ªon‚É‚È‚Á‚Ä‚¨‚èA“]‘—‚ªI‚
 %href
 clCreateBuffer
 clReadBuffer
-
+clFillBuffer
 ;--------
 
 %index
@@ -138,7 +122,7 @@ p6‚ÍÈ—ªƒfƒtƒHƒ‹ƒg‚Å1‚Å‚·B‚Â‚Ü‚èƒuƒƒbƒLƒ“ƒOƒ‚[ƒh‚ªon‚É‚È‚Á‚Ä‚¨‚èA“]‘—‚ªI‚
 %href
 clCreateBuffer
 clWriteBuffer
-
+clFillBuffer
 ;--------
 
 %index
@@ -178,7 +162,7 @@ array p1 : HSP‘¤‚Ì”z—ñ•Ï”		[in]
 %inst
 dim–½—ß‚È‚Ç‚ÅŠm•Û‚µ‚½HSP‚Ì”z—ñ•Ï”‚ğA‚»‚Ì‚Ü‚ÜƒRƒs[‚µ‚ÄVRAM‚Ìì¬‚ğ‚µ‚Ü‚·B
 CL_mem_object id‚ª•Ô‚è‚Ü‚·B
-‚±‚ê‚ÍintŒ^‚Å‚·B
+‚±‚ê‚Í32bit intŒ^‚Å‚·B
 
 %href
 clCreateBuffer
@@ -309,11 +293,12 @@ clReadIndex_i32(memid,3)@‚Í@700
 %href
 clReadIndex_dp
 clReadIndex_fp
+clReadIndex_i64
 ;--------
 
 %index
-clReadIndex_fp
-VRAM‚©‚çfloatŒ^‚ğ1—v‘f“Ç‚İ‚İ
+clReadIndex_i64
+VRAM‚©‚ç64bit intŒ^‚ğ1—v‘f“Ç‚İ‚İ
 
 %prm
 (int p1,int p2)
@@ -327,10 +312,15 @@ p1‚ÍCL mem obj id
 p2‚Í“Ç‚İo‚µƒCƒ“ƒfƒbƒNƒX‚ğw’è‚µ‚Ä‰º‚³‚¢B
 ƒuƒƒbƒLƒ“ƒOƒ‚[ƒh‚ÍƒIƒ“(“]‘—Š®—¹‚Ü‚Å‘Ò‚Â)‚Å‚·B
 
+VRAM‚Ì“à—e‚ª64bit intŒ^4‚Â‚Ì”z—ñ•Ï”@(10000000000,40000000000,50000000000,70000000000)
+‚¾‚Á‚½ê‡
+clReadIndex_i64(memid,3)@‚Í@70000000000
+‚ğ•Ô‚µ‚Ü‚·B
+
 %href
 clReadIndex_i32
 clReadIndex_dp
-
+clReadIndex_fp
 ;--------
 
 %index
@@ -356,7 +346,35 @@ clReadIndex_d(memid,3)@‚Í@700.0
 
 %href
 clReadIndex_i32
+clReadIndex_i64
 clReadIndex_fp
+;--------
+
+%index
+clReadIndex_fp
+VRAM‚©‚çfloatŒ^‚ğ1—v‘f“Ç‚İ‚İ
+
+%prm
+(int p1,int p2)
+
+int p1 : CL_mem_object id		[in]
+int p2 : ”z—ñ‚Ì—v‘f(index)		[in]
+
+%inst
+GPU‚ÌVRAM‚©‚ç’¼Ú1‚Â‚Ì’l‚ğ‚Æ‚è‚¾‚µ•Ô‚µ‚Ü‚·B
+p1‚ÍCL mem obj id
+p2‚Í“Ç‚İo‚µƒCƒ“ƒfƒbƒNƒX‚ğw’è‚µ‚Ä‰º‚³‚¢B
+ƒuƒƒbƒLƒ“ƒOƒ‚[ƒh‚ÍƒIƒ“(“]‘—Š®—¹‚Ü‚Å‘Ò‚Â)‚Å‚·B
+
+VRAM‚Ì“à—e‚ªfloatŒ^4‚Â‚Ì”z—ñ•Ï”@(100.0,400.0,500.0,700.0)
+‚¾‚Á‚½ê‡
+clReadIndex_d(memid,3)@‚Í@700.0
+‚ğ•Ô‚µ‚Ü‚·B
+
+%href
+clReadIndex_i32
+clReadIndex_i64
+clReadIndex_dp
 ;--------
 
 %index
@@ -378,31 +396,33 @@ p1‚Åw’è‚µ‚½VRAM(CL mem obj id)‚Ì“à—e‚Ép3’l‚ğ‘‚«‚İ‚Ü‚·B
 ƒuƒƒbƒLƒ“ƒOƒ‚[ƒh‚ÍƒIƒ“(“]‘—Š®—¹‚Ü‚Å‘Ò‚Â)‚Å‚·B
 
 %href
-clWriteIndex_fp
+clWriteIndex_i64
 clWriteIndex_dp
+clWriteIndex_fp
 ;--------
 
 %index
-clWriteIndex_fp
+clWriteIndex_i64
 VRAM‚É1—v‘f‘‚«‚İ
 
 %prm
-int p1,int p2,float p3
+int p1,int p2,int64 p3
 
 int p1 : CL_mem_object id		[in]
 int p2 : ”z—ñ‚Ì—v‘f(index)		[in]
-float p3 : “à—e				[in]
+int64 p3 : “à—e				[in]
 
 %inst
 p1‚Åw’è‚µ‚½VRAM(CL mem obj id)‚Ì“à—e‚Ép3’l‚ğ‘‚«‚İ‚Ü‚·B
 ‘‚«‚İƒCƒ“ƒfƒbƒNƒX‚Íp2‚Åw’è‚µ‚Ü‚·B
-‚±‚Ì‚Æ‚«VRAM‚ÍfloatŒ^‚Ì”z—ñ•Ï”‚Æ‚µ‚Äl‚¦‚Ü‚·B
+‚±‚Ì‚Æ‚«VRAM‚Í64bit intŒ^‚Ì”z—ñ•Ï”‚Æ‚µ‚Äl‚¦‚Ü‚·B
 
 ƒuƒƒbƒLƒ“ƒOƒ‚[ƒh‚ÍƒIƒ“(“]‘—Š®—¹‚Ü‚Å‘Ò‚Â)‚Å‚·B
 
 %href
 clWriteIndex_i32
 clWriteIndex_dp
+clWriteIndex_fp
 ;--------
 
 %index
@@ -414,7 +434,7 @@ int p1,int p2,double p3
 
 int p1 : CL_mem_object id		[in]
 int p2 : ”z—ñ‚Ì—v‘f(index)		[in]
-double p3:“à—e				[in]
+double p3: “à—e				[in]
 
 %inst
 p1‚Åw’è‚µ‚½VRAM(CL mem obj id)‚Ì“à—e‚Ép3’l‚ğ‘‚«‚İ‚Ü‚·B
@@ -427,86 +447,56 @@ p1‚Åw’è‚µ‚½VRAM(CL mem obj id)‚Ì“à—e‚Ép3’l‚ğ‘‚«‚İ‚Ü‚·B
 %href
 clWriteIndex_i32
 clWriteIndex_i64
+clWriteIndex_fp
 ;--------
-
 %index
-clFillBuffer_i32
-VRAM‚ğw’è‚Ì”’l‚Å–„‚ß‚é
+clWriteIndex_fp
+VRAM‚É1—v‘f‘‚«‚İ
 
 %prm
-int p1,int p2,int p3,int p4,int p5
+int p1,int p2,float p3
 
 int p1 : CL_mem_object id		[in]
-int p2 : pattern,È—ª‰Â			[in]
+int p2 : ”z—ñ‚Ì—v‘f(index)		[in]
+float p3: “à—e				[in]
+
+%inst
+p1‚Åw’è‚µ‚½VRAM(CL mem obj id)‚Ì“à—e‚Ép3’l‚ğ‘‚«‚İ‚Ü‚·B
+‘‚«‚İƒCƒ“ƒfƒbƒNƒX‚Íp2‚Åw’è‚µ‚Ü‚·B
+‚±‚Ì‚Æ‚«VRAM‚ÍfloatŒ^‚Ì”z—ñ•Ï”‚Æ‚µ‚Äl‚¦‚Ü‚·B
+
+ƒuƒƒbƒLƒ“ƒOƒ‚[ƒh‚ÍƒIƒ“(“]‘—Š®—¹‚Ü‚Å‘Ò‚Â)‚Å‚·B
+
+
+%href
+clWriteIndex_i32
+clWriteIndex_i64
+clWriteIndex_dp
+;--------
+%index
+clFillBuffer
+VRAM‚ğw’è‚ÌŒ^‚Æ”’l‚Å–„‚ß‚é
+
+%prm
+int p1,var p2,int p3,int p4,int p5
+
+int p1 : CL_mem_object id		[in]
+var p2 : pattern			[in]
 int p3 : offset,È—ª‰Â		[in]
 int p4 : size,È—ª‰Â			[in]
 int p5 : event_id,È—ª‰Â		[in]
 
 %inst
-p1‚Åw’è‚µ‚½VRAM(CL mem obj id)‚Ép2‚Ì’l‚ğ4byte‚¨‚«‚É‘‚«‚İ‚Ü‚·B
-p2‚ÍÈ—ª0‚É‚È‚è‚Ü‚·B
-‘‚«‚Şæ‚Ìindex‚Æ‘‚«‚ŞƒTƒCƒY‚Íp3,p4‚Åw’è‚µ‚Ü‚·‚ªA’PˆÊ‚ğbyte‚Åw’è‚·‚é‚±‚Æ‚É’ˆÓ‚µ‚Ä‚­‚¾‚³‚¢B
+p1‚Åw’è‚µ‚½VRAM(CL mem obj id)‚Ép2‚Ì’l‚ğ‘‚«‚İ‚Ü‚·B
+p2‚ÌŒ^‚ªintŒ^‚È‚ç4byte‚¨‚«AfloatŒ^‚Å‚à4byte‚¨‚«AdoubleŒ^‚âint64Œ^‚È‚ç8byte’u‚«‚É’l‚ª‘‚«‚Ü‚ê‚Ü‚·B
 È—ªp3=0,p4=ƒƒ‚ƒŠƒTƒCƒY
 ‚Æ‚È‚è‚Ü‚·B
 
 ‚±‚Ì–½—ß©‘Ì‚ÍÀs‚ªŠ®—¹‚·‚é‚Ü‚Å‘Ò‚Â–½—ß‚Å‚Í‚È‚­AOpenCLƒRƒ}ƒ“ƒh‚ğƒLƒ…[‚É“ü‚ê‚é‚¾‚¯‚Å‚ ‚èAÀÛ‚ÌƒJ[ƒlƒ‹‚ÌÀsI—¹‚ğ‘Ò‚Â‚É‚Íevent‚ğg‚¤‚©clFinish“™‚Å‘Ò‚Â‚±‚Æ‚É‚È‚è‚Ü‚·B
 
 %href
-clFillBuffer_fp
-clFillBuffer_dp
-;--------
-%index
-clFillBuffer_fp
-VRAM‚ğw’è‚Ì”’l‚Å–„‚ß‚é
-
-%prm
-int p1,float p2,int p3,int p4,int p5
-
-int p1 : CL_mem_object id		[in]
-float p2 : pattern		[in]
-int p3 : offset,È—ª‰Â		[in]
-int p4 : size,È—ª‰Â			[in]
-int p5 : event_id,È—ª‰Â		[in]
-
-%inst
-p1‚Åw’è‚µ‚½VRAM(CL mem obj id)‚Ép2‚Ì’l‚ğ8byte‚¨‚«‚É‘‚«‚İ‚Ü‚·B
-p2‚É‚ÍfloatŒ^‚Åpattern‚ğw’è‚µ‚Ü‚·B
-‘‚«‚Şæ‚Ìindex‚Æ‘‚«‚ŞƒTƒCƒY‚Íp3,p4‚Åw’è‚µ‚Ü‚·‚ªA’PˆÊ‚ğbyte‚Åw’è‚·‚é‚±‚Æ‚É’ˆÓ‚µ‚Ä‚­‚¾‚³‚¢B
-È—ªp3=0,p4=ƒƒ‚ƒŠƒTƒCƒY
-‚Æ‚È‚è‚Ü‚·B
-
-‚±‚Ì–½—ß©‘Ì‚ÍÀs‚ªŠ®—¹‚·‚é‚Ü‚Å‘Ò‚Â–½—ß‚Å‚Í‚È‚­AOpenCLƒRƒ}ƒ“ƒh‚ğƒLƒ…[‚É“ü‚ê‚é‚¾‚¯‚Å‚ ‚èAÀÛ‚ÌƒJ[ƒlƒ‹‚ÌÀsI—¹‚ğ‘Ò‚Â‚É‚Íevent‚ğg‚¤‚©clFinish“™‚Å‘Ò‚Â‚±‚Æ‚É‚È‚è‚Ü‚·B
-
-%href
-clFillBuffer_i32
-clFillBuffer_dp
-;--------
-
-%index
-clFillBuffer_dp
-VRAM‚ğw’è‚Ì”’l‚Å–„‚ß‚é
-
-%prm
-int p1,double p2,int p3,int p4,int p5
-
-int p1 : CL_mem_object id		[in]
-double p2 : pattern,È—ª‰Â		[in]
-int p3 : offset,È—ª‰Â		[in]
-int p4 : size,È—ª‰Â			[in]
-int p5 : event_id,È—ª‰Â		[in]
-
-%inst
-p1‚Åw’è‚µ‚½VRAM(CL mem obj id)‚Ép2‚Ì’l‚ğ8byte‚¨‚«‚É‘‚«‚İ‚Ü‚·B
-p2‚ÍÈ—ª0.0‚É‚È‚è‚Ü‚·B
-‘‚«‚Şæ‚Ìindex‚Æ‘‚«‚ŞƒTƒCƒY‚Íp3,p4‚Åw’è‚µ‚Ü‚·‚ªA’PˆÊ‚ğbyte‚Åw’è‚·‚é‚±‚Æ‚É’ˆÓ‚µ‚Ä‚­‚¾‚³‚¢B
-È—ªp3=0,p4=ƒƒ‚ƒŠƒTƒCƒY
-‚Æ‚È‚è‚Ü‚·B
-
-‚±‚Ì–½—ß©‘Ì‚ÍÀs‚ªŠ®—¹‚·‚é‚Ü‚Å‘Ò‚Â–½—ß‚Å‚Í‚È‚­AOpenCLƒRƒ}ƒ“ƒh‚ğƒLƒ…[‚É“ü‚ê‚é‚¾‚¯‚Å‚ ‚èAÀÛ‚ÌƒJ[ƒlƒ‹‚ÌÀsI—¹‚ğ‘Ò‚Â‚É‚Íevent‚ğg‚¤‚©clFinish“™‚Å‘Ò‚Â‚±‚Æ‚É‚È‚è‚Ü‚·B
-
-%href
-clFillBuffer_i32
-clFillBuffer_fp
+clReadBuffer
+clWriteBuffer
 ;--------
 
 %index
@@ -525,11 +515,12 @@ p1‚Åw’è‚µ‚½•Ï”‚ğintŒ^”z—ñ•Ï”‚Æ‚µ‚Ä‰Šú‰»‚µA“à—e‚ğp2‚©‚çƒRƒs[‚µ‚Ü‚·B
 
 
 %href
-cldim_fpFromBuffer
+cldim_i64FromBuffer
 cldim_dpFromBuffer
+cldim_fpFromBuffer
 ;--------
 %index
-cldim_fpFromBuffer
+cldim_i64FromBuffer
 HSP”z—ñ•Ï”Šm•Û‚µVRAM‚©‚çƒRƒs[
 
 %prm
@@ -538,7 +529,7 @@ array p1 : HSP‘¤‚Ì”z—ñ•Ï”			[out]
 int p2 : ƒRƒs[Œ³CL_mem_object id		[in]
 
 %inst
-p1‚Åw’è‚µ‚½•Ï”‚ğfloatŒ^”z—ñ•Ï”‚Æ‚µ‚Ä‰Šú‰»‚µA“à—e‚ğp2‚©‚çƒRƒs[‚µ‚Ü‚·B
+p1‚Åw’è‚µ‚½•Ï”‚ğ64bit intŒ^”z—ñ•Ï”‚Æ‚µ‚Ä‰Šú‰»‚µA“à—e‚ğp2‚©‚çƒRƒs[‚µ‚Ü‚·B
 ƒTƒCƒY‚Í©“®‚ÅŒˆ’è‚³‚ê‚Ü‚·B
 ‚È‚¨HSP‚Ìd—lãAŠm•Û‚Å‚«‚éƒTƒCƒY‚ÌãŒÀ‚Í1GB‚Ü‚Å‚Å‚·B
 
@@ -546,6 +537,7 @@ p1‚Åw’è‚µ‚½•Ï”‚ğfloatŒ^”z—ñ•Ï”‚Æ‚µ‚Ä‰Šú‰»‚µA“à—e‚ğp2‚©‚çƒRƒs[‚µ‚Ü‚·B
 %href
 cldim_i32FromBuffer
 cldim_dpFromBuffer
+cldim_fpFromBuffer
 ;--------
 %index
 cldim_dpFromBuffer
@@ -563,7 +555,139 @@ p1‚Åw’è‚µ‚½•Ï”‚ğdoubleŒ^”z—ñ•Ï”‚Æ‚µ‚Ä‰Šú‰»‚µA“à—e‚ğp2‚©‚çƒRƒs[‚µ‚Ü‚·B
 
 
 %href
-cldim_fpFromBuffer
+cldim_i64FromBuffer
 cldim_i32FromBuffer
+cldim_fpFromBuffer
 ;--------
+%index
+cldim_fpFromBuffer
+HSP”z—ñ•Ï”Šm•Û‚µVRAM‚©‚çƒRƒs[
 
+%prm
+array p1,int p2
+array p1 : HSP‘¤‚Ì”z—ñ•Ï”			[out]
+int p2 : ƒRƒs[Œ³CL_mem_object id		[in]
+
+%inst
+p1‚Åw’è‚µ‚½•Ï”‚ğfloatŒ^”z—ñ•Ï”‚Æ‚µ‚Ä‰Šú‰»‚µA“à—e‚ğp2‚©‚çƒRƒs[‚µ‚Ü‚·B
+ƒTƒCƒY‚Í©“®‚ÅŒˆ’è‚³‚ê‚Ü‚·B
+‚È‚¨HSP‚Ìd—lãAŠm•Û‚Å‚«‚éƒTƒCƒY‚ÌãŒÀ‚Í1GB‚Ü‚Å‚Å‚·B
+
+
+%href
+cldim_i64FromBuffer
+cldim_i32FromBuffer
+cldim_dpFromBuffer
+
+;----------------
+%index
+clGetAllBufferSize
+VRAM‘ƒTƒCƒYæ“¾
+
+%prm
+()
+
+%inst
+clCreateBuffer“™‚Åì¬‚µ‚½buffer‚Ì‘ƒTƒCƒY‚ğæ“¾‚µ‚Ü‚·B
+‚±‚Ì–½—ß‚ÍGPU‚âCPU‚Å‚Ìƒƒ‚ƒŠg—p—Ê‚ğæ“¾‚·‚é–½—ß‚Å‚Í‚È‚­A‚ ‚­‚Ü‚ÅHSPCL32N‚Ìƒvƒ‰ƒOƒCƒ“‚ğg‚Á‚½ƒvƒƒZƒX“à‚ÌƒfƒoƒCƒXbufferŠm•ÛƒTƒCƒY‚Å‚ ‚é‚±‚Æ‚É’ˆÓ‚µ‚Ä‚­‚¾‚³‚¢B
+
+
+%href
+clCreateBuffer
+clCreateBufferFrom
+clGetSize
+;----------------
+%index
+clGetSize
+ƒƒ‚ƒŠƒTƒCƒYæ“¾
+
+%prm
+(int p1)
+int p1 : CL_mem_object id		[in]
+
+%inst
+clCreateBuffer“™‚Åì¬‚µ‚½buffer‚ÌƒTƒCƒY‚ğbyte‚Å•Ô‚µ‚Ü‚·B
+
+
+%href
+clCreateBuffer
+clCreateBufferFrom
+clGetAllBufferSize
+
+;----------------
+%index
+clGarbageCollectionNow
+VRAMˆêŠ‡‰ğ•ú
+
+%prm
+int p1,int p2,int p3EEEE
+int p1 : œŠOCL_mem_object id,È—ª‰Â	[in]
+int p2 : œŠOCL_mem_object id,È—ª‰Â	[in]
+int p3 : œŠOCL_mem_object id,È—ª‰Â	[in]
+int p4 : EEEE
+
+%inst
+clCreateBuffer“™‚Åì¬‚µ‚½buffer‚ğ‰ğ•ú‚µ‚Ü‚·B
+
+clCreateBuffer‚âclCreateBufferFrom‚È‚Çcl mem object‚ğ¶¬‚·‚é‚Æ
+–¾¦“I‚ÉclReleaseBuffer‚Å‰ğ•ú‚µ‚È‚¢ŒÀ‚èƒvƒƒZƒX‚ğI—¹‚·‚é‚Ü‚Åc‚è‘±‚¯‚Ü‚·B
+‚à‚µƒR[ƒh“à‚Åcl mem id‚ğƒƒXƒg‚µ‚Ä‚µ‚Ü‚¤‚Æ‰ğ•ú‚·‚é‚±‚Æ‚à‚Å‚«‚È‚­‚È‚Á‚Ä‚µ‚Ü‚¢‚Ü‚·B
+
+‚»‚±‚Åƒvƒ‰ƒOƒCƒ“‘¤‚Å‘S‚Äì¬‚µ‚½cl mem id‚ğŠo‚¦‚Ä‚¨‚«A‹[—“I‚ÈGC‚ğs‚È‚¤‚±‚Æ‚ÅA‚¢‚ç‚È‚­‚È‚Á‚½cl mem‚ğ‰ğ•ú‚Å‚«‚é‚æ‚¤‚É‚µ‚½‚Ì‚ªclGarbageCollectionNow–½—ß‚Å‚·B
+‚½‚¾‚µƒƒ‚ƒŠ‚ÌQÆƒJƒEƒ“ƒ^“™À‘•‚Å‚«‚È‚¢‚Ì‚Åè“®‚ÅƒJƒEƒ“ƒ^‚ğ‰ñ‚µ‚Ä’¸‚­•K—v‚ª‚ ‚è‚Ü‚·B
+
+clIncRefcntCLBufferId
+clDecRefcntCLBufferId
+
+–½—ß‚ÅQÆƒJƒEƒ“ƒ^‚ğ‘Œ¸‚Å‚«‚Ü‚·B
+ƒfƒtƒHƒ‹ƒg‚ÅQÆƒJƒEƒ“ƒ^‚Í0‚Å‚·B
+QÆƒJƒEƒ“ƒ^‚ª1ˆÈã‚Ì‚à‚Ì‚Í‚±‚Ì–½—ß‚Å”jŠü‚³‚ê‚Ü‚¹‚ñB
+
+‚Ü‚½QÆƒJƒEƒ“ƒ^‚ª0ˆÈ‰º‚Ì‚à‚Ì‚Å‚à
+p1,p2EEE‚Émem id‚ğw’è‚·‚é‚±‚Æ‚ÅA‚±‚Ì–½—ßÀs‚Éƒƒ‚ƒŠ‚ğ‰ğ•ú‚µ‚È‚¢‚æ‚¤‚É‚·‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B
+
+%href
+clIncRefcntCLBufferId
+clDecRefcntCLBufferId
+
+;----------------
+%index
+clIncRefcntCLBufferId
+VRAMQÆƒJƒEƒ“ƒ^ƒCƒ“ƒNƒŠƒƒ“ƒg
+
+%prm
+int p1
+int p1 : CL_mem_object id	[in]
+
+%inst
+ƒƒ‚ƒŠid‚ÌQÆƒJƒEƒ“ƒ^‚ğ1‘‚â‚µ‚Ü‚·B
+‚±‚ê‚ÍŠî–{“I‚É
+clGarbageCollectionNow
+–½—ß‚ÆƒZƒbƒg‚Åg‚¢‚Ü‚·B
+•Ö‹XãQÆƒJƒEƒ“ƒ^‚Æ“Ç‚ñ‚Å‚¢‚Ü‚·‚ªAÀÛHSP‘¤‚©‚ç‚Ç‚ê‚¾‚¯QÆ‚³‚ê‚Ä‚¢‚æ‚¤‚ªA‚±‚ÌƒJƒEƒ“ƒ^‚Í‚½‚¾‚ÌƒJƒEƒ“ƒ^‚Æ‚µ‚Ä‚µ‚©‹@”\‚µ‚Ä‚¨‚ç‚¸A
+ÀÛ‚ÌQÆó‹µ‚ğ‘ª‚ê‚Ä‚¢‚é‚à‚Ì‚Å‚Í‚ ‚è‚Ü‚¹‚ñB
+
+%href
+clGarbageCollectionNow
+clDecRefcntCLBufferId
+
+;----------------
+%index
+clDecRefcntCLBufferId
+VRAMQÆƒJƒEƒ“ƒ^ƒfƒNƒŠƒƒ“ƒg
+
+%prm
+int p1
+int p1 : CL_mem_object id	[in]
+
+%inst
+ƒƒ‚ƒŠid‚ÌQÆƒJƒEƒ“ƒ^‚ğ1Œ¸‚ç‚µ‚Ü‚·B
+‚±‚ê‚ÍŠî–{“I‚É
+clGarbageCollectionNow
+–½—ß‚ÆƒZƒbƒg‚Åg‚¢‚Ü‚·B
+•Ö‹XãQÆƒJƒEƒ“ƒ^‚Æ“Ç‚ñ‚Å‚¢‚Ü‚·‚ªAÀÛHSP‘¤‚©‚ç‚Ç‚ê‚¾‚¯QÆ‚³‚ê‚Ä‚¢‚æ‚¤‚ªA‚±‚ÌƒJƒEƒ“ƒ^‚Í‚½‚¾‚ÌƒJƒEƒ“ƒ^‚Æ‚µ‚Ä‚µ‚©‹@”\‚µ‚Ä‚¨‚ç‚¸A
+ÀÛ‚ÌQÆó‹µ‚ğ‘ª‚ê‚Ä‚¢‚é‚à‚Ì‚Å‚Í‚ ‚è‚Ü‚¹‚ñB
+
+%href
+clGarbageCollectionNow
+clIncRefcntCLBufferId
