@@ -1,0 +1,10 @@
+//SetしたShapeを確認
+//clBLAS_Set2DShape命令はsgemm,dgemm命令や転置命令で使われる情報であり
+//OpenCLカーネルコード内で二次元配列として使えるようになるわけではないことに注意してください。
+#include "hspcl32n.as"
+	clinit
+	
+	matA=clCreateBuffer(10*10*4)
+	clBLAS_Set2DShape matA,10,10
+	mes clBLAS_Get2DShape(matA,0)
+	mes clBLAS_Get2DShape(matA,1)

@@ -1,0 +1,17 @@
+//y=dot(x1,x2)
+//‚ÌƒTƒ“ƒvƒ‹
+#include "hspcl32n.as"
+	clinit
+	
+	vecX1=clCreateBuffer(100*4)
+	vecX2=clCreateBuffer(100*4)
+	Y=clCreateBuffer(4)
+	clFillBuffer vecX1,float(1.41421356237)
+	clFillBuffer vecX2,float(1.41421356238)
+	
+	clBLAS_sdot Y,vecX1,vecX2
+	mes "dot(vecX1,vecX2) = "+clReadIndex_fp(Y,0)
+
+	//ŠÖ”‚Æ‚µ‚Äg‚¤‚±‚Æ‚à
+	Y=clBLAS_sdot(vecX1,vecX2)
+	mes "dot(vecX1,vecX2) = "+clReadIndex_fp(Y,0)

@@ -1,0 +1,16 @@
+//y=sqrt(dot(x1,x1))
+//‚ÌƒTƒ“ƒvƒ‹
+#include "hspcl32n.as"
+	clinit
+	
+	//y=Ax
+	vecX=clCreateBuffer(100*8)
+	Y=clCreateBuffer(8)
+	clFillBuffer vecX,1.41421356237
+	
+	clBLAS_dnrm2 Y,vecX
+	mes "sqrt(dot(vecX,vecX)) = "+clReadIndex_dp(Y,0)
+
+	//ŠÖ”‚Æ‚µ‚Äg‚¤‚±‚Æ‚à
+	Y=clBLAS_dnrm2(vecX)
+	mes "sqrt(dot(vecX,vecX)) = "+clReadIndex_dp(Y,0)

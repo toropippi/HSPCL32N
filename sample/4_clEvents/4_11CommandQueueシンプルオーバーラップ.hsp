@@ -1,0 +1,120 @@
+//CPU→GPU転送,GPUで計算,GPU→CPU転送
+//これらの部分をオーバーラップさせることをしたいです
+//ここでは単純にCommandQueueを分けてシンプルオーバーラップをさせます(なおそれが一番速いよう)
+#include "hspcl32n.as"
+	randomize
+	clinit
+	//clSetDevice 1
+	n=1024*1024*32
+	local_size=128
+	loopnum=123//GPU内のループ回数
+	stepnum=4
+
+	dim host_A,n*stepnum
+	dim host_B,n*stepnum
+
+	prg=clCreateProgram("SinDiv.cl")
+	krn=clCreateKernel(prg,"SinDiv")
+
+	dim clmem_A,stepnum
+	dim clmem_B,stepnum
+		repeat stepnum
+		clmem_A.cnt=clCreateBuffer(n*4)
+		clmem_B.cnt=clCreateBuffer(n*4)
+		loop
+	
+	//////////////////////////////////////
+	//ここからオーバーラップ計算
+		repeat 4
+		clSetCommandQueue cnt//同じデバイス内でコマンドキューを別にセット
+		
+		clWriteBuffer clmem_A.cnt,host_A,n*4,0,n*4*cnt,0,event_num
+		event_num++
+
+		clSetKrns krn,clmem_A.cnt,clmem_B.cnt,loopnum//loopnum=thread内のループ数
+		clDoKrn1 krn,n,local_size,event_num//計算内容としてはAを元にある数値を計算しBに代入するというもの
+		event_num++
+
+		clReadBuffer clmem_B.cnt,host_B,n*4,0,n*4*cnt,0,event_num
+		event_num++
+		loop
+	clFlush
+	//ここまでオーバーラップ計算
+	//////////////////////////////////////
+		repeat 4
+		clSetCommandQueue cnt
+		clFinish
+		loop
+	
+	gosub*view1
+	gosub*view2
+	stop
+
+
+
+
+*view1
+	//まずはすべての計算時間を取得
+	dim64 kinfo,event_num
+	sdim kinfos,128,event_num
+	dim64 start_time,event_num
+	dim64 end_time,event_num
+	dim cmdq_no,event_num
+		repeat event_num
+		start_time.cnt=clGetEventLogs(cnt,6)//6はCL_PROFILING_COMMAND_STARTのtime
+		end_time.cnt=clGetEventLogs(cnt,7)//7はCL_PROFILING_COMMAND_ENDのtime
+		cmdq_no.cnt=clGetEventLogs(cnt,3)//3は何番のcommand queで実行されたか取得
+		kinfo.cnt=clGetEventLogs(cnt,0)//0はeventがなんのコマンドだったか取得
+		if kinfo.cnt==CL_COMMAND_WRITE_BUFFER  :kinfos.cnt="WRITE_BUFFER"
+		if kinfo.cnt==CL_COMMAND_READ_BUFFER   :kinfos.cnt="READ_BUFFER"
+		if kinfo.cnt==CL_COMMAND_NDRANGE_KERNEL:kinfos.cnt="KERNEL"
+		loop
+		
+	offset=start_time.0
+	
+		repeat event_num
+		start_time.cnt-=offset
+		end_time.cnt-=offset
+		loop
+
+	scalex=end_time.(event_num-1)
+
+	//計算時間をグラフで表示
+	//軸
+	line 30,30,30,450
+	line 30,30,27,35
+	line 30,30,33,35
+	pos 0,240
+	font msgothic,12
+	mes "Queue\n番号"
+
+	line 30,450,620,450
+	line 620,450,615,447
+	line 620,450,615,453
+	pos 270,460
+	mes "時間(μs)"
+		repeat 9
+		line 30+cnt*580/8,450,30+cnt*580/8,445
+		pos 30+cnt*580/8,450
+		mes scalex*cnt/8000
+		loop
+		
+	return
+
+
+*view2
+	//実行単位で表示していく
+		repeat event_num
+			hsvcolor 60*(cnt\3),200,200
+			//まず実行時間を表示
+			lx=start_time.cnt*580/scalex+30
+			rx=end_time.cnt*580/scalex+30
+			yy=270-int(cmdq_no.cnt)*50
+			boxf int(lx),yy,int(rx),yy+30
+			
+			//文字表示
+			color 0,0,0
+			pos int(lx),yy-10
+			mes kinfos.cnt
+		loop
+	return

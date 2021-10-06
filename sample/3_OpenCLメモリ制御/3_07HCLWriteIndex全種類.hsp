@@ -1,0 +1,15 @@
+#include "hspcl32n.as"
+	clinit
+	
+	n=1024
+	clmem=clCreateBuffer(n*4)
+	
+	clWriteIndex_i32 clmem,0,77//poke的な使い方
+	clWriteIndex_fp clmem,1,77//poke的な使い方
+	clWriteIndex_i64 clmem,1,77//poke的な使い方
+	clWriteIndex_dp clmem,2,77//poke的な使い方
+
+	mes clReadIndex_i32(clmem,0)
+	mes clReadIndex_fp(clmem,1)
+	mes clReadIndex_i64(clmem,1)
+	mes clReadIndex_dp(clmem,2)

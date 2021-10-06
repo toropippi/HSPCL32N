@@ -1,0 +1,29 @@
+//C=A*B
+//の行列積のエラーサンプル
+//raw colがあっててもメモリ確保サイズがあってないといけない
+#include "hspcl32n.as"
+	clinit
+	matA=clCreateBuffer(10*1000*4)
+	clBLAS_Set2DShape matA,10,1000
+	
+	matB=clCreateBuffer(10*1000*4)
+	clBLAS_Set2DShape matB,1000,10
+	
+	matC=clCreateBuffer(10*10*4)
+
+	//sgemm計算
+	clBLAS_sgemm matC,matA,matB,0,0,0
+	mes "C=A*B完了"
+	mes "Cの大きさbyte="+clGetSize(matC)
+	mes "C.raw="+clBLAS_Get2DShape(matC,0)
+	mes "C.col="+clBLAS_Get2DShape(matC,1)
+
+	wait 100
+	
+	//sgemm計算 C=A.T*B.Tなので1000*1000要素ないといけないが・・・
+	clBLAS_sgemm matC,matA,matB,0,1,1
+	mes "C=A.T*B.T完了"
+	
+	mes "Cの大きさbyte="+clGetSize(matC)
+	mes "C.raw="+clBLAS_Get2DShape(matC,0)
+	mes "C.col="+clBLAS_Get2DShape(matC,1)

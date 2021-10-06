@@ -1,0 +1,82 @@
+//並列数が同じでも、local_sizeを変えると計算時間が変わってくることがわかりました。
+//今度は1刻みで1～128でやってみましょう。
+//なおglobal_size(並列数)はlocal_sizeで割り切れないといけません。
+//結果のグラフは、どのGPU CPUで実行したかで結果が大きく異なると思います。
+//一応私の環境RTX3080での計算結果をSample13_result.pngでおいておきます。
+//vecAddは突き詰めるとメモリ律速になる問題ですが、local_sizeが少ないようだと(特に32未満)メモリアクセスのパフォーマンスが落ちるようです。
+//かと言って32以上ならなんでも良いかというとそういうわけではありません(それは次のサンプルで分かります)
+#include "hspcl32n.as"
+	clinit
+	prg=clCreateProgram("VecAdd.cl")
+	krn=clCreateKernel(prg,"vecAdd")
+	
+	n=1024*1024
+	clmem_A=clCreateBuffer(n*4)
+	clmem_B=clCreateBuffer(n*4)
+	clmem_C=clCreateBuffer(n*4)
+	
+	dim host_A,n
+	dim host_B,n
+	dim host_C,n
+		repeat n
+		host_A.cnt=cnt
+		host_B.cnt=cnt
+		loop
+	
+	clWriteBuffer clmem_A,host_A,n*4,0,0//CPU→GPU
+	clWriteBuffer clmem_B,host_B,n*4,0,0//CPU→GPU
+	
+	clSetKernel krn,0,clmem_A
+	clSetKernel krn,1,clmem_B
+	clSetKernel krn,2,clmem_C
+
+	title "計算中..."
+	wait 1
+		repeat 128
+		local_size=cnt+1
+		clDoKrn1 krn,n/local_size*local_size,local_size,cnt//同じ計算を、local_sizeだけ変えてなんどもやる
+		clReadBuffer clmem_C,host_C,n*4,0,0//GPU→CPU
+		clFinish
+		loop
+	title "計算終了"
+
+	dim c_time,128
+		repeat 128
+		start_time=clGetEventLogs(cnt,6)
+		end_time=clGetEventLogs(cnt,7)
+		c_time.cnt=end_time-start_time
+		loop
+
+	//c_timeをグラフにプロット
+	gosub*graph
+	stop
+
+*graph
+	//計算時間をグラフで表示
+	//まずは軸
+	line 30,30,30,450
+	line 30,30,27,35
+	line 30,30,33,35
+	pos 3,240
+	font msgothic,12
+	mes "時間"
+
+	line 30,450,620,450
+	line 620,450,615,447
+	line 620,450,615,453
+	pos 270,460
+	mes "local_size"
+		repeat 9
+		line 30+cnt*580/8,450,30+cnt*580/8,445
+		pos 30+cnt*580/8,450
+		mes 16*cnt
+		loop
+
+	t_scale=c_time.64//擬似的な中央値
+	t_scale=t_scale/140+1
+	pos 30,450-c_time/t_scale
+		repeat 127,1
+		line cnt*580/128+30,450-c_time.cnt/t_scale
+		loop
+
+	return

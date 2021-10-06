@@ -1,0 +1,35 @@
+// clDoKrn1,2,3等、これまでのカーネル実行命令はclSetKrns命令で事前に引数をセットしておかなければいけなく、面倒でした。
+// 今回のclCall2は引数を直接(?)指定できるので、より直観的に書くことができます。
+// つまりclCallのHSP配列→cl mem版
+#include "hspcl32n.as"
+	clinit
+	n=256
+	dim a,n
+	dim b,n
+		repeat n
+		a.cnt=cnt
+		b.cnt=cnt
+		loop
+	mema=clCreateBufferFrom(a)
+	memb=clCreateBufferFrom(b)
+	memc=clCreateBuffer(n*4)
+
+	clCall2 {"
+__kernel void test(__global int* a,__global int* b,__global int* c,float d)
+{
+	int gid=get_global_id(0);
+	c[gid]=a[gid]+b[gid]+(int)d;
+}
+	"},n,n,mema,memb,memc,float(10.0)//10にあたるのがコードのd
+
+	cldim_i32FromBuffer c,memc
+		repeat n
+		mes ""+a.cnt+" + "+b.cnt+" + 10 = "+c.cnt+""
+		loop
+	stop
+
+
+// clCallでは第一引数の入力文字列がプラグイン内部でハッシュ化され保存されており、
+// 全く同じ文字列の場合、前回のビルドを自動で使いまわすことができるようになっています。
+// つまり毎回カーネルソースをコンパイルしているわけではないので高速です。
+// ただHCLDokrn1,2,3命令のように引数指定と分離できてるわけではないので、細かいことを言えば引数指定の分オーバーヘッドはどうしてもあります。

@@ -1,0 +1,30 @@
+// clCreateBufferで確保した総メモリサイズを確認するコード
+// これはHSPCL32Nで確保したGPUメモリのサイズが分かるだけであり実際のGPUメモリ使用量がわかるわけではありません。
+#include "hspcl32n.as"
+	clinit
+	
+	n=256//配列サイズ 256byte
+	clmem0=clCreateBuffer(n)
+
+	n=1024*1024*512//配列サイズ 512MB
+	clmem1=clCreateBuffer(n)
+
+	n=int64(1024)*1024*1024*1//配列サイズ 1GB
+	clmem2=clCreateBuffer(n)
+
+	dim data,64
+	clWriteBuffer clmem0,data,256
+	clWriteBuffer clmem1,data,256
+	clWriteBuffer clmem2,data,256//writeしないと実際には確保されない
+
+	mes "clmem0のサイズ(byte) = "+clGetSize(clmem0)
+	mes "clmem1のサイズ(byte) = "+clGetSize(clmem1)
+	mes "clmem2のサイズ(byte) = "+clGetSize(clmem2)
+	mes 
+	mes "総メモリサイズ(byte) = "+clGetAllBufferSize()
+
+
+	mes 
+	clReleaseBuffer clmem2
+	mes "clReleaseBuffer clmem2"
+	mes "総メモリサイズ(byte) = "+clGetAllBufferSize()

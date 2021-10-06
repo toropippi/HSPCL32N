@@ -1,0 +1,30 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////
+//Shared memory 共有メモリのサンプル
+//とりあえず共有メモリを使ってみる。
+//カーネルのスレッドが終わるとローカルメモリ(共有メモリ)も解放されるので結果は捨てられる。
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+#include "hspcl32n.as"
+	clinit
+
+	source={"
+__kernel void local_test(__local char *p, int local_size) 
+{
+    for (int i=0; i<local_size; i++) 
+    {
+        p[i] = i;               /* ローカルメモリに値を設定(結果は捨てられる) */
+    }
+}
+
+	"}
+
+	prg=clCreateProgramWithSource(source)
+	krn=clCreateKernel(prg,"local_test")
+	clSetKernel krn,0,0,256//ローカルメモリ作成。第4引数に0以外を指定することが必須。１ワークグループにつき256byte作成
+	clSetKernel krn,1,256
+
+	clDoKrn1 krn,1,1
+	clFinish
+	mes "ローカルメモリにアクセスしました。"
+	mes "おわり"
+	stop

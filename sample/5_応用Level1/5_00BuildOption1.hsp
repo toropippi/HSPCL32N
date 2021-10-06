@@ -1,0 +1,21 @@
+//clCreateProgramでのbuid optionの解説
+//一番よく使うであろう、-Dオプション
+//OpenCL Cでdefineの定義をビルドオプションから指定することができる
+
+#include "hspcl32n.as"
+	clinit
+	
+	prg=clCreateProgram("BuildOptonSample1.cl","-D SCALE=111")
+	krn=clCreateKernel(prg,"Mul")
+
+	dim a,2
+	a.0=3
+	clmem=clCreateBufferFrom(a)
+	clSetKernel krn,0,clmem
+	clDoKrn1 krn,1,1//計算
+	clReadBuffer clmem,a//GPU→CPU
+
+	clFinish
+
+	mes a.0
+	mes a.1//SCALE倍された数字が出力

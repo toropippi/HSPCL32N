@@ -1,0 +1,45 @@
+//やってることはVecAdd.hspと同じ
+//時間計測はHSPのgettimeを使ってもいいがOpenCLのAPIを使うことでより正確に測ることができる
+//そのためにはカーネル実行の命令(ここではclDoKrn1)でeventを登録するようにする
+//event idは0～65535まで使える
+//そのevent idの番号から時間情報をとってくることができる
+//時間の単位はnsナノセカンド
+#include "hspcl32n.as"
+	clinit
+	prg=clCreateProgram("VecAdd.cl")
+	krn=clCreateKernel(prg,"vecAdd")
+	
+	n=256
+	clmem_A=clCreateBuffer(n*4)
+	clmem_B=clCreateBuffer(n*4)
+	clmem_C=clCreateBuffer(n*4)
+	
+	dim host_A,n
+	dim host_B,n
+	dim host_C,n
+		repeat n
+		host_A.cnt=cnt
+		host_B.cnt=cnt
+		loop
+	
+	clWriteBuffer clmem_A,host_A,n*4,0,0//CPU→GPU
+	clWriteBuffer clmem_B,host_B,n*4,0,0//CPU→GPU
+	
+	clSetKernel krn,0,clmem_A
+	clSetKernel krn,1,clmem_B
+	clSetKernel krn,2,clmem_C
+	
+	clDoKrn1 krn,n,64,0//GPUで計算。ここの第4引数の0は、この命令をevent_id 0に登録するという意味
+	clReadBuffer clmem_C,host_C,n*4,0,0//GPU→CPU
+	
+	//eventから時間情報を取得。戻り値は64bit int
+	start_time=clGetEventLogs(0,6)//6はCL_PROFILING_COMMAND_STARTのtime
+	end_time=clGetEventLogs(0,7)//7はCL_PROFILING_COMMAND_ENDのtime
+	mes "計算start "+start_time
+	mes "計算end   "+end_time
+	
+		repeat 256
+		mes ""+host_A.cnt+" + "+host_B.cnt+" = "+host_C.cnt
+		loop
+	
+	stop

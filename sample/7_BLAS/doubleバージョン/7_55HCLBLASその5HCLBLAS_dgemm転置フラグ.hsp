@@ -1,0 +1,33 @@
+//C=A*B
+//の行列積のサンプル
+#include "hspcl32n.as"
+	clinit
+	
+	matA=clCreateBuffer(2*2*8)
+	clBLAS_Set2DShape matA,2,2
+		repeat 2*2
+		clWriteIndex_dp matA,cnt,1.0*rnd(10)
+		loop
+	
+	matB=clCreateBuffer(2*2*8)
+	clBLAS_Set2DShape matB,2,2
+		repeat 2*2
+		clWriteIndex_dp matB,cnt,1.0*rnd(10)
+		loop
+	
+	matC=clCreateBuffer(2*2*8)
+	//clBLAS_Set2DShape matC,2,2// Cは計算で自動的にshapeが求まるので実はこれはいらない
+
+	//これでA,B,Cの初期設定完了
+
+	//dgemm計算
+	clBLAS_dgemm matC,matA,matB,0,1,0 // C=A.T*B
+	clBLAS_dgemm matC,matA,matB,0,0,1 // C=A*B.T
+	clBLAS_dgemm matC,matA,matB,1,0,0 // C.T=A*B
+	clBLAS_dgemm matC,matA,matB,0,1,1 // C=A.T*B.T
+	clBLAS_dgemm matC,matA,matB,1,0,1 // C.T=A*B.T
+	clBLAS_dgemm matC,matA,matB,1,1,0 // C.T=A.T*B
+	clBLAS_dgemm matC,matA,matB,1,1,1 // C.T=A.T*B.T
+	clBLAS_dgemm matC,matA,matB,0,0,0 // C=A*B
+	//おわり
+	mes "おわり"
