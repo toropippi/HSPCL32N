@@ -10,7 +10,7 @@ HSPCL32N.dll
 3.0
 
 %date
-2021/10/06
+2023/02/06
 
 %author
 pippi
@@ -341,7 +341,7 @@ p2は読み出しインデックスを指定して下さい。
 
 VRAMの内容がdouble型4つの配列変数　(100.0,400.0,500.0,700.0)
 だった場合
-clReadIndex_d(memid,3)　は　700.0
+clReadIndex_dp(memid,3)　は　700.0
 を返します。
 
 %href
@@ -368,7 +368,7 @@ p2は読み出しインデックスを指定して下さい。
 
 VRAMの内容がfloat型4つの配列変数　(100.0,400.0,500.0,700.0)
 だった場合
-clReadIndex_d(memid,3)　は　700.0
+clReadIndex_dp(memid,3)　は　700.0
 を返します。
 
 %href
